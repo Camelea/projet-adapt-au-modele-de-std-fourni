@@ -42,6 +42,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application.Interface\InterfaceService.cs" />
+    <Compile Include="Application.Interface\Methode.cs" />
+    <Compile Include="Application.Interface\ObjetPresentation.cs" />
+    <Compile Include="Application.Interface\ParametreEntrant.cs" />
+    <Compile Include="Application.Interface\ParametreSortant.cs" />
+    <Compile Include="Domain.CommonType\Enumerations.cs" />
+    <Compile Include="Domain.CommonType\Metiers.cs" />
+    <Compile Include="Domain\Entites\ClasseParent.cs" />
+    <Compile Include="Domain\Entites\Constructeur.cs" />
+    <Compile Include="Domain\Entites\EntitePartiel.cs" />
+    <Compile Include="Domain\Entites\Methode.cs" />
+    <Compile Include="Propriete.cs" />
+    <Compile Include="Domain\Entites\ProprieteDynamique.cs" />
+    <Compile Include="Domain.CommonType\ServiceExterne.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tables\CleEtrangere.cs" />
@@ -57,6 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Infrastructure.ExternalServices\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

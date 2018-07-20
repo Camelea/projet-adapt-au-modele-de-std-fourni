@@ -41,13 +41,8 @@ namespace ConsoleApp4.Tables
 
 		public override string ToString()
 		{
-			var res = " ";
-			foreach (Colonne c in this.Colonnes)
-			{
-				res = res + " " + c.ToString() ;
-			}
 
-			return (this.Nom + "\n" + res);
+			return (this.Nom );
 				
 			
 		}
@@ -111,6 +106,7 @@ namespace ConsoleApp4.Tables
 			for (int i = 0; i < NombreTables(doc, nsmgr); i++)
 			{
 				tables.Add(new Table(noms[i], colonnes[i], contraintes[i], donnees[i]));
+
 
 			}
 			return tables;

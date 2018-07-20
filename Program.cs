@@ -1,4 +1,6 @@
-﻿using ConsoleApp4.Tables;
+﻿
+using ConsoleApp4.Application.Interface;
+using ConsoleApp4.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +17,8 @@ namespace ConsoleApp4
 
 
 			XmlDocument doc = new XmlDocument();
-			//doc.Load("C:\\Users\\CameleaOUARKOUB\\Pictures\\Exemple2.xml");
-			doc.Load("C:\\Users\\CameleaOUARKOUB\\Desktop\\document.xml");
+			doc.Load("C:\\Users\\CameleaOUARKOUB\\Pictures\\document.xml");
+			//doc.Load("C:\\Users\\CameleaOUARKOUB\\Desktop\\document.xml");
 
 
 
@@ -61,21 +63,114 @@ namespace ConsoleApp4
 
 			//}
 
-			#region TestTable 
-			var sequences = Table.Tables(doc, nsmgr);
-			List<Table> resultat = sequences;
-			foreach (Table y in resultat)
+			//#region TestTable 
+			//var sequences = Table.Tables(doc, nsmgr);
+			//List<Table> resultat = sequences;
+			//foreach (Table y in resultat)
+			//{
+
+			//	Console.WriteLine(y.ToString());
+
+
+			//}
+
+
+
+			//Console.ReadKey();
+
+			//#endregion
+
+			//#region Test Service Externe 
+
+			//var proprietes = Propriete.ProprietesServicesExternes(doc, nsmgr);
+			//List<List<Propriete>> resultat1 = proprietes;
+
+			//foreach (List<Propriete> lp in resultat1)
+
+			//{
+			//	Console.WriteLine("nouvelle liste");
+			//	foreach (Propriete p in lp )
+			//	{
+			//		Console.WriteLine("nouvelle prop");
+			//		Console.WriteLine(p.ToString());
+
+			//	}
+			//}
+
+
+
+			//Console.ReadKey();
+
+			//#endregion
+
+			//#region Interfaces Services 
+
+			//var proprietes = Methode.DescriptionsMethodesinterfacesService(doc, nsmgr);
+			//List<List<string>> resultat1 = proprietes;
+
+			//foreach (List<string> lp in resultat1)
+
+			//{
+			//	Console.WriteLine("nouvelle liste");
+			//	foreach (string p in lp)
+			//	{
+
+			//		Console.WriteLine(p.ToString());
+
+			//	}
+			//}
+
+
+
+			//Console.ReadKey();
+
+			//#endregion
+
+			//#region Parametes entrants 
+
+			//var proprietes = ParametreEntrant.ParametresEntrantsMethodesClasses(doc, nsmgr);
+			//List<List<ParametreEntrant>> resultat1 = proprietes;
+
+			//foreach (List<ParametreEntrant> lp in resultat1)
+
+			//{
+			//	Console.WriteLine("nouvelle liste");
+			//	foreach (ParametreEntrant p in lp)
+			//	{
+
+			//		Console.WriteLine(p.ToString());
+
+			//	}
+			//}
+			//Console.ReadKey();
+
+
+
+			//#endregion
+
+			#region Parametres Sortants
+		
+
+			var proprietes = ParametreSortant.ParametresSortantsMethodesClasses(doc, nsmgr);
+			List<List<ParametreSortant>> resultat1 = proprietes;
+
+			foreach (List<ParametreSortant> lp in resultat1)
+
 			{
-				foreach (Colonne c in y.Colonnes)
+				Console.WriteLine("nouvelle liste");
+				foreach (ParametreSortant p in lp)
 				{
-					Console.WriteLine(c.ToString());
+
+					Console.WriteLine(p.ToString());
+
 				}
-			
 			}
-
-
-
 			Console.ReadKey();
+
+
+
+	
+
 
 			#endregion
 		}
