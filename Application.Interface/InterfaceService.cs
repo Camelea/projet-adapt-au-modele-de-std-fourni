@@ -14,23 +14,34 @@ namespace ConsoleApp4.Application.Interface
 
 		public string Nom;
 		public string Description;
-		public Methode Methode;
+		public List<Methode> Methodes;
 
 		#endregion
 
 
 		#region Constructeur
-		public InterfaceService(string nom, string description, Methode methode)
+		public InterfaceService(string nom, string description, List<Methode> methodes)
 		{
 			this.Nom = nom;
 			this.Description = description;
-			this.Methode = methode;
+			this.Methodes = methodes;
+		}
+		public InterfaceService(string nom, string description)
+		{
+			this.Nom = nom;
+			this.Description = description;
+			
 		}
 
 
 		#endregion
 
 		#region Méthodes 
+
+		public override string ToString()
+		{
+			return (this.Nom + this.Description);
+		}
 
 		/// <summary>
 		/// Retourne une liste de noms des interfaces de services présentes dans le fichier
@@ -65,7 +76,7 @@ namespace ConsoleApp4.Application.Interface
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<String> DescriptionsInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
@@ -90,8 +101,41 @@ namespace ConsoleApp4.Application.Interface
 		}
 
 
+		/// <summary>
+		/// Retourne la liste des interfaces de service du fichier 
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="nsmgr"></param>
+		/// <returns></returns>
+		public static List<InterfaceService> InterfacesService(XmlDocument doc, XmlNamespaceManager nsmgr)
+		{
+			List<InterfaceService> interfacesServices = new List<InterfaceService>();
+			List<string> noms = NomsInterfacesServices(doc, nsmgr);
+			List<string> descriptions = DescriptionsInterfacesServices(doc, nsmgr);
+			List<List<Methode>> methodes = Methode.Methodes(doc, nsmgr);
+
+			for (int i = 1; i < NomsInterfacesServices(doc, nsmgr).Count + 1; i++)
+			{
 
 
+				if (Methode.NombreMethodesInterfacesServices(doc, nsmgr)[i - 1] != 0 )
+				{
+
+					interfacesServices.Add(new InterfaceService(noms[i - 1], descriptions[i - 1], methodes[i - 1]));
+				}
+
+				if (Methode.NombreMethodesInterfacesServices(doc, nsmgr)[i - 1] == 0)
+				{
+
+					interfacesServices.Add(new InterfaceService(noms[i - 1], descriptions[i - 1]));
+				}
+
+
+
+			}
+			return interfacesServices;
+
+		}
 
 
 

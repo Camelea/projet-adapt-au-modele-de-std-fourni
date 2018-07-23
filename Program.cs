@@ -80,7 +80,7 @@ namespace ConsoleApp4
 
 			//#endregion
 
-			//#region Test Service Externe 
+			#region Test Service Externe 
 
 			//var proprietes = Propriete.ProprietesServicesExternes(doc, nsmgr);
 			//List<List<Propriete>> resultat1 = proprietes;
@@ -101,9 +101,9 @@ namespace ConsoleApp4
 
 			//Console.ReadKey();
 
-			//#endregion
+			#endregion
 
-			//#region Interfaces Services 
+			#region Interfaces Services 
 
 			//var proprietes = Methode.DescriptionsMethodesinterfacesService(doc, nsmgr);
 			//List<List<string>> resultat1 = proprietes;
@@ -124,9 +124,25 @@ namespace ConsoleApp4
 
 			//Console.ReadKey();
 
-			//#endregion
+			var proprietes = InterfaceService.InterfacesService(doc, nsmgr);
+			List<InterfaceService> resultat1 = proprietes;
 
-			//#region Parametes entrants 
+			foreach (InterfaceService lp in resultat1)
+
+			{
+				Console.WriteLine("nouvelle liste");
+				Console.WriteLine(lp.ToString());
+
+				
+			}
+
+
+
+			Console.ReadKey();
+
+			#endregion
+
+			#region Parametes entrants 
 
 			//var proprietes = ParametreEntrant.ParametresEntrantsMethodesClasses(doc, nsmgr);
 			//List<List<ParametreEntrant>> resultat1 = proprietes;
@@ -146,31 +162,55 @@ namespace ConsoleApp4
 
 
 
-			//#endregion
+			#endregion
 
 			#region Parametres Sortants
-		
-
-			var proprietes = ParametreSortant.ParametresSortantsMethodesClasses(doc, nsmgr);
-			List<List<ParametreSortant>> resultat1 = proprietes;
-
-			foreach (List<ParametreSortant> lp in resultat1)
-
-			{
-				Console.WriteLine("nouvelle liste");
-				foreach (ParametreSortant p in lp)
-				{
-
-					Console.WriteLine(p.ToString());
-
-				}
-			}
-			Console.ReadKey();
 
 
+			//var proprietes = ParametreSortant.ParametresSortantsMethodesClasses(doc, nsmgr);
+			//List<List<ParametreSortant>> resultat1 = proprietes;
 
-	
+			//foreach (List<ParametreSortant> lp in resultat1)
 
+			//{
+			//	Console.WriteLine("nouvelle liste");
+			//	foreach (ParametreSortant p in lp)
+			//	{
+
+			//		Console.WriteLine(p.ToString());
+
+			//	}
+			//}
+			//Console.ReadKey();
+
+
+
+
+
+
+			#endregion
+
+
+			#region Test Methode
+
+			//var proprietes = Methode.Methodes(doc, nsmgr);
+			//List<List<Methode>> resultat1 = proprietes;
+
+			//foreach (List<Methode> lp in resultat1)
+
+			//{
+			//	Console.WriteLine("nouvelle liste");
+			//	foreach (Methode p in lp)
+			//	{
+			//		Console.WriteLine("nouvelle prop");
+			//		Console.WriteLine(p.ToString());
+
+			//	}
+			//}
+
+
+
+			//Console.ReadKey();
 
 			#endregion
 		}

@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace ConsoleApp4.Application.Interface
 {
-	class Methode
+	public class Methode
 	{
 		#region Attributs 
 
@@ -33,6 +33,10 @@ namespace ConsoleApp4.Application.Interface
 
 		#region Méthodes 
 
+		public override string ToString()
+		{
+			return (this.Nom + this.Description);
+		}
 
 		/// <summary>
 		/// Retourne la liste des noms des méthodes des interfaces de service présentes dans le fichier
@@ -123,6 +127,45 @@ namespace ConsoleApp4.Application.Interface
 			}
 			return NombreMethodesInterfacesServices;
 		}
+
+
+
+		/// <summary>
+		/// Fonction qui renvoie la liste de toutes les méthodes des interfaces de service 
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="nsmgr"></param>
+		/// <returns></returns>
+		public static List<List<Methode>> Methodes(XmlDocument doc, XmlNamespaceManager nsmgr)
+		{
+			List<List<Methode>> methodes = new List<List<Methode>>();
+			List<List<string>> nomsMethodes = NomsMethodesInterfacesServices(doc, nsmgr);
+			List<List<string>> descriptionsMethodes = DescriptionsMethodesinterfacesService(doc, nsmgr);
+			List<List<ParametreSortant>> parametresSortants = ParametreSortant.ParametresSortantsMethodesClasses(doc, nsmgr);
+			List<List<ParametreEntrant>> parametresEntrants = ParametreEntrant.ParametresEntrantsMethodesClasses(doc, nsmgr);
+			for (int i = 1; i <InterfaceService.NomsInterfacesServices(doc, nsmgr).Count + 1; i++)
+			{
+				if (NombreMethodesInterfacesServices(doc, nsmgr)[i - 1] != 0)
+				{
+					List<Methode> methodesInterfacesServices = new List<Methode>();
+
+					for (int cmp = 0; cmp < NombreMethodesInterfacesServices(doc, nsmgr)[i - 1]; cmp++)
+					{
+
+						methodesInterfacesServices.Add(new Methode(nomsMethodes[i - 1][cmp], descriptionsMethodes[i - 1][cmp], parametresEntrants[cmp], parametresSortants[cmp]));
+
+
+					}
+					methodes.Add(methodesInterfacesServices);
+				}
+
+
+
+
+			}
+			return methodes;
+		}
+
 
 
 
