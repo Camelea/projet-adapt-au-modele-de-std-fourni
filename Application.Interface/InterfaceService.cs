@@ -102,7 +102,7 @@ namespace ConsoleApp4.Application.Interface
 
 
 		/// <summary>
-		/// Retourne la liste des interfaces de service du fichier 
+		/// Retourne la liste des interfaces de service du fichier  
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>

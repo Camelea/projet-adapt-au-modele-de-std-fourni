@@ -4,23 +4,27 @@ using System.Xml;
 
 namespace ConsoleApp4.Domain.CommonType.Services_Externes
 {
+
 	public class Methode
 	{
-		public string Nom;
-		public string Description;
-		public List<ParametreMethode> ParametresMethode;
-		public List<TypeRetour> TypeRetour;
+		#region Attributs 
 
-#endregion
+		public string Nom;
+		public List<DescriptionMethode> Descriptions;
+		public List<ParametreMethode> ParametresMethode;
+		public List<TypeRetour> TypesRetour;
+		public string Algorithme;
+		#endregion
 
 		#region Constructeur 
 
-		public Methode(string nom, string description, List<ParametreMethode> parametresMethode, List<TypeRetour> typeRetour)
+		public Methode(string nom, List<DescriptionMethode> descriptions, List<ParametreMethode> parametresMethode, List<TypeRetour> typeRetour,string algorithme)
 		{
 			this.Nom = nom;
-			this.Description = description;
+			this.Descriptions = descriptions;
 			this.ParametresMethode = parametresMethode;
-			this.TypeRetour = typeRetour;
+			this.TypesRetour = typeRetour;
+			this.Algorithme = algorithme;
 
 		}
 
@@ -30,7 +34,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 		public override string ToString()
 		{
-			return (this.Nom + this.Description);
+			return (this.Nom );
 		}
 
 		/// <summary>
@@ -68,65 +72,27 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		}
 
 
-
 		/// <summary>
-		/// Retourne la liste des descriptions des méthodes des interfaces de service présentes dans le fichier
+		/// Retourne le nombre de methodes de chaque entité
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<string>> DescriptionsMethodesinterfacesService(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<int> NombreMethodesEntites(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
-
-			XmlNodeList nodeList2;
-			XmlElement root = doc.DocumentElement;
-			List<List<string>> MethodesInterfacesServices = new List<List<string>>();
-
-			for (int i = 1; i < InterfaceService.NomsInterfacesServices(doc, nsmgr).Count + 1; i++)
-
+			List<int> NombreMethodesEntite = new List<int>();
+			foreach (List<string> liste in NomsMethodesEntites(doc, nsmgr))
 			{
-				for (int cmp = 0; cmp < NombreMethodesInterfacesServices(doc, nsmgr)[i - 1] + 1; cmp++)
-				{
-					List<string> ListeMethodesInterfacesServices = new List<string>();
-					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][1]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/preceding-sibling:: w:p)]";
-
-					nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-					foreach (XmlNode isbn2 in nodeList2)
-					{
-						ListeMethodesInterfacesServices.Add(isbn2.InnerText);
-					}
-					MethodesInterfacesServices.Add(ListeMethodesInterfacesServices);
-
-				}
-			}
-
-			return MethodesInterfacesServices;
-
-
-		}
-
-		/// <summary>
-		/// Retourne le nombre de methodes de chaque interface de service 
-		/// </summary>
-		/// <param name="doc"></param>
-		/// <param name="nsmgr"></param>
-		/// <returns></returns>
-		public static List<int> NombreMethodesInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr)
-		{
-			List<int> NombreMethodesInterfacesServices = new List<int>();
-			foreach (List<string> liste in NomsMethodesInterfacesServices(doc, nsmgr))
-			{
-				NombreMethodesInterfacesServices.Add(liste.Count);
+				NombreMethodesEntite.Add(liste.Count);
 
 			}
-			return NombreMethodesInterfacesServices;
+			return NombreMethodesEntite;
 		}
 
 
 
 		/// <summary>
-		/// Fonction qui renvoie la liste de toutes les méthodes des interfaces de service 
+		/// Fonction qui renvoie la liste de toutes les méthodes des entités
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
@@ -134,20 +100,21 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		public static List<List<Methode>> Methodes(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			List<List<Methode>> methodes = new List<List<Methode>>();
-			List<List<string>> nomsMethodes = NomsMethodesInterfacesServices(doc, nsmgr);
-			List<List<string>> descriptionsMethodes = DescriptionsMethodesinterfacesService(doc, nsmgr);
-			List<List<ParametreSortant>> parametresSortants = ParametreSortant.ParametresSortantsMethodesClasses(doc, nsmgr);
-			List<List<ParametreEntrant>> parametresEntrants = ParametreEntrant.ParametresEntrantsMethodesClasses(doc, nsmgr);
-			for (int i = 1; i < InterfaceService.NomsInterfacesServices(doc, nsmgr).Count + 1; i++)
+			List<List<string>> nomsMethodes = NomsMethodesEntites(doc, nsmgr);
+			List<List<string>> algorithmes = AlgorithmesMethodesEntites(doc, nsmgr);
+			List<List<DescriptionMethode>> descriptionsMethodes = DescriptionMethode.DescriptionsMethodesEntites(doc, nsmgr);
+			List<List<ParametreMethode>> parametresMethodes = ParametreMethode.ParametresMethodesEntites(doc, nsmgr);
+			List<List<TypeRetour>> typesRetour = TypeRetour.TypeRetourMethodesEntites(doc, nsmgr);
+			for (int i = 1; i <Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
 			{
-				if (NombreMethodesInterfacesServices(doc, nsmgr)[i - 1] != 0)
+				if (NombreMethodesEntites(doc, nsmgr)[i - 1] != 0)
 				{
 					List<Methode> methodesInterfacesServices = new List<Methode>();
 
-					for (int cmp = 0; cmp < NombreMethodesInterfacesServices(doc, nsmgr)[i - 1]; cmp++)
+					for (int cmp = 0; cmp < NombreMethodesEntites(doc, nsmgr)[i - 1]; cmp++)
 					{
 
-						methodesInterfacesServices.Add(new Methode(nomsMethodes[i - 1][cmp], descriptionsMethodes[i - 1][cmp], parametresEntrants[cmp], parametresSortants[cmp]));
+						methodesInterfacesServices.Add(new Methode(nomsMethodes[i - 1][cmp], descriptionsMethodes[cmp], parametresMethodes[cmp], typesRetour[cmp], algorithmes[i-1][cmp]));
 
 
 					}
@@ -155,16 +122,71 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 				}
 
 
-
-
 			}
 			return methodes;
 		}
 
+		/// <summary>
+		/// Retourne la liste des Algorithmes des méthodes des entités présentes dans le fichier
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="nsmgr"></param>
+		/// <returns></returns>
+		public static List<List<string>> AlgorithmesMethodesEntites(XmlDocument doc, XmlNamespaceManager nsmgr)
+		{
 
+			XmlNodeList nodeList2;
+			XmlElement root = doc.DocumentElement;
+			List<List<string>> MethodesEntites = new List<List<string>>();
+
+			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
+
+			{
+				for (int cmp = 0; cmp < NombreMethodesEntites(doc, nsmgr)[i - 1] + 1; cmp++)
+				{
+					if (i < Entite.NomsEntites(doc, nsmgr).Count || (i == Entite.NomsEntites(doc, nsmgr).Count && cmp < NombreMethodesEntites(doc, nsmgr)[i - 1]-1))
+					{
+						List<string> ListeMethodesEntites = new List<string>();
+						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][7]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][7]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][7]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:p)]";
+
+						nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+						foreach (XmlNode isbn2 in nodeList2)
+						{
+							ListeMethodesEntites.Add(isbn2.InnerText);
+						}
+						MethodesEntites.Add(ListeMethodesEntites);
+
+					}
+
+
+
+					if (i == Entite.NomsEntites(doc, nsmgr).Count && cmp == NombreMethodesEntites(doc, nsmgr)[i - 1]-1)
+					{
+						List<string> ListeMethodesEntites = new List<string>();
+						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][7]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /preceding-sibling:: w:p)]";
+
+						nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+						foreach (XmlNode isbn2 in nodeList2)
+						{
+							ListeMethodesEntites.Add(isbn2.InnerText);
+						}
+						MethodesEntites.Add(ListeMethodesEntites);
+
+					}
+				}
+			}
+
+
+			return MethodesEntites;
+		}
+
+		
 
 
 
 		#endregion
 	}
+
 }

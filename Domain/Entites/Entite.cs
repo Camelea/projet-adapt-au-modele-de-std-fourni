@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Domain.Entites
-{
+
+{/// <summary>
+/// Classe qui permet de récupérer tous les entités du fichier 
+/// </summary>
+/// 
 	class Entite
 	{
 		#region Attributs
@@ -19,10 +23,23 @@ namespace ConsoleApp4.Domain.Entites
 		public List<Propriete> Proprietes;
 		public List<ProprieteDynamique> ProprietesDynamiques;
 		public Constructeur Constructeur;
+		public List<Methode> Methodes;
 
 		#endregion
 
 		#region Constructeur 
+
+		public Entite(string nom, string description, List<EntitePartiel> entitesPartiels, List<ClasseParent> classesParent, List<Propriete> proprietes, List<ProprieteDynamique> proprietesDynamiques, Constructeur constructeur, List<Methode> methodes)
+		{
+			this.Nom = nom;
+			this.Description = description;
+			this.EntitesPartiels = entitesPartiels;
+			this.ClassesParent = classesParent;
+			this.Proprietes = proprietes;
+			this.ProprietesDynamiques = proprietesDynamiques;
+			this.Constructeur = constructeur;
+			this.Methodes = methodes;
+		}
 
 		public Entite(string nom, string description, List<EntitePartiel> entitesPartiels, List<ClasseParent> classesParent, List<Propriete> proprietes, List<ProprieteDynamique> proprietesDynamiques, Constructeur constructeur)
 		{
@@ -73,11 +90,11 @@ namespace ConsoleApp4.Domain.Entites
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionsInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<String> DescriptionsEntites(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsInterfacesServices = new List<string>();
+			List<string> ListeDescriptionsEntites = new List<string>();
 
 			for (int i = 1; i < NomsEntites(doc, nsmgr).Count + 1; i++)
 
@@ -88,14 +105,57 @@ namespace ConsoleApp4.Domain.Entites
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeDescriptionsInterfacesServices.Add(isbn2.InnerText);
+					ListeDescriptionsEntites.Add(isbn2.InnerText);
 				}
 
 			}
-			return ListeDescriptionsInterfacesServices;
+			return ListeDescriptionsEntites;
 
 
 		}
+
+
+		/// <summary>
+		/// Retourne la liste des entités du fichier  
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="nsmgr"></param>
+		/// <returns></returns>
+		public static List<Entite> entites(XmlDocument doc, XmlNamespaceManager nsmgr)
+		{
+			List<Entite> entites = new List<Entite>();
+			List<string> noms = NomsEntites(doc, nsmgr);
+			List<string> descriptions = DescriptionsEntites(doc, nsmgr);
+			List<List<Methode>> methodes = Methode.Methodes(doc, nsmgr);
+			List<List<ClasseParent>> classesParent = ClasseParent.ClassesParent(doc, nsmgr);
+			List<List<EntitePartiel>> entitesPartiels = EntitePartiel.EntitesPartiels(doc, nsmgr);
+			List<List<Propriete>> proprietes = Propriete.Proprietes(doc, nsmgr);
+			List<List<ProprieteDynamique>> proprietesDynamiques = ProprieteDynamique.ProprietesDynamiques(doc, nsmgr);
+			List<Constructeur> constructeurs = Constructeur.Constructeurs(doc, nsmgr);
+
+			for (int i = 1; i < NomsEntites(doc, nsmgr).Count + 1; i++)
+			{
+
+
+				if (Methode.NombreMethodesEntites(doc, nsmgr)[i - 1] != 0)
+				{
+
+					entites.Add(new Entite(noms[i-1], descriptions[i-1], entitesPartiels[i-1], classesParent[i-1],proprietes[i-1],proprietesDynamiques[i-1], constructeurs[i-1],methodes[i-1]));
+				}
+
+				if (Methode.NombreMethodesEntites(doc, nsmgr)[i - 1] == 0)
+				{
+
+					entites.Add(new Entite(noms[i - 1], descriptions[i - 1], entitesPartiels[i - 1], classesParent[i - 1], proprietes[i - 1], proprietesDynamiques[i - 1], constructeurs[i - 1]));
+				}
+
+
+
+			}
+			return entites;
+
+		}
+
 
 		#endregion
 

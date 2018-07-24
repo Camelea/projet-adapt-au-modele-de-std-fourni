@@ -46,7 +46,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<ProprieteDynamique>> EntitesPartiels(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<List<ProprieteDynamique>> ProprietesDynamiques(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;

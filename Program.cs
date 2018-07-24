@@ -1,5 +1,5 @@
 ﻿
-using ConsoleApp4.Application.Interface;
+using ConsoleApp4.Domain.CommonType.Services_Externes;
 using ConsoleApp4.Tables;
 using System;
 using System.Collections.Generic;
@@ -124,21 +124,21 @@ namespace ConsoleApp4
 
 			//Console.ReadKey();
 
-			var proprietes = InterfaceService.InterfacesService(doc, nsmgr);
-			List<InterfaceService> resultat1 = proprietes;
+			//var proprietes = InterfaceService.InterfacesService(doc, nsmgr);
+			//List<InterfaceService> resultat1 = proprietes;
 
-			foreach (InterfaceService lp in resultat1)
+			//foreach (InterfaceService lp in resultat1)
 
-			{
-				Console.WriteLine("nouvelle liste");
-				Console.WriteLine(lp.ToString());
+			//{
+			//	Console.WriteLine("nouvelle liste");
+			//	Console.WriteLine(lp.ToString());
 
 				
-			}
+			//}
 
 
 
-			Console.ReadKey();
+			//Console.ReadKey();
 
 			#endregion
 
@@ -211,6 +211,26 @@ namespace ConsoleApp4
 
 
 			//Console.ReadKey();
+
+			#endregion
+
+			#region Methodes Entités 
+
+		var proprietes = Methode.AlgorithmesMethodesEntites(doc, nsmgr);
+			List<List<string>> resultat1 = proprietes;
+
+			foreach (List<string> lp in resultat1)
+
+			{
+				Console.WriteLine("nouvelle liste");
+				foreach (string p in lp)
+				{
+
+					Console.WriteLine(p.ToString());
+
+				}
+			}
+			Console.ReadKey();
 
 			#endregion
 		}

@@ -51,8 +51,16 @@
     <Compile Include="Domain.CommonType\Metiers.cs" />
     <Compile Include="Domain\Entites\ClasseParent.cs" />
     <Compile Include="Domain\Entites\Constructeur.cs" />
+    <Compile Include="Domain\Entites\ConstructeurInstanciation.cs" />
+    <Compile Include="Domain\Entites\ConstructeurParDefaut.cs" />
+    <Compile Include="Domain\Entites\Description.cs" />
+    <Compile Include="Domain\Entites\Entite.cs" />
     <Compile Include="Domain\Entites\EntitePartiel.cs" />
     <Compile Include="Domain\Entites\Methode.cs" />
+    <Compile Include="Domain\Entites\Parametre.cs" />
+    <Compile Include="Domain\Entites\ParametreMethode.cs" />
+    <Compile Include="Domain\Entites\Propriete.cs" />
+    <Compile Include="Domain\Entites\TypeRetour.cs" />
     <Compile Include="Propriete.cs" />
     <Compile Include="Domain\Entites\ProprieteDynamique.cs" />
     <Compile Include="Domain.CommonType\ServiceExterne.cs" />
