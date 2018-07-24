@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace ConsoleApp4.Application.Interface
 {
-	public class ParametreSortant
+	public class TypeRetourInterfaceService
 	{
 		#region Attributs
 		public string Type;
@@ -12,7 +12,7 @@ namespace ConsoleApp4.Application.Interface
 
 		#region Constructeur
 
-		public ParametreSortant(string type, string description)
+		public TypeRetourInterfaceService(string type, string description)
 		{
 			this.Type = type;
 			this.Description = description;
@@ -28,14 +28,19 @@ namespace ConsoleApp4.Application.Interface
 
 		}
 
-		#region ServicesExternes
-		public static List<List<ParametreSortant>> ParametresSortantsMethodesClasses(XmlDocument doc, XmlNamespaceManager nsmgr)
+		/// <summary>
+		/// Fonction qui permet de renvoyer la liste des colonnes de types de retour des interfaces de service 
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="nsmgr"></param>
+		/// <returns></returns>
+		public static List<List<TypeRetourInterfaceService>> TypesRetourInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeMethodesInterfacesServices = new List<List<string>>();
-			List<List<ParametreSortant>> ParametresSortantsInterfacesServices = new List<List<ParametreSortant>>();
+			List<List<string>> ListeTypeRetourInterfacesServices = new List<List<string>>();
+			List<List<TypeRetourInterfaceService>> TypesRetourInterfacesServices = new List<List<TypeRetourInterfaceService>>();
 
 			for (int i = 1; i < InterfaceService.NomsInterfacesServices(doc, nsmgr).Count + 1; i++)
 			{
@@ -47,7 +52,7 @@ namespace ConsoleApp4.Application.Interface
 					{
 						if ((i < InterfaceService.NomsInterfacesServices(doc, nsmgr).Count + 1 && cmp < Methode.NombreMethodesInterfacesServices(doc, nsmgr)[i - 1]) || (i == InterfaceService.NomsInterfacesServices(doc, nsmgr).Count + 1 && cmp < Methode.NombreMethodesInterfacesServices(doc, nsmgr)[i - 1]))
 						{
-							ListeMethodesInterfacesServices.Add(new List<string>());
+							ListeTypeRetourInterfacesServices.Add(new List<string>());
 							string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:tbl / w:tr /w:tc)]";
 
 
@@ -56,15 +61,15 @@ namespace ConsoleApp4.Application.Interface
 							foreach (XmlNode isbn2 in nodeList2)
 							{
 
-								ListeMethodesInterfacesServices[cmp].Add(isbn2.InnerText);
+								ListeTypeRetourInterfacesServices[cmp].Add(isbn2.InnerText);
 
 							}
-							ParametresSortantsInterfacesServices.Add(ListeAParametresSortants(ListeMethodesInterfacesServices[cmp]));
+							TypesRetourInterfacesServices.Add(ListeATypeRetourInterfaceService(ListeTypeRetourInterfacesServices[cmp]));
 
 						}
 						if (i == InterfaceService.NomsInterfacesServices(doc, nsmgr).Count  && cmp == Methode.NombreMethodesInterfacesServices(doc, nsmgr)[i - 1])
 						{
-							ListeMethodesInterfacesServices.Add(new List<string>());
+							ListeTypeRetourInterfacesServices.Add(new List<string>());
 							string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /preceding-sibling:: w:tbl / w:tr /w:tc)]";
 
 
@@ -73,10 +78,10 @@ namespace ConsoleApp4.Application.Interface
 							foreach (XmlNode isbn2 in nodeList2)
 							{
 
-								ListeMethodesInterfacesServices[cmp].Add(isbn2.InnerText);
+								ListeTypeRetourInterfacesServices[cmp].Add(isbn2.InnerText);
 
 							}
-							ParametresSortantsInterfacesServices.Add(ListeAParametresSortants(ListeMethodesInterfacesServices[cmp]));
+							TypesRetourInterfacesServices.Add(ListeATypeRetourInterfaceService(ListeTypeRetourInterfacesServices[cmp]));
 
 
 
@@ -85,27 +90,27 @@ namespace ConsoleApp4.Application.Interface
 					}
 				}
 			}
-			return ParametresSortantsInterfacesServices;
+			return TypesRetourInterfacesServices;
 
 		}
 
 
-		#endregion
+		
 
 		/// <summary>
-		/// Fonction qui prend une liste de string et la transforme en liste de parametres sortants
+		/// Fonction qui prend une liste de string et la transforme en liste de types de retour
 		/// 
 		/// </summary>
 		/// <param name="liste"></param>
 		/// <returns></returns>
-		public static List<ParametreSortant> ListeAParametresSortants(List<string> liste)
+		public static List<TypeRetourInterfaceService> ListeATypeRetourInterfaceService(List<string> liste)
 		{
-			List<ParametreSortant> ListeParametresSortants= new List<ParametreSortant>();
+			List<TypeRetourInterfaceService> ListeTypeRetourInterfacesServices= new List<TypeRetourInterfaceService>();
 			for (int i = 2; i < liste.Count; i = i + 2)
 			{
-				ListeParametresSortants.Add(new ParametreSortant(liste[i], liste[i + 1]));
+				ListeTypeRetourInterfacesServices.Add(new TypeRetourInterfaceService(liste[i], liste[i + 1]));
 			}
-			return ListeParametresSortants;
+			return ListeTypeRetourInterfacesServices;
 		}
 
 

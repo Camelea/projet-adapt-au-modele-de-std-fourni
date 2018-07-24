@@ -13,14 +13,14 @@ namespace ConsoleApp4.Application.Interface
 
 		public string Nom;
 		public string Description;
-		public List<ParametreEntrant> parametreEntrant;
-		public List<ParametreSortant> parametreSortant;
+		public List<ParametreInterfaceService> parametreEntrant;
+		public List<TypeRetourInterfaceService> parametreSortant;
 
 		#endregion
 
 		#region Constructeur 
 
-		public Methode(string nom, string description, List<ParametreEntrant> parametreEntrant, List<ParametreSortant> parametreSortant)
+		public Methode(string nom, string description, List<ParametreInterfaceService> parametreEntrant, List<TypeRetourInterfaceService> parametreSortant)
 		{
 			this.Nom = nom;
 			this.Description = description;
@@ -141,8 +141,8 @@ namespace ConsoleApp4.Application.Interface
 			List<List<Methode>> methodes = new List<List<Methode>>();
 			List<List<string>> nomsMethodes = NomsMethodesInterfacesServices(doc, nsmgr);
 			List<List<string>> descriptionsMethodes = DescriptionsMethodesinterfacesService(doc, nsmgr);
-			List<List<ParametreSortant>> parametresSortants = ParametreSortant.ParametresSortantsMethodesClasses(doc, nsmgr);
-			List<List<ParametreEntrant>> parametresEntrants = ParametreEntrant.ParametresEntrantsMethodesClasses(doc, nsmgr);
+			List<List<TypeRetourInterfaceService>> parametresSortants = TypeRetourInterfaceService.TypesRetourInterfacesServices(doc, nsmgr);
+			List<List<ParametreInterfaceService>> parametresEntrants = ParametreInterfaceService.ParametresInterfacesServices(doc, nsmgr);
 			for (int i = 1; i <InterfaceService.NomsInterfacesServices(doc, nsmgr).Count + 1; i++)
 			{
 				if (NombreMethodesInterfacesServices(doc, nsmgr)[i - 1] != 0)
