@@ -11,17 +11,17 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		#region Attributs
 
 		public string Nom;
-		public string Type;
+		public string Visibilite;
 		public string Description;
 
 		#endregion
 
 		#region Constructeur 
 
-		public DescriptionMethode(string nom, string type, string description)
+		public DescriptionMethode(string nom, string visibilite, string description)
 		{
 			this.Nom = nom;
-			this.Type = type;
+			this.Visibilite = visibilite;
 			this.Description = description;
 
 		}

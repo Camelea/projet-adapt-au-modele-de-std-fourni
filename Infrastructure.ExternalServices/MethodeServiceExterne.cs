@@ -12,7 +12,7 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 		#region Attributs 
 
 		public string Nom;
-		public string Descriptions;
+		public List<DescriptionServiceExterne> Descriptions;
 		public List<ParametreServiceExterne> ParametresMethode;
 		public List<TypeRetourServiceExterne> TypesRetour;
 		public string Algorithme;
@@ -20,7 +20,7 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 
 		#region Constructeur 
 
-		public MethodeServiceExterne(string nom, string descriptions, List<ParametreServiceExterne> parametresMethode, List<TypeRetourServiceExterne> typeRetour, string algorithme)
+		public MethodeServiceExterne(string nom, List<DescriptionServiceExterne>  descriptions, List<ParametreServiceExterne> parametresMethode, List<TypeRetourServiceExterne> typeRetour, string algorithme)
 		{
 			this.Nom = nom;
 			this.Descriptions = descriptions;
@@ -120,7 +120,7 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 			List<List<MethodeServiceExterne>> methodes = new List<List<MethodeServiceExterne>>();
 			List<List<string>> nomsMethodes = NomsMethodesServiceExterne(doc, nsmgr);
 			List<List<string>> algorithmes = AlgorithmesMethodesServiceExterne(doc, nsmgr);
-			List<List<string>> descriptions = DescriptionsMethodesRegistres(doc, nsmgr);
+			List<List<DescriptionServiceExterne>> descriptions =  DescriptionServiceExterne.DescriptionsMethodesServiceExterne(doc, nsmgr);
 			List<List<ParametreServiceExterne>> parametresMethodes = ParametreServiceExterne.ParametresMethodesServiceExterne(doc, nsmgr);
 			List<List<TypeRetourServiceExterne>> typesRetour = TypeRetourServiceExterne.TypeRetourMethodesServiceExternes(doc, nsmgr);
 			for (int i = 1; i < ServiceExterne.NomsServiceExterne(doc, nsmgr).Count + 1; i++)
@@ -132,7 +132,7 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 					for (int cmp = 0; cmp < NombreMethodesServiceExterne(doc, nsmgr)[i - 1]; cmp++)
 					{
 
-						methodesServiceExterne.Add(new MethodeServiceExterne(nomsMethodes[i - 1][cmp], descriptions[i - 1][cmp], parametresMethodes[cmp], typesRetour[cmp], algorithmes[i - 1][cmp]));
+						methodesServiceExterne.Add(new MethodeServiceExterne(nomsMethodes[i - 1][cmp], descriptions[cmp], parametresMethodes[cmp], typesRetour[cmp], algorithmes[i - 1][cmp]));
 
 
 					}

@@ -6,7 +6,7 @@ namespace ConsoleApp4.Tables
 	public class ContrainteDeVerification
 	{
 		#region Attributs
-		public string Nom;
+		public string Nom { get; private set; }
 		public string Colonne;
 		public string Condition;
 		#endregion
@@ -31,7 +31,7 @@ namespace ConsoleApp4.Tables
 
 		public override string ToString() // à corriger 
 		{
-			return (Nom + "" + Colonne + "" + Condition);
+			return (Nom + " " + Colonne + " " + Condition);
 
 		}
 
