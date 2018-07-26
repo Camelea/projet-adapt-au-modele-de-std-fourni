@@ -34,7 +34,7 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 
 		}
 
-		#region ServicesExternes
+		
 		public static List<List<TypeRetourInterfaceRegistre>> TypeRetourMethodesInterfacesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 
@@ -97,7 +97,7 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 
 
 
-		#endregion
+		
 
 
 		/// <summary>

@@ -65,10 +65,19 @@
     <Compile Include="Domain\Entites\TypeRetour.cs" />
     <Compile Include="Domain\Interface.De.Registre\ParametreInterfaceRegistre.cs" />
     <Compile Include="Domain\Interface.De.Registre\TypeRetourInterfaceRegistre.cs" />
+    <Compile Include="Domain\InterfaceServiceExterne\InterfaceServiceExterne.cs" />
+    <Compile Include="Domain\InterfaceServiceExterne\MethodeInterfaceServiceExterne.cs" />
+    <Compile Include="Domain\InterfaceServiceExterne\ParametreInterfaceServiceExterne.cs" />
+    <Compile Include="Domain\InterfaceServiceExterne\TypeRetourInterfaceServiceExterne.cs" />
     <Compile Include="Domain\Registres\MethodeRegistre.cs" />
     <Compile Include="Domain\Registres\ParametreRegistre.cs" />
     <Compile Include="Domain\Registres\Registre.cs" />
     <Compile Include="Domain\Registres\TypeRetourRegistre.cs" />
+    <Compile Include="Infrastructure.ExternalServices\DescriptionServiceExterne.cs" />
+    <Compile Include="Infrastructure.ExternalServices\MethodeServiceExterne.cs" />
+    <Compile Include="Infrastructure.ExternalServices\ParametreServiceExterne.cs" />
+    <Compile Include="Infrastructure.ExternalServices\ServiceExterne.cs" />
+    <Compile Include="Infrastructure.ExternalServices\TypeRetourServiceExterne.cs" />
     <Compile Include="Propriete.cs" />
     <Compile Include="Domain\Entites\ProprieteDynamique.cs" />
     <Compile Include="Domain.CommonType\ServiceExterne.cs" />
@@ -88,8 +97,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Infrastructure.ExternalServices\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

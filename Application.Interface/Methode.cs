@@ -11,10 +11,10 @@ namespace ConsoleApp4.Application.Interface
 	{
 		#region Attributs 
 
-		public string Nom;
-		public string Description;
-		public List<ParametreInterfaceService> parametreEntrant;
-		public List<TypeRetourInterfaceService> parametreSortant;
+		public string Nom { get; private set; }
+		public string Description { get; private set; }
+		public List<ParametreInterfaceService> parametreEntrant { get; private set; }
+		public List<TypeRetourInterfaceService> parametreSortant { get; private set; }
 
 		#endregion
 

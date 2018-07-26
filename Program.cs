@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace ConsoleApp4
 {
-	class Program
+	public class Program
 	{
 		public static void Main(string[] args)
 		{
@@ -54,7 +54,9 @@ namespace ConsoleApp4
 			nsmgr.AddNamespace("wps", "http://schemas.microsoft.com/office/word/2010/wordprocessingShape");
 			nsmgr.AddNamespace("mc: Ignorable", "w14 w15 w16se wp14");
 
-			//var sequences = ConstructeurInitialisation.GetDescriptionContrainteInitialisation(doc, nsmgr);
+			#region Test Table 
+
+			// var sequences = ConstructeurInitialisation.GetDescriptionContrainteInitialisation(doc, nsmgr);
 			//List<string> resultat = sequences;
 			//foreach (string y in resultat)
 			//{
@@ -78,7 +80,7 @@ namespace ConsoleApp4
 
 			//Console.ReadKey();
 
-			//#endregion
+			#endregion
 
 			#region Test Service Externe 
 
@@ -133,7 +135,7 @@ namespace ConsoleApp4
 			//	Console.WriteLine("nouvelle liste");
 			//	Console.WriteLine(lp.ToString());
 
-				
+
 			//}
 
 
@@ -216,7 +218,7 @@ namespace ConsoleApp4
 
 			#region Methodes Entités 
 
-		var proprietes = Methode.AlgorithmesMethodesEntites(doc, nsmgr);
+			var proprietes = Methode.AlgorithmesMethodesEntites(doc, nsmgr);
 			List<List<string>> resultat1 = proprietes;
 
 			foreach (List<string> lp in resultat1)

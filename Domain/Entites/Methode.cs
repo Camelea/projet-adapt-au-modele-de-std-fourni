@@ -9,11 +9,11 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 	{
 		#region Attributs 
 
-		public string Nom;
-		public List<DescriptionMethode> Descriptions;
-		public List<ParametreMethode> ParametresMethode;
-		public List<TypeRetour> TypesRetour;
-		public string Algorithme;
+		public string Nom { get; private set; }
+		public List<DescriptionMethode> Descriptions { get; private set; }
+		public List<ParametreMethode> ParametresMethode { get; private set; }
+		public List<TypeRetour> TypesRetour { get; private set; }
+		public string Algorithme { get; private set; }
 		#endregion
 
 		#region Constructeur 

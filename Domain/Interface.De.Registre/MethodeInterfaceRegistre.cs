@@ -161,8 +161,9 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 			}
 			return methodes;
-			#endregion
+			
 		}
+		#endregion
 
 	}
 }

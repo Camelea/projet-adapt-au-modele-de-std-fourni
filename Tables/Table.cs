@@ -10,10 +10,10 @@ namespace ConsoleApp4.Tables
 	class Table
 	{
 		#region Attributs
-		public String Nom { get; set; }
-		public List<Colonne> Colonnes { get; set; }
-		public Contrainte Contraintes { get; set; }
-		public List<Donnee> Donnees { get; set; }
+		public String Nom { get; private set; }
+		public List<Colonne> Colonnes { get; private set; }
+		public Contrainte Contraintes { get; private set; }
+		public List<Donnee> Donnees { get; private set; }
 
 		#endregion
 
