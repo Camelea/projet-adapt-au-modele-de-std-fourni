@@ -27,3 +27,5 @@ Mardi 31 : creer le fichier qui va tout rassembler .
 - A FAIRE : 
 - Creer les classes de tests
 - Completer et vérifier la doc 
+- Ajouter les get , set a toutes les classes => Jeudi
+- Remonter les for , => vendredi 
