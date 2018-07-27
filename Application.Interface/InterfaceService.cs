@@ -76,26 +76,22 @@ namespace ConsoleApp4.Application.Interface
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionsInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionsInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsInterfacesServices = new List<string>();
 
-			for (int i = 1; i < NomsInterfacesServices(doc, nsmgr).Count + 1; i++)
-
-			{
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-
+				var res = "";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeDescriptionsInterfacesServices.Add(isbn2.InnerText);
+					res = res + (isbn2.InnerText);
 				}
 
-			}
-			return ListeDescriptionsInterfacesServices;
+		
+			return res;
 
 
 		}
@@ -111,23 +107,23 @@ namespace ConsoleApp4.Application.Interface
 		{
 			List<InterfaceService> interfacesServices = new List<InterfaceService>();
 			List<string> noms = NomsInterfacesServices(doc, nsmgr);
-			List<string> descriptions = DescriptionsInterfacesServices(doc, nsmgr);
-			List<List<Methode>> methodes = Methode.Methodes(doc, nsmgr);
+			
 
 			for (int i = 1; i < NomsInterfacesServices(doc, nsmgr).Count + 1; i++)
 			{
+				List<Methode> methodes = Methode.Methodes(doc, nsmgr,i);
+				string descriptions = DescriptionsInterfacesServices(doc, nsmgr,i);
 
-
-				if (Methode.NombreMethodesInterfacesServices(doc, nsmgr)[i - 1] != 0 )
+				if (Methode.NombreMethodesInterfacesServices(doc, nsmgr,i - 1) != 0 )
 				{
 
-					interfacesServices.Add(new InterfaceService(noms[i - 1], descriptions[i - 1], methodes[i - 1]));
+					interfacesServices.Add(new InterfaceService(noms[i - 1], descriptions, methodes));
 				}
 
-				if (Methode.NombreMethodesInterfacesServices(doc, nsmgr)[i - 1] == 0)
+				if (Methode.NombreMethodesInterfacesServices(doc, nsmgr,i - 1) == 0)
 				{
 
-					interfacesServices.Add(new InterfaceService(noms[i - 1], descriptions[i - 1]));
+					interfacesServices.Add(new InterfaceService(noms[i - 1], descriptions));
 				}
 
 

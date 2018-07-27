@@ -108,19 +108,19 @@ namespace ConsoleApp4
 
 			#region Interfaces Services 
 
-			var proprietes =TypeRetourInterfaceService.TypesRetourInterfacesServices(doc, nsmgr);
-			List<List<TypeRetourInterfaceService>> resultat1 = proprietes;
+			//var proprietes =TypeRetourInterfaceService.TypesRetourInterfacesServices(doc, nsmgr);
+			//List<List<TypeRetourInterfaceService>> resultat1 = proprietes;
 
-			foreach (List<TypeRetourInterfaceService> lp in resultat1)
+			//foreach (List<TypeRetourInterfaceService> lp in resultat1)
 
-			{
-				Console.WriteLine("nouvelle liste");
-				foreach (TypeRetourInterfaceService p in lp)
-				{
+			//{
+			//	Console.WriteLine("nouvelle liste");
+			//	foreach (TypeRetourInterfaceService p in lp)
+			//	{
 
-					Console.WriteLine(p.ToString());
+			//		Console.WriteLine(p.ToString());
 
-				}
+			//	}
 			}
 
 

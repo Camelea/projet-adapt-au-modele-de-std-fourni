@@ -64,7 +64,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 					}
 	
 			
-			return (ListeAParametresEntrants(ListeProprietesServicesExternes);
+			return (ListeAParametresEntrants(ListeProprietesServicesExternes));
 
 		}
 		#endregion

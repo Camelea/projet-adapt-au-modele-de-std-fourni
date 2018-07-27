@@ -33,24 +33,19 @@ namespace ConsoleApp4.Application.Interface
 		}
 
 		#region ServicesExternes
-		public static List<List<ParametreInterfaceService>> ParametresInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<ParametreInterfaceService> ParametresInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeParametresInterfacesServices = new List<List<string>>();
-			List<List<ParametreInterfaceService>> ParametresInterfacesServices = new List<List<ParametreInterfaceService>>();
+			List<string> ListeParametresInterfacesServices = new List<string>();
 
-			for (int i = 1; i < InterfaceService.NomsInterfacesServices(doc, nsmgr).Count + 1; i++)
-			{
-
-				if (Methode.NombreMethodesInterfacesServices(doc, nsmgr)[i - 1] != 0)
+				if (Methode.NombreMethodesInterfacesServices(doc, nsmgr,i - 1) != 0)
 				{
 
-					for (int cmp = 0; cmp < Methode.NombreMethodesInterfacesServices(doc, nsmgr)[i - 1]+1; cmp++)
+					for (int cmp = 0; cmp < Methode.NombreMethodesInterfacesServices(doc, nsmgr,i - 1)+1; cmp++)
 					{
 
-						ListeParametresInterfacesServices.Add(new List<string>());
 						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/preceding-sibling:: w:tbl / w:tr /w:tc)]";
 
 
@@ -59,16 +54,15 @@ namespace ConsoleApp4.Application.Interface
 						foreach (XmlNode isbn2 in nodeList2)
 						{
 		
-								ListeParametresInterfacesServices[cmp].Add(isbn2.InnerText);
+								ListeParametresInterfacesServices.Add(isbn2.InnerText);
 							
 						}
-						ParametresInterfacesServices.Add(ListeAParametresInterfacesServices(ListeParametresInterfacesServices[cmp]));
-
+					
 					}
 
 				}
-			}
-			return ParametresInterfacesServices;
+			
+			return ListeAParametresInterfacesServices(ListeParametresInterfacesServices);
 
 		}
 
