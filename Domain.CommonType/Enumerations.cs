@@ -14,18 +14,18 @@ namespace ConsoleApp4.Domain.CommonType
 
 		public string Nom;
 		public string Description;
-		public List<Propriete> Proprietes;
+		public List<Propriete> Valeurs;
 
 
 
 		#endregion
 
 		#region Constructeur 
-		public Enumeration(string nom, string description, List<Propriete> proprietes)
+		public Enumeration(string nom, string description, List<Propriete> valeurs)
 		{
 			this.Nom = nom;
 			this.Description = description;
-			this.Proprietes = proprietes;
+			this.Valeurs = valeurs;
 		}
 		#endregion
 
@@ -65,49 +65,42 @@ namespace ConsoleApp4.Domain.CommonType
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionEnumeration(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionEnumeration(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsEnumeration = new List<string>();
 
-			for (int i = 1; i < NomsClassesEnumeration(doc, nsmgr).Count + 1; i++)
-
-			{
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-
+				var res = "";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeDescriptionsEnumeration.Add(isbn2.InnerText);
+				res = res + (isbn2.InnerText);
 				}
 
-			}
 
-			return ListeDescriptionsEnumeration;
+			return res;
 
 
 		}
 
 
-
-
 		/// <summary>
-		/// Fonction qui retourne la listes des metiers  
+		/// Fonction qui retourne la listes des enumerations  
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<Enumeration> WebMethodes(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<Enumeration> Enumerations(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			List<string> noms = NomsClassesEnumeration(doc, nsmgr);
 			List<Enumeration> enumerations = new List<Enumeration>();
-			List<string> descriptions = DescriptionEnumeration(doc, nsmgr);
-			List<List<Propriete>> proprietes = Propriete.ValeursEnumeration(doc, nsmgr);
 			for (int i = 0; i < noms.Count; i++)
 			{
-				enumerations.Add(new Enumeration(noms[i], descriptions[i], proprietes[i]));
+				string descriptions = DescriptionEnumeration(doc, nsmgr,i);
+				List<Propriete> proprietes = Propriete.ValeursEnumeration(doc, nsmgr, i);
+				enumerations.Add(new Enumeration(noms[i], descriptions, proprietes));
 
 			}
 			return enumerations;
