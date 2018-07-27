@@ -64,27 +64,22 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionServicesExternes(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionServicesExternes(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsServicesExternes = new List<string>();
 
-			for (int i = 1; i <NomsClassesServicesExternes(doc, nsmgr).Count + 1; i++)
-
-			{
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-
+			var res = "";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeDescriptionsServicesExternes.Add(isbn2.InnerText);
+					res = res + (isbn2.InnerText);
 				}
 
-			}
-
-			return ListeDescriptionsServicesExternes;
+		
+			return res;
 
 
 		}
@@ -102,11 +97,12 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		{
 			List<string> noms = NomsClassesServicesExternes(doc, nsmgr);
 			List<ServiceExterne> servicesExternes = new List<ServiceExterne>();
-			List<string> descriptions = DescriptionServicesExternes(doc, nsmgr);
-			List<List<Propriete>> proprietes = Propriete.ProprietesServicesExternes(doc, nsmgr);
+			
 			for (int i = 0; i < noms.Count; i++)
 			{
-				servicesExternes.Add(new ServiceExterne(noms[i], descriptions[i], proprietes[i]));
+				string descriptions = DescriptionServicesExternes(doc, nsmgr,i);
+				List<Propriete> proprietes = Propriete.ProprietesServicesExternes(doc, nsmgr,i);
+				servicesExternes.Add(new ServiceExterne(noms[i], descriptions, proprietes));
 
 			}
 			return servicesExternes;
