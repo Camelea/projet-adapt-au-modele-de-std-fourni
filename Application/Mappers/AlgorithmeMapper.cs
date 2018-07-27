@@ -11,9 +11,9 @@ namespace ConsoleApp4.Application.Mappers
 	{
 
 		#region Attributs
-		public string ProprieteSource;
-		public string ProprieteDestination;
-		public string Algorithme;
+		public string ProprieteSource { get; private set; }
+		public string ProprieteDestination { get; private set; }
+		public string Algorithme { get; private set; }
 
 		#endregion
 

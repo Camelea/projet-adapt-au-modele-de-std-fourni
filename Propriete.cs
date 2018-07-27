@@ -49,18 +49,34 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 			for (int i = 1; i < ServiceExterne.NomsClassesServicesExternes(doc, nsmgr).Count + 1; i++)
 			{
-				ListeProprietesServicesExternes.Add(new List<string>());
-				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']]["+i+ "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i +1)+ "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
-
-				nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-				foreach (XmlNode isbn2 in nodeList2)
+				if (i < ServiceExterne.NomsClassesServicesExternes(doc, nsmgr).Count)
 				{
-					ListeProprietesServicesExternes[i - 1].Add(isbn2.InnerText);
+					ListeProprietesServicesExternes.Add(new List<string>());
+					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						ListeProprietesServicesExternes[i - 1].Add(isbn2.InnerText);
+
+					}
+					ProprietesServicesExternes.Add(ListeAParametresEntrants(ListeProprietesServicesExternes[i - 1]));
 				}
-				ProprietesServicesExternes.Add(ListeAParametresEntrants(ListeProprietesServicesExternes[i - 1]));
+				if (i == ServiceExterne.NomsClassesServicesExternes(doc, nsmgr).Count)
+				{
+					ListeProprietesServicesExternes.Add(new List<string>());
+					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						ListeProprietesServicesExternes[i - 1].Add(isbn2.InnerText);
+
+					}
+					ProprietesServicesExternes.Add(ListeAParametresEntrants(ListeProprietesServicesExternes[i - 1]));
+				}
 			}
 			return ProprietesServicesExternes;
 
@@ -84,18 +100,36 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 			for (int i = 1; i < Metier.NomsClassesMetier(doc, nsmgr).Count + 1; i++)
 			{
-				ListeProprietesMetier.Add(new List<string>());
-				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
-
-				nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-				foreach (XmlNode isbn2 in nodeList2)
+				if (i < Metier.NomsClassesMetier(doc, nsmgr).Count)
 				{
-					ListeProprietesMetier[i - 1].Add(isbn2.InnerText);
+					ListeProprietesMetier.Add(new List<string>());
+					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
+
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						ListeProprietesMetier[i - 1].Add(isbn2.InnerText);
+
+					}
+					ProprietesMetier.Add(ListeAParametresEntrants(ListeProprietesMetier[i - 1]));
 
 				}
-				ProprietesMetier.Add(ListeAParametresEntrants(ListeProprietesMetier[i - 1]));
+				if (i == Metier.NomsClassesMetier(doc, nsmgr).Count)
+				{
+					ListeProprietesMetier.Add(new List<string>());
+					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						ListeProprietesMetier[i - 1].Add(isbn2.InnerText);
+
+					}
+					ProprietesMetier.Add(ListeAParametresEntrants(ListeProprietesMetier[i - 1]));
+
+				}
 			}
 			return ProprietesMetier;
 
@@ -121,18 +155,38 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 			for (int i = 1; i < Metier.NomsClassesMetier(doc, nsmgr).Count + 1; i++)
 			{
-				ListeValeursEnumerations.Add(new List<string>());
-				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
-
-				nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-				foreach (XmlNode isbn2 in nodeList2)
+				if (i < Metier.NomsClassesMetier(doc, nsmgr).Count)
 				{
-					ListeValeursEnumerations[i - 1].Add(isbn2.InnerText);
+					ListeValeursEnumerations.Add(new List<string>());
+					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
+
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						ListeValeursEnumerations[i - 1].Add(isbn2.InnerText);
+
+					}
+					ValeursEnumerations.Add(ListeAParametresEntrants(ListeValeursEnumerations[i - 1]));
 
 				}
-				ValeursEnumerations.Add(ListeAParametresEntrants(ListeValeursEnumerations[i - 1]));
 
+				if (i == Metier.NomsClassesMetier(doc, nsmgr).Count)
+				{
+					ListeValeursEnumerations.Add(new List<string>());
+					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /preceding-sibling::w:tbl / w:tr /w:tc)]";
+
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						ListeValeursEnumerations[i - 1].Add(isbn2.InnerText);
+
+					}
+					ValeursEnumerations.Add(ListeAParametresEntrants(ListeValeursEnumerations[i - 1]));
+
+
+				}
 			}
 			return ValeursEnumerations;
 
@@ -157,18 +211,35 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 			for (int i = 1; i < ObjetPresentation.NomsObjetsPresentation(doc, nsmgr).Count + 1; i++)
 			{
-				ListeProprietesObjetsPresentation.Add(new List<string>());
-				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
-
-				nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-				foreach (XmlNode isbn2 in nodeList2)
+				if (i < ObjetPresentation.NomsObjetsPresentation(doc, nsmgr).Count)
 				{
-					ListeProprietesObjetsPresentation[i - 1].Add(isbn2.InnerText);
+					ListeProprietesObjetsPresentation.Add(new List<string>());
+					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
+
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						ListeProprietesObjetsPresentation[i - 1].Add(isbn2.InnerText);
+
+					}
+					ProprietesObjetsPresentation.Add(ListeAParametresEntrants(ListeProprietesObjetsPresentation[i - 1]));
 
 				}
-				ProprietesObjetsPresentation.Add(ListeAParametresEntrants(ListeProprietesObjetsPresentation[i - 1]));
+				if (i == ObjetPresentation.NomsObjetsPresentation(doc, nsmgr).Count)
+				{
+					ListeProprietesObjetsPresentation.Add(new List<string>());
+					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /preceding-sibling::w:tbl / w:tr /w:tc)]";
 
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						ListeProprietesObjetsPresentation[i - 1].Add(isbn2.InnerText);
+
+					}
+					ProprietesObjetsPresentation.Add(ListeAParametresEntrants(ListeProprietesObjetsPresentation[i - 1]));
+				}
 			}
 			return ProprietesObjetsPresentation;
 

@@ -47,6 +47,16 @@
     <Compile Include="Application.Interface\ObjetPresentation.cs" />
     <Compile Include="Application.Interface\ParametreInterfaceService.cs" />
     <Compile Include="Application.Interface\TypeRetourInterfaceService.cs" />
+    <Compile Include="Application\Mappers\AlgorithmeMapper.cs" />
+    <Compile Include="Application\Mappers\Mapper.cs" />
+    <Compile Include="Application\Mappers\MethodeMapper.cs" />
+    <Compile Include="Application\Mappers\ParametreEntrantMapper.cs" />
+    <Compile Include="Application\Mappers\TypeRetourMapper.cs" />
+    <Compile Include="Application\Services\DescriptionService.cs" />
+    <Compile Include="Application\Services\MethodeService.cs" />
+    <Compile Include="Application\Services\ParametreService.cs" />
+    <Compile Include="Application\Services\Service.cs" />
+    <Compile Include="Application\Services\TypeRetourService.cs" />
     <Compile Include="Domain.CommonType\Enumerations.cs" />
     <Compile Include="Domain.CommonType\Metiers.cs" />
     <Compile Include="Domain\Entites\ClasseParent.cs" />

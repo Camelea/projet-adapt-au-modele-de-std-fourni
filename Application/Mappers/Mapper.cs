@@ -11,9 +11,9 @@ namespace ConsoleApp4.Application.Mappers
 	{
 		#region Attributs
 
-		public string Nom;
-		public string Description;
-		public List<MethodeMapper> Methodes;
+		public string Nom { get; private set; }
+		public string Description { get; private set; }
+		public List<MethodeMapper> Methodes { get; private set; }
 
 		#endregion
 

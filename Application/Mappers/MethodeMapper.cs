@@ -11,11 +11,11 @@ namespace ConsoleApp4.Application.Mappers
 	{
 		#region Attributs 
 
-		public string Nom;
-		public string Descriptions;
-		public List<ParametreEntrantMapper> ParametresMethode;
-		public List<TypeRetourMapper> TypesRetour;
-		public List<AlgorithmeMapper> Algorithme;
+		public string Nom { get; private set; }
+		public string Descriptions { get; private set; }
+		public List<ParametreEntrantMapper> ParametresMethode { get; private set; }
+		public List<TypeRetourMapper> TypesRetour { get; private set; }
+		public List<AlgorithmeMapper> Algorithme { get; private set; }
 		#endregion
 
 		#region Constructeur 
