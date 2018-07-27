@@ -86,52 +86,34 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		#region Metiers 
 
 		/// <summary>
-		/// Renvoie la liste des informations de parametres des services externes 
+		/// Renvoie la liste des informations de parametres des metier pour le métier donné en parametre 
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<Propriete>> ProprietesMetier(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<Propriete> ProprietesMetier(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeProprietesMetier = new List<List<string>>();
-			List<List<Propriete>> ProprietesMetier = new List<List<Propriete>>();
+			List<string> ListeProprietesMetier = new List<string>();
 
-			for (int i = 1; i < Metier.NomsClassesMetier(doc, nsmgr).Count + 1; i++)
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
+
+
+			if (i == Metier.NomsClassesMetier(doc, nsmgr).Count)
 			{
-				if (i < Metier.NomsClassesMetier(doc, nsmgr).Count)
-				{
-					ListeProprietesMetier.Add(new List<string>());
-					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 
-					nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-					foreach (XmlNode isbn2 in nodeList2)
-					{
-						ListeProprietesMetier[i - 1].Add(isbn2.InnerText);
-
-					}
-					ProprietesMetier.Add(ListeAParametresEntrants(ListeProprietesMetier[i - 1]));
-
-				}
-				if (i == Metier.NomsClassesMetier(doc, nsmgr).Count)
-				{
-					ListeProprietesMetier.Add(new List<string>());
-					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3]/preceding-sibling::w:tbl / w:tr /w:tc)]";
-
-					nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-					foreach (XmlNode isbn2 in nodeList2)
-					{
-						ListeProprietesMetier[i - 1].Add(isbn2.InnerText);
-
-					}
-					ProprietesMetier.Add(ListeAParametresEntrants(ListeProprietesMetier[i - 1]));
-
-				}
+				xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 			}
-			return ProprietesMetier;
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						ListeProprietesMetier.Add(isbn2.InnerText);
+
+					}
+
+		return ListeAParametresEntrants(ListeProprietesMetier);
 
 		}
 

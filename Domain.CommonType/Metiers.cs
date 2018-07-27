@@ -65,27 +65,23 @@ namespace ConsoleApp4.Domain.CommonType.Metiers
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionMetiers(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionMetiers(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsMetier = new List<string>();
 
-			for (int i = 1; i < NomsClassesMetier(doc, nsmgr).Count + 1; i++)
-
-			{
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-
+			var res = "";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
-
+			
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeDescriptionsMetier.Add(isbn2.InnerText);
+					res= res+ (isbn2.InnerText);
 				}
 
-			}
+			
 
-			return ListeDescriptionsMetier;
+			return res;
 
 
 		}
@@ -103,11 +99,11 @@ namespace ConsoleApp4.Domain.CommonType.Metiers
 		{
 			List<string> noms = NomsClassesMetier(doc, nsmgr);
 			List<Metier> metiers = new List<Metier>();
-			List<string> descriptions = DescriptionMetiers(doc, nsmgr);
-			List<List<Propriete>> proprietes = Propriete.ProprietesMetier(doc, nsmgr);
 			for (int i = 0; i < noms.Count; i++)
 			{
-				metiers.Add(new Metier(noms[i], descriptions[i], proprietes[i]));
+				string descriptions = DescriptionMetiers(doc, nsmgr,i);
+				List <Propriete> proprietes = Propriete.ProprietesMetier(doc, nsmgr,i);
+				metiers.Add(new Metier(noms[i], descriptions, proprietes));
 
 			}
 			return metiers;
