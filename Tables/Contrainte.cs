@@ -46,21 +46,20 @@ namespace ConsoleApp4.Tables
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<Contrainte> Contraintes(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static Contrainte Contraintes(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
-			List<Sequence> sequences = Sequence.SequencesTables(doc, nsmgr);
-			List<Contrainte> contraintes = new List<Contrainte>();
-			List<List<ClePrimaire>> clesprimaires = ClePrimaire.ClesPrimairesTables(doc, nsmgr);
-			List<List<ContrainteNonNulle>> contraintesnonnulles = ContrainteNonNulle.ContraintesNonNullesTables(doc, nsmgr);
-			List<List<Index>> indexes = Index.IndexTables(doc, nsmgr);
-			List<List<CleEtrangere>> clesetrangeres = CleEtrangere.ClesEtrangeresTables(doc, nsmgr);
-			List<List<ContrainteDeVerification>> contraintesdeverification = ContrainteDeVerification.ContraintesDeVerificationTables(doc, nsmgr);
-			for (int i = 0; i < sequences.Count; i++)
-			{
-				contraintes.Add(new Contrainte(sequences[i], clesprimaires[i], contraintesnonnulles[i], indexes[i], clesetrangeres[i], contraintesdeverification[i]));
 
-			}
-			return contraintes;
+				Sequence sequences = Sequence.SequenceTables(doc, nsmgr,i);
+				List<ClePrimaire> clesprimaires = ClePrimaire.ClesPrimairesTables(doc, nsmgr,i);
+				List<ContrainteDeVerification> contraintesdeverification = ContrainteDeVerification.ContraintesDeVerificationTables(doc, nsmgr,i);
+				List<ContrainteNonNulle> contraintesnonnulles = ContrainteNonNulle.ContraintesNonNullesTables(doc, nsmgr,i);
+				List<CleEtrangere> clesetrangeres = CleEtrangere.ClesEtrangeresTables(doc, nsmgr, i);
+				List < Index > indexes = Index.IndexTables(doc, nsmgr,i);
+
+				
+
+			
+			return (new Contrainte(sequences, clesprimaires, contraintesnonnulles, indexes, clesetrangeres, contraintesdeverification));
 
 		}
 		#endregion

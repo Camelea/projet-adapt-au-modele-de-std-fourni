@@ -6,8 +6,8 @@ namespace ConsoleApp4.Tables
 	public class ContrainteNonNulle
 	{
 		#region Attributs
-		public string Nom;
-		public string Colonne;
+		public string Nom { get; private set; }
+		public string Colonne { get; private set; }
 		#endregion
 
 		#region Constructeur
@@ -32,31 +32,25 @@ namespace ConsoleApp4.Tables
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<ContrainteNonNulle>> ContraintesNonNullesTables(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<ContrainteNonNulle> ContraintesNonNullesTables(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeContraintesNonNullesTables = new List<List<string>>();
-			List<List<ContrainteNonNulle>> ListeContraintesNonNullesTables2 = new List<List<ContrainteNonNulle>>();
+			List<string> ListeContraintesNonNullesTables = new List<string>();
 
-			for (int i = 1; i < Table.NombreTables(doc, nsmgr) + 1; i++)
 
-			{
-
-				ListeContraintesNonNullesTables.Add(new List<string>());
 				string xpath = @"//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][4]/ following-sibling::w:tbl / w:tr /w:tc [count(. | //w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][5]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][5]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeContraintesNonNullesTables[i-1].Add(isbn2.InnerText);
+					ListeContraintesNonNullesTables.Add(isbn2.InnerText);
 
 				}
-				ListeContraintesNonNullesTables2.Add(ListeAContraintesNonNulles(ListeContraintesNonNullesTables[i-1]));
 
-			}
-			return ListeContraintesNonNullesTables2;
+			
+			return ListeAContraintesNonNulles(ListeContraintesNonNullesTables);
 
 		}
 

@@ -50,33 +50,23 @@ namespace ConsoleApp4.Tables
 		}
 
 
-		public static List<List<ContrainteDeVerification>> ContraintesDeVerificationTables(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<ContrainteDeVerification> ContraintesDeVerificationTables(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeContrainteDeVerification = new List<List<string>>();
-			List<List<ContrainteDeVerification>> ListeContrainteDeVerificationTables = new List<List<ContrainteDeVerification>>();
-
-
-			//nodeList2 = root.SelectNodes(" // w:p [ w:pPr / w:pStyle [@w:val='Heading2']] | // w:p  [ w:pPr / w:pStyle [@w:val='Heading2']] ", nsmgr);// 
-			for (int i = 1; i < Table.NombreTables(doc, nsmgr) + 1; i++)
-
-			{
-
-				ListeContrainteDeVerification.Add(new List<string>());
+			List<string> ListeContrainteDeVerification = new List<string>();
+			
 				string xpath = @"//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][5]/ following-sibling::w:tbl / w:tr /w:tc [count(. | //w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeContrainteDeVerification[i - 1].Add(isbn2.InnerText);
+					ListeContrainteDeVerification.Add(isbn2.InnerText);
 
 				}
-				ListeContrainteDeVerificationTables.Add(ListeAContraintesDeVerification(ListeContrainteDeVerification[i - 1]));
 
-			}
-			return ListeContrainteDeVerificationTables;
+			return ListeAContraintesDeVerification(ListeContrainteDeVerification);
 
 		}
 

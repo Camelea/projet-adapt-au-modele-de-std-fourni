@@ -34,31 +34,23 @@ namespace ConsoleApp4.Tables
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<ClePrimaire>> ClesPrimairesTables(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<ClePrimaire> ClesPrimairesTables(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeClesPrimaires = new List<List<string>>();
-			List<List<ClePrimaire>> ListeClesPrimairesTables = new List<List<ClePrimaire>>();
-
-			for (int i = 1; i < Table.NombreTables(doc, nsmgr) + 1; i++)
-
-			{
-
-				ListeClesPrimaires.Add(new List<string>());
+			List<string> ListeClesPrimaires = new List<string>();
+			
 				string xpath = @"//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | //w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeClesPrimaires[i - 1].Add(isbn2.InnerText);
+					ListeClesPrimaires.Add(isbn2.InnerText);
 
 				}
-				ListeClesPrimairesTables.Add(ListeAClesPrimaires(ListeClesPrimaires[i - 1]));
 
-			}
-			return ListeClesPrimairesTables;
+			return ListeAClesPrimaires(ListeClesPrimaires);
 
 		}
 

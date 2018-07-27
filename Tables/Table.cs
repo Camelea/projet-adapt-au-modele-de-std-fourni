@@ -98,14 +98,16 @@ namespace ConsoleApp4.Tables
 		public static List<Table> Tables(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			List<string> noms = NomsTables(doc, nsmgr);
-			List<List<Colonne>> colonnes = Colonne.ColonnesTables(doc, nsmgr);
-			List<Contrainte> contraintes = Contrainte.Contraintes(doc, nsmgr);
 			List<Table> tables = new List<Table>();
-			List<List<Donnee>> donnees = Donnee.DonneesTables(doc, nsmgr);
+			
 
 			for (int i = 0; i < NombreTables(doc, nsmgr); i++)
 			{
-				tables.Add(new Table(noms[i], colonnes[i], contraintes[i], donnees[i]));
+				Contrainte contraintes = Contrainte.Contraintes(doc, nsmgr,i);
+				List<Colonne> colonnes = Colonne.ColonnesTables(doc, nsmgr, i);
+				List<Donnee> donnees = Donnee.DonneesTables(doc, nsmgr, i);
+
+				tables.Add(new Table(noms[i], colonnes, contraintes, donnees));
 
 
 			}

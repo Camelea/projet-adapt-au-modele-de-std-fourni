@@ -47,31 +47,24 @@ namespace ConsoleApp4.Tables
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<CleEtrangere>> ClesEtrangeresTables(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<CleEtrangere> ClesEtrangeresTables(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeClesEtrangeres = new List<List<string>>();
-			List<List<CleEtrangere>> ListeClesEtrangeresTables = new List<List<CleEtrangere>>();
+			List<string> ListeClesEtrangeres = new List<string>();
 
-			for (int i = 1; i < Table.NombreTables(doc, nsmgr) + 1; i++)
-
-			{
-
-				ListeClesEtrangeres.Add(new List<string>());
 				string xpath = @"//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/ following-sibling::w:tbl / w:tr /w:tc [count(. | //w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][4]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][4]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeClesEtrangeres[i-1].Add(isbn2.InnerText);
+					ListeClesEtrangeres.Add(isbn2.InnerText);
 
 				}
-				ListeClesEtrangeresTables.Add(ListeAClesEtrangeres(ListeClesEtrangeres[i-1]));
-
-			}
-			return ListeClesEtrangeresTables;
+				
+			
+			return ListeAClesEtrangeres(ListeClesEtrangeres);
 
 		}
 		#endregion

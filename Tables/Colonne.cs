@@ -43,18 +43,13 @@ namespace ConsoleApp4.Tables
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<Colonne>> ColonnesTables(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<Colonne> ColonnesTables(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeColonnes = new List<List<string>>();
-			List<List<Colonne>> ListeColonnesTables = new List<List<Colonne>>();
+			List<string> ListeColonnes = new List<string>();
 
-			for (int i = 1; i < Table.NombreTables(doc, nsmgr) + 1; i++)
 
-			{
-
-				ListeColonnes.Add(new List<string>());
 				string xpath = @"//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][1]/ following-sibling::w:tbl / w:tr /w:tc [count(. | //w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][1]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][1]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 
 
@@ -63,13 +58,13 @@ namespace ConsoleApp4.Tables
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeColonnes[i-1].Add(isbn2.InnerText);
+					ListeColonnes.Add(isbn2.InnerText);
 
 				}
-				ListeColonnesTables.Add(ListeAColonnes(ListeColonnes[i-1]));
+				
 
-			}
-			return ListeColonnesTables;
+			
+			return ListeAColonnes(ListeColonnes)); ;
 
 		}
 

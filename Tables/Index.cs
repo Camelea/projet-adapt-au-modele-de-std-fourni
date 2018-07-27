@@ -25,36 +25,29 @@ namespace ConsoleApp4.Tables
 		}
 
 		/// <summary>
-		/// Fonction qui permet de recuperer la liste des indexes de otutes la tables presentes dans le fichier 
+		/// Fonction qui permet de recuperer la liste des indexes de la table concernée 
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<Index>> IndexTables(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<Index> IndexTables(XmlDocument doc, XmlNamespaceManager nsmgr,i)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeIndexes = new List<List<string>>();
-			List<List<Index>> ListeIndexesTables = new List<List<Index>>();
+			List<string> ListeIndexes = new List<string>>();
+	
 
-			for (int i = 1; i < Table.NombreTables(doc, nsmgr) + 1; i++)
-
-			{
-
-				ListeIndexes.Add(new List<string>());
 				string xpath = @"//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/ following-sibling::w:tbl / w:tr /w:tc [count(. | //w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']]["+i+ "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][3]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][3]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeIndexes[i-1].Add(isbn2.InnerText);
+					ListeIndexes.Add(isbn2.InnerText);
 
 				}
-				ListeIndexesTables.Add(ListeAIndex(ListeIndexes[i-1]));
 
-			}
-			return ListeIndexesTables;
+			return ListeAIndex(ListeIndexes);
 
 		}
 
