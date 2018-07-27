@@ -1,4 +1,5 @@
 ﻿
+using ConsoleApp4.Application.Interface;
 using ConsoleApp4.Domain.CommonType.Services_Externes;
 using ConsoleApp4.Tables;
 using System;
@@ -107,24 +108,24 @@ namespace ConsoleApp4
 
 			#region Interfaces Services 
 
-			//var proprietes = Methode.DescriptionsMethodesinterfacesService(doc, nsmgr);
-			//List<List<string>> resultat1 = proprietes;
+			var proprietes =TypeRetourInterfaceService.TypesRetourInterfacesServices(doc, nsmgr);
+			List<List<TypeRetourInterfaceService>> resultat1 = proprietes;
 
-			//foreach (List<string> lp in resultat1)
+			foreach (List<TypeRetourInterfaceService> lp in resultat1)
 
-			//{
-			//	Console.WriteLine("nouvelle liste");
-			//	foreach (string p in lp)
-			//	{
+			{
+				Console.WriteLine("nouvelle liste");
+				foreach (TypeRetourInterfaceService p in lp)
+				{
 
-			//		Console.WriteLine(p.ToString());
+					Console.WriteLine(p.ToString());
 
-			//	}
-			//}
+				}
+			}
 
 
 
-			//Console.ReadKey();
+			Console.ReadKey();
 
 			//var proprietes = InterfaceService.InterfacesService(doc, nsmgr);
 			//List<InterfaceService> resultat1 = proprietes;
@@ -218,21 +219,21 @@ namespace ConsoleApp4
 
 			#region Methodes Entités 
 
-			var proprietes = Methode.AlgorithmesMethodesEntites(doc, nsmgr);
-			List<List<string>> resultat1 = proprietes;
+			//var proprietes = Methode.AlgorithmesMethodesEntites(doc, nsmgr);
+			//List<List<string>> resultat1 = proprietes;
 
-			foreach (List<string> lp in resultat1)
+			//foreach (List<string> lp in resultat1)
 
-			{
-				Console.WriteLine("nouvelle liste");
-				foreach (string p in lp)
-				{
+			//{
+			//	Console.WriteLine("nouvelle liste");
+			//	foreach (string p in lp)
+			//	{
 
-					Console.WriteLine(p.ToString());
+			//		Console.WriteLine(p.ToString());
 
-				}
-			}
-			Console.ReadKey();
+			//	}
+			//}
+			//Console.ReadKey();
 
 			#endregion
 		}
