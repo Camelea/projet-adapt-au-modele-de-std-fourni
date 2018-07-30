@@ -65,27 +65,21 @@ namespace ConsoleApp4.Application.Interface
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsObjetPresentation = new List<string>();
 
-			for (int i = 1; i < NomsObjetsPresentation(doc, nsmgr).Count + 1; i++)
-
-			{
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-
+				var res = "";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeDescriptionsObjetPresentation.Add(isbn2.InnerText);
+					res = res + (isbn2.InnerText);
 				}
 
-			}
-
-			return ListeDescriptionsObjetPresentation;
+			return res;
 
 
 		}
@@ -103,11 +97,12 @@ namespace ConsoleApp4.Application.Interface
 		{
 			List<string> noms = NomsObjetsPresentation(doc, nsmgr);
 			List<ObjetPresentation> objetsPresentation = new List<ObjetPresentation>();
-			List<string> descriptions = DescriptionObjetsPresentation(doc, nsmgr);
-			List<List<Propriete>> proprietes = Propriete.ProprietesObjetsPresentation(doc, nsmgr);
+			
 			for (int i = 0; i < noms.Count; i++)
 			{
-				objetsPresentation.Add(new ObjetPresentation(noms[i], descriptions[i], proprietes[i]));
+				string descriptions = DescriptionObjetsPresentation(doc, nsmgr, i);
+				List<Propriete> proprietes = Propriete.ProprietesObjetsPresentation(doc, nsmgr,i);
+				objetsPresentation.Add(new ObjetPresentation(noms[i], descriptions, proprietes));
 
 			}
 			return objetsPresentation;

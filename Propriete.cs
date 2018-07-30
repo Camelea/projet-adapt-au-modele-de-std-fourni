@@ -150,46 +150,30 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<Propriete>> ProprietesObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<Propriete> ProprietesObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeProprietesObjetsPresentation = new List<List<string>>();
-			List<List<Propriete>> ProprietesObjetsPresentation = new List<List<Propriete>>();
+			List<string> ListeProprietesObjetsPresentation = new List<string>();
 
-			for (int i = 1; i < ObjetPresentation.NomsObjetsPresentation(doc, nsmgr).Count + 1; i++)
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
+
+
+			if (i == ObjetPresentation.NomsObjetsPresentation(doc, nsmgr).Count)
 			{
-				if (i < ObjetPresentation.NomsObjetsPresentation(doc, nsmgr).Count)
-				{
-					ListeProprietesObjetsPresentation.Add(new List<string>());
-					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 
-					nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-					foreach (XmlNode isbn2 in nodeList2)
-					{
-						ListeProprietesObjetsPresentation[i - 1].Add(isbn2.InnerText);
-
-					}
-					ProprietesObjetsPresentation.Add(ListeAParametresEntrants(ListeProprietesObjetsPresentation[i - 1]));
-
-				}
-				if (i == ObjetPresentation.NomsObjetsPresentation(doc, nsmgr).Count)
-				{
-					ListeProprietesObjetsPresentation.Add(new List<string>());
-					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /preceding-sibling::w:tbl / w:tr /w:tc)]";
-
-					nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-					foreach (XmlNode isbn2 in nodeList2)
-					{
-						ListeProprietesObjetsPresentation[i - 1].Add(isbn2.InnerText);
-
-					}
-					ProprietesObjetsPresentation.Add(ListeAParametresEntrants(ListeProprietesObjetsPresentation[i - 1]));
-				}
+				xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /preceding-sibling::w:tbl / w:tr /w:tc)]";
 			}
-			return ProprietesObjetsPresentation;
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						ListeProprietesObjetsPresentation.Add(isbn2.InnerText);
+
+					}
+					
+			
+			return ListeAParametresEntrants(ListeProprietesObjetsPresentation);
 
 		}
 

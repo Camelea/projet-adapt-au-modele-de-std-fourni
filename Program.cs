@@ -121,11 +121,11 @@ namespace ConsoleApp4
 			//		Console.WriteLine(p.ToString());
 
 			//	}
-			}
+			//}
 
 
 
-			Console.ReadKey();
+			//Console.ReadKey();
 
 			//var proprietes = InterfaceService.InterfacesService(doc, nsmgr);
 			//List<InterfaceService> resultat1 = proprietes;

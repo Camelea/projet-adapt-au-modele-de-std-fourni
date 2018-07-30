@@ -64,7 +64,7 @@ namespace ConsoleApp4.Tables
 				
 
 			
-			return ListeAColonnes(ListeColonnes)); ;
+			return ListeAColonnes(ListeColonnes);
 
 		}
 
