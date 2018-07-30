@@ -39,45 +39,30 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<string>> NomsMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<string> NomsMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> MethodesInterfaceServiceExterne = new List<List<string>>();
+			List<string> MethodesInterfaceServiceExterne = new List<string>();
 
-			for (int i = 1; i < InterfaceServiceExterne.NomsInterfacesServicesExternes(doc, nsmgr).Count + 1; i++)
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading4']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']])]";
 
+
+			if (i == InterfaceServiceExterne.NomsInterfacesServicesExternes(doc, nsmgr).Count)
 			{
-				if (i < InterfaceServiceExterne.NomsInterfacesServicesExternes(doc, nsmgr).Count)
-				{
-					List<string> ListeMethodesInterfaceServiceExterne = new List<string>();
-					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading4']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i +1)+ "]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i +1)+ "]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']])]";
 
-					nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-					foreach (XmlNode isbn2 in nodeList2)
-					{
-						ListeMethodesInterfaceServiceExterne.Add(isbn2.InnerText);
-					}
-					MethodesInterfaceServiceExterne.Add(ListeMethodesInterfaceServiceExterne);
-
-				}
-
-				if (i == InterfaceServiceExterne.NomsInterfacesServicesExternes(doc, nsmgr).Count)
-				{
-					List<string> ListeMethodesInterfaceServiceExterne = new List<string>();
-					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading4']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5] /preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']])]";
-
-					nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-					foreach (XmlNode isbn2 in nodeList2)
-					{
-						ListeMethodesInterfaceServiceExterne.Add(isbn2.InnerText);
-					}
-					MethodesInterfaceServiceExterne.Add(ListeMethodesInterfaceServiceExterne);
-				}
+				xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading4']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5] /preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']])]";
 			}
+
+					nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+					foreach (XmlNode isbn2 in nodeList2)
+					{
+						MethodesInterfaceServiceExterne.Add(isbn2.InnerText);
+					}
+					
+			
 
 			return MethodesInterfaceServiceExterne;
 
@@ -90,36 +75,36 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<string>> DescriptionsMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<string> DescriptionsMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> MethodesInterfaceServiceExterne = new List<List<string>>();
+			List<string> MethodesInterfaceServiceExterne = new List<string>();
 
-			for (int i = 1; i < InterfaceServiceExterne.NomsInterfacesServicesExternes(doc, nsmgr).Count + 1; i++)
 
-			{
-				for (int cmp = 0; cmp < NombreMethodesInterfaceServiceExterne(doc, nsmgr)[i - 1] + 1; cmp++)
+				for (int cmp = 0; cmp < NombreMethodesInterfaceServiceExterne(doc, nsmgr,i - 1) + 1; cmp++)
 				{
-					List<string> ListeMethodesInterfaceServiceExterne = new List<string>();
 					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']]["+(cmp+1)+"]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][1]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][2]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][2]/preceding-sibling:: w:p)]";
 
 					nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 					foreach (XmlNode isbn2 in nodeList2)
 					{
-						ListeMethodesInterfaceServiceExterne.Add(isbn2.InnerText);
+						MethodesInterfaceServiceExterne.Add(isbn2.InnerText);
 					}
-					MethodesInterfaceServiceExterne.Add(ListeMethodesInterfaceServiceExterne);
+					
 
 				}
-			}
+			
 
 			return MethodesInterfaceServiceExterne;
 
 
 		}
+
+
+		
 
 		/// <summary>
 		/// Retourne le nombre de methodes de chaque interface de service externe 
@@ -127,15 +112,10 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<int> NombreMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static int NombreMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
-			List<int> NombreMethodesInterfaceServiceExterne = new List<int>();
-			foreach (List<string> liste in NomsMethodesInterfaceServiceExterne(doc, nsmgr))
-			{
-				NombreMethodesInterfaceServiceExterne.Add(liste.Count);
-
-			}
-			return NombreMethodesInterfaceServiceExterne;
+			
+			return NomsMethodesInterfaceServiceExterne(doc,nsmgr,i).Count;
 		}
 
 		/// <summary>
@@ -144,34 +124,31 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<MethodeInterfaceServiceExterne>> MethodeServicesExternes(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<MethodeInterfaceServiceExterne> MethodeServicesExternes(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
-			List<List<MethodeInterfaceServiceExterne>> methodes = new List<List<MethodeInterfaceServiceExterne>>();
-			List<List<string>> nomsMethodes = NomsMethodesInterfaceServiceExterne(doc, nsmgr);
-			List<List<string>> descriptionsMethodes = DescriptionsMethodesInterfaceServiceExterne(doc, nsmgr);
-			List<List<ParametreInterfaceServiceExterne>> parametres = ParametreInterfaceServiceExterne.ParametresMethodesInterfaceServiceExterne(doc, nsmgr);
-			List<List<TypeRetourInterfaceServiceExterne>> typesRetour = TypeRetourInterfaceServiceExterne.TypeRetourMethodesInterfaceServiceExterne(doc, nsmgr);
-			for (int i = 1; i < InterfaceServiceExterne.NomsInterfacesServicesExternes(doc, nsmgr).Count + 1; i++)
-			{
-				if (NombreMethodesInterfaceServiceExterne(doc, nsmgr)[i - 1] != 0)
+			List<MethodeInterfaceServiceExterne> methodesInterfaceServiceExterne = new List<MethodeInterfaceServiceExterne>();
+		
+				List<string> nomsMethodes = NomsMethodesInterfaceServiceExterne(doc, nsmgr, i-1);
+
+				if (NombreMethodesInterfaceServiceExterne(doc, nsmgr,i - 1) != 0)
 				{
-					List<MethodeInterfaceServiceExterne> methodesInterfaceServiceExterne = new List<MethodeInterfaceServiceExterne>();
+					
+					List<string> descriptionsMethodes = DescriptionsMethodesInterfaceServiceExterne(doc, nsmgr,i-1);
+					
 
-					for (int cmp = 0; cmp < NombreMethodesInterfaceServiceExterne(doc, nsmgr)[i - 1]; cmp++)
+				for (int cmp = 0; cmp < NombreMethodesInterfaceServiceExterne(doc, nsmgr,i - 1); cmp++)
 					{
+					List<ParametreInterfaceServiceExterne> parametres = ParametreInterfaceServiceExterne.ParametresMethodesInterfaceServiceExterne(doc, nsmgr, i,cmp);
+					List<TypeRetourInterfaceServiceExterne> typesRetour = TypeRetourInterfaceServiceExterne.TypeRetourMethodesInterfaceServiceExterne(doc, nsmgr,i , cmp);
 
-						methodesInterfaceServiceExterne.Add(new MethodeInterfaceServiceExterne(nomsMethodes[i - 1][cmp], descriptionsMethodes[i - 1][cmp], parametres[cmp], typesRetour[cmp]));
+					methodesInterfaceServiceExterne.Add(new MethodeInterfaceServiceExterne(nomsMethodes[cmp], descriptionsMethodes[cmp], parametres, typesRetour));
 
 
 					}
-					methodes.Add(methodesInterfaceServiceExterne);
-				}
-
-
-
+				
 
 			}
-			return methodes;
+			return methodesInterfaceServiceExterne;
 
 		}
 

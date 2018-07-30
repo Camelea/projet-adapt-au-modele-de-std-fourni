@@ -12,7 +12,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		public string Description;
 		public List<ParametreInterfaceRegistre> ParametresInterfaceRegistre;
 		public List<TypeRetourInterfaceRegistre> TypeRetourInterfacesRegistres;
-
+		
 		#endregion
 
 		#region Constructeur 
@@ -109,6 +109,8 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 			return NomsMethodesInterfacesRegistres(doc,nsmgr,i).Count;
 		}
 
+	
+
 
 
 		/// <summary>
@@ -117,17 +119,31 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static MethodeInterfaceRegistre MethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i,int cmp  )
+		public static List<MethodeInterfaceRegistre> MethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 
 				List<string> nomsMethodes = NomsMethodesInterfacesRegistres(doc, nsmgr,i-1);
 				List<string> descriptionsMethodes = DescriptionsMethodesinterfacesRegistres(doc, nsmgr,i-1);
+				List<MethodeInterfaceRegistre> methodesInterfacesRegistres = new List<MethodeInterfaceRegistre>();
 
-				List<ParametreInterfaceRegistre> parametres = ParametreInterfaceRegistre.ParametresMethodesInterfacesRegistres(doc, nsmgr, i, cmp);
-				List<TypeRetourInterfaceRegistre> typesRetour = TypeRetourInterfaceRegistre.TypeRetourMethodesInterfacesRegistres(doc, nsmgr, i, cmp);
+
+			if (NombreMethodesInterfacesRegistres(doc, nsmgr,i - 1) != 0)
+				{
+					
+
+					for (int cmp = 0; cmp < NombreMethodesInterfacesRegistres(doc, nsmgr,i - 1); cmp++)
+					{
+						List<ParametreInterfaceRegistre> parametres = ParametreInterfaceRegistre.ParametresMethodesInterfacesRegistres(doc, nsmgr, i,cmp);
+						List<TypeRetourInterfaceRegistre> typesRetour = TypeRetourInterfaceRegistre.TypeRetourMethodesInterfacesRegistres(doc, nsmgr,i , cmp);
+
+						methodesInterfacesRegistres.Add(new MethodeInterfaceRegistre(nomsMethodes[cmp], descriptionsMethodes[cmp], parametres, typesRetour));
+
+
+					}
+
+			}
+			return methodesInterfacesRegistres;
 			
-			return (new MethodeInterfaceRegistre(nomsMethodes[cmp], descriptionsMethodes[cmp], parametres, typesRetour));
-
 		}
 		#endregion
 

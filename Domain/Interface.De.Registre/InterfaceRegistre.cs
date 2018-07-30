@@ -16,6 +16,7 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 		public string Nom;
 		public string Description;
 		public List<MethodeInterfaceRegistre> Methodes;
+		
 
 		#endregion
 

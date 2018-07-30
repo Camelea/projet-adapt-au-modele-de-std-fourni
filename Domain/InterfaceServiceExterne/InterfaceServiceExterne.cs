@@ -70,19 +70,20 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 		{
 			List<InterfaceServiceExterne> interfacesRegistresExternes = new List<InterfaceServiceExterne>();
 			List<string> noms = NomsInterfacesServicesExternes(doc, nsmgr);
-			List<List<MethodeInterfaceServiceExterne>> methodes = MethodeInterfaceServiceExterne.MethodeServicesExternes(doc, nsmgr);
+			
 
 			for (int i = 1; i < NomsInterfacesServicesExternes(doc, nsmgr).Count + 1; i++)
 			{
+				List<MethodeInterfaceServiceExterne> methodes = MethodeInterfaceServiceExterne.MethodeServicesExternes(doc, nsmgr, i-1);
 
 
-				if (MethodeInterfaceServiceExterne.NombreMethodesInterfaceServiceExterne(doc, nsmgr)[i - 1] != 0)
+				if (MethodeInterfaceServiceExterne.NombreMethodesInterfaceServiceExterne(doc, nsmgr,i - 1) != 0)
 				{
 
-					interfacesRegistresExternes.Add(new InterfaceServiceExterne(noms[i - 1], methodes[i - 1]));
+					interfacesRegistresExternes.Add(new InterfaceServiceExterne(noms[i - 1], methodes));
 				}
 
-				if (MethodeInterfaceServiceExterne.NombreMethodesInterfaceServiceExterne(doc, nsmgr)[i - 1] == 0)
+				if (MethodeInterfaceServiceExterne.NombreMethodesInterfaceServiceExterne(doc, nsmgr,i - 1) == 0)
 				{
 
 					interfacesRegistresExternes.Add(new InterfaceServiceExterne(noms[i - 1]));
