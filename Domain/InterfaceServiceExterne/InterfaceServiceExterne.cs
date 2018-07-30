@@ -74,7 +74,7 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 
 			for (int i = 1; i < NomsInterfacesServicesExternes(doc, nsmgr).Count + 1; i++)
 			{
-				List<MethodeInterfaceServiceExterne> methodes = MethodeInterfaceServiceExterne.MethodeServicesExternes(doc, nsmgr, i-1);
+				List<MethodeInterfaceServiceExterne> methodes = MethodeInterfaceServiceExterne.MethodeServicesExternes(doc, nsmgr, i);
 
 
 				if (MethodeInterfaceServiceExterne.NombreMethodesInterfaceServiceExterne(doc, nsmgr,i - 1) != 0)

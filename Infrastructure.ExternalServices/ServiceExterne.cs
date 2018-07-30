@@ -78,26 +78,23 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionsServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static String DescriptionsServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsServiceExterne = new List<string>();
-
-			for (int i = 1; i < NomsServiceExterne(doc, nsmgr).Count + 1; i++)
-
-			{
+		
+	
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']]["+i+"] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']]["+i+ "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/preceding-sibling::w:p)]";
 
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
-
+				var res = "";
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeDescriptionsServiceExterne.Add(isbn2.InnerText);
+					res = res + " " + (isbn2.InnerText);
 				}
 
-			}
-			return ListeDescriptionsServiceExterne;
+
+			return res;
 
 
 		}
@@ -108,25 +105,22 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> InterfacesImplementeesServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string InterfacesImplementeesServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeInterfacesImplementeesServiceExterne = new List<string>();
-
-			for (int i = 1; i < NomsServiceExterne(doc, nsmgr).Count + 1; i++)
-
-			{
+	
+	
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']]["+i+"] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2] ";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
-
+				var res = "";
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeInterfacesImplementeesServiceExterne.Add(isbn2.InnerText);
+					res = res + " " + (isbn2.InnerText);
 				}
 
-			}
-			return ListeInterfacesImplementeesServiceExterne;
+			
+			return res;
 
 
 		}
@@ -142,24 +136,24 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 		{
 			List<ServiceExterne> servicesExternes = new List<ServiceExterne>();
 			List<string> noms = NomsServiceExterne(doc, nsmgr);
-			List<string> descriptions = DescriptionsServiceExterne(doc, nsmgr);
-			List<string> interfacesImplementees = InterfacesImplementeesServiceExterne(doc, nsmgr);
 			List<List<MethodeServiceExterne>> methodes = MethodeServiceExterne.MethodesServiceExterne(doc, nsmgr);
 
 			for (int i = 1; i < NomsServiceExterne(doc, nsmgr).Count + 1; i++)
 			{
+				string descriptions = DescriptionsServiceExterne(doc, nsmgr,i-1);
+				string interfacesImplementees = InterfacesImplementeesServiceExterne(doc, nsmgr,i-1);
 
 
-				if (MethodeServiceExterne.NombreMethodesServiceExterne(doc, nsmgr)[i - 1] != 0)
+				if (MethodeServiceExterne.NombreMethodesServiceExterne(doc, nsmgr,i - 1) != 0)
 				{
 
-					servicesExternes.Add(new ServiceExterne(noms[i - 1], descriptions[i - 1], interfacesImplementees[i - 1], methodes[i - 1]));
+					servicesExternes.Add(new ServiceExterne(noms[i - 1], descriptions, interfacesImplementees, methodes[i - 1]));
 				}
 
-				if (MethodeServiceExterne.NombreMethodesServiceExterne(doc, nsmgr)[i - 1] == 0)
+				if (MethodeServiceExterne.NombreMethodesServiceExterne(doc, nsmgr,i - 1) == 0)
 				{
 
-					servicesExternes.Add(new ServiceExterne(noms[i - 1], descriptions[i - 1], interfacesImplementees[i - 1]));
+					servicesExternes.Add(new ServiceExterne(noms[i - 1], descriptions, interfacesImplementees));
 				}
 
 

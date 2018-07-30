@@ -39,24 +39,18 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<TypeRetourServiceExterne>> TypeRetourMethodesServiceExternes(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<TypeRetourServiceExterne> TypeRetourMethodesServiceExternes(XmlDocument doc, XmlNamespaceManager nsmgr,int i,int cmp )
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeTypeRetourServiceExterne = new List<List<string>>();
-			List<List<TypeRetourServiceExterne>> TypeRetourInterfacesServiceExterne = new List<List<TypeRetourServiceExterne>>();
+			List<string> ListeTypeRetourServiceExterne = new List<string>();
 
-			for (int i = 1; i < ServiceExterne.NomsServiceExterne(doc, nsmgr).Count + 1; i++)
-			{
 
-				if (MethodeServiceExterne.NombreMethodesServiceExterne(doc, nsmgr)[i - 1] != 0)
+				if (MethodeServiceExterne.NombreMethodesServiceExterne(doc, nsmgr,i - 1) != 0)
 				{
 
-					for (int cmp = 0; cmp < MethodeServiceExterne.NombreMethodesServiceExterne(doc, nsmgr)[i - 1] + 1; cmp++)
-					{
-						
-							ListeTypeRetourServiceExterne.Add(new List<string>());
+
 							string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']]["+i+"] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']]["+(cmp+1)+"]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][3]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']]["+i+"] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']]["+(cmp+1)+"]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][4]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][5] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']]["+i+"] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']]["+(cmp+1)+"]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][4]/preceding-sibling:: w:tbl / w:tr /w:tc)]";
 
 
@@ -65,20 +59,16 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 							foreach (XmlNode isbn2 in nodeList2)
 							{
 
-								ListeTypeRetourServiceExterne[cmp].Add(isbn2.InnerText);
+								ListeTypeRetourServiceExterne.Add(isbn2.InnerText);
 
 							}
-							TypeRetourInterfacesServiceExterne.Add(ListeATypeRetourServiceExterne(ListeTypeRetourServiceExterne[cmp]));
-
 						
-					
 
 
-						}
 					}
-				}
+				
 			
-			return TypeRetourInterfacesServiceExterne;
+			return ListeATypeRetourServiceExterne(ListeTypeRetourServiceExterne);
 
 		}
 
