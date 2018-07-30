@@ -61,7 +61,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 				
 					}
 
-			return ListeAParametresMethode(ListeParametresMethodesEntites));
+			return ListeAParametresMethode(ListeParametresMethodesEntites);
 
 
 		}
