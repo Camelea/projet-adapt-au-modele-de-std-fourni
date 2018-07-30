@@ -35,63 +35,31 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 		}
 
 		
-		public static List<List<TypeRetourInterfaceRegistre>> TypeRetourMethodesInterfacesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<TypeRetourInterfaceRegistre> TypeRetourMethodesInterfacesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i,int cmp )
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeTypeRetourInterfacesRegistres = new List<List<string>>();
-			List<List<TypeRetourInterfaceRegistre>> TypeRetourInterfacesRegistres = new List<List<TypeRetourInterfaceRegistre>>();
+			List<string> ListeTypeRetourInterfacesRegistres = new List<string>();
 
-			for (int i = 1; i < InterfaceRegistre.NomsInterfacesRegistres(doc, nsmgr).Count + 1; i++)
-			{
+				if (MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr,i - 1) != 0)
+				{
+						
+							string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/preceding-sibling:: w:tbl / w:tr /w:tc)]";
 
-				if (MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr)[i - 1] != 0)
+
+							nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+				foreach (XmlNode isbn2 in nodeList2)
 				{
 
-					for (int cmp = 0; cmp < MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr)[i - 1] + 1; cmp++)
-					{
-						if ((i < InterfaceRegistre.NomsInterfacesRegistres(doc, nsmgr).Count + 1 && cmp < MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr)[i - 1]) || (i == InterfaceRegistre.NomsInterfacesRegistres(doc, nsmgr).Count + 1 && cmp < MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr)[i - 1]))
-						{
-							ListeTypeRetourInterfacesRegistres.Add(new List<string>());
-							string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:tbl / w:tr /w:tc)]";
+					ListeTypeRetourInterfacesRegistres.Add(isbn2.InnerText);
 
-
-							nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-							foreach (XmlNode isbn2 in nodeList2)
-							{
-
-								ListeTypeRetourInterfacesRegistres[cmp].Add(isbn2.InnerText);
-
-							}
-							TypeRetourInterfacesRegistres.Add(ListeATypeRetourInterfaceRegistre(ListeTypeRetourInterfacesRegistres[cmp]));
-
-						}
-						if (i == InterfaceRegistre.NomsInterfacesRegistres(doc, nsmgr).Count && cmp == MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr)[i - 1])
-						{
-							ListeTypeRetourInterfacesRegistres.Add(new List<string>());
-							string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /preceding-sibling:: w:tbl / w:tr /w:tc)]";
-
-
-							nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-							foreach (XmlNode isbn2 in nodeList2)
-							{
-
-								ListeTypeRetourInterfacesRegistres[cmp].Add(isbn2.InnerText);
-
-							}
-							TypeRetourInterfacesRegistres.Add(ListeATypeRetourInterfaceRegistre(ListeTypeRetourInterfacesRegistres[cmp]));
-
-
-
-
-						}
-					}
 				}
-			}
-			return TypeRetourInterfacesRegistres;
+						}
+				
+				
+			return ListeATypeRetourInterfaceRegistre(ListeTypeRetourInterfacesRegistres);
 
 		}
 

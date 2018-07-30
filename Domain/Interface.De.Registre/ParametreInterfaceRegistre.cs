@@ -37,25 +37,17 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 
 		}
 
-		#region ServicesExternes
-		public static List<List<ParametreInterfaceRegistre>> ParametresMethodesInterfacesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr)
+
+		public static List<ParametreInterfaceRegistre> ParametresMethodesInterfacesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i,int cmp)
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeParametresInterfacesRegistres = new List<List<string>>();
-			List<List<ParametreInterfaceRegistre>> ParametresInterfacesRegistres = new List<List<ParametreInterfaceRegistre>>();
+			List<string> ListeParametresInterfacesRegistres = new List<string>();
 
-			for (int i = 1; i < InterfaceRegistre.NomsInterfacesRegistres(doc, nsmgr).Count + 1; i++)
-			{
-
-				if (MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr)[i - 1] != 0)
+			if (MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr, i-1 ) != 0)
 				{
 
-					for (int cmp = 0; cmp < MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr)[i - 1] + 1; cmp++)
-					{
-
-						ListeParametresInterfacesRegistres.Add(new List<string>());
 						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/preceding-sibling:: w:tbl / w:tr /w:tc)]";
 
 
@@ -64,22 +56,18 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 						foreach (XmlNode isbn2 in nodeList2)
 						{
 
-							ListeParametresInterfacesRegistres[cmp].Add(isbn2.InnerText);
+							ListeParametresInterfacesRegistres.Add(isbn2.InnerText);
 
 						}
-						ParametresInterfacesRegistres.Add(ListeAParametresRegistres(ListeParametresInterfacesRegistres[cmp]));
-
-					}
+					
 
 				}
-			}
-			return ParametresInterfacesRegistres;
+			return ListeAParametresRegistres(ListeParametresInterfacesRegistres);
 
-		}
+	}
 
 
-		#endregion
-
+		
 
 		/// <summary>
 		/// Renvoie la liste des parametres des methodes des interfaces de registre associés à une liste donnée
