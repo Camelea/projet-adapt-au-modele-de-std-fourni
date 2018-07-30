@@ -36,24 +36,18 @@ namespace ConsoleApp4.Application.Services
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<ParametreService>> ParametresMethodesServices(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<ParametreService> ParametresMethodesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeParametresMethodesServices = new List<List<string>>();
-			List<List<ParametreService>> ParametresMethodesServices = new List<List<ParametreService>>();
+			List<string> ListeParametresMethodesServices = new List<string>();
+	
 
-			for (int i = 1; i < Service.NomsServices(doc, nsmgr).Count + 1; i++)
-			{
-
-				if (MethodeService.NombreMethodesServices(doc, nsmgr)[i - 1] != 0)
+				if (MethodeService.NombreMethodesServices(doc, nsmgr,i - 1) != 0)
 				{
 
-					for (int cmp = 0; cmp < MethodeService.NombreMethodesServices(doc, nsmgr)[i - 1]; cmp++)
-					{
-
-						ListeParametresMethodesServices.Add(new List<string>());
+				
 						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/ following-sibling:: w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3] / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3] / preceding-sibling::w:tbl / w:tr /w:tc)]";
 
 
@@ -61,18 +55,14 @@ namespace ConsoleApp4.Application.Services
 
 						foreach (XmlNode isbn2 in nodeList2)
 						{
-							if (isbn2.InnerText != "")
-							{
-								ListeParametresMethodesServices[cmp].Add(isbn2.InnerText.Trim());
-							}
+							
+								ListeParametresMethodesServices.Add(isbn2.InnerText.Trim());
+							
 						}
-						ParametresMethodesServices.Add(ListeAParametresServices(ListeParametresMethodesServices[cmp]));
-
-					}
-
+					
 				}
-			}
-			return ParametresMethodesServices;
+			
+			return (ListeAParametresServices(ListeParametresMethodesServices));
 
 		}
 

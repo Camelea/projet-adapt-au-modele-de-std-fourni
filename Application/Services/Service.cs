@@ -79,26 +79,23 @@ namespace ConsoleApp4.Application.Services
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionsService(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionsService(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsServices = new List<string>();
 
-			for (int i = 1; i < NomsServices(doc, nsmgr).Count + 1; i++)
-
-			{
+	
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-
+				var res = "";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeDescriptionsServices.Add(isbn2.InnerText);
+					res = res + " " + (isbn2.InnerText);
 				}
 
-			}
-			return ListeDescriptionsServices;
+			
+			return res;
 
 
 		}
@@ -109,25 +106,22 @@ namespace ConsoleApp4.Application.Services
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> InterfacesImplementeesServices(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string InterfacesImplementeesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeInterfacesImplementeesServices = new List<string>();
 
-			for (int i = 1; i < NomsServices(doc, nsmgr).Count + 1; i++)
 
-			{
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] ";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
-
+				var res = "";
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeInterfacesImplementeesServices.Add(isbn2.InnerText);
+					res = res + " " +(isbn2.InnerText);
 				}
 
-			}
-			return ListeInterfacesImplementeesServices;
+			
+			return res;
 
 
 		}
@@ -143,24 +137,25 @@ namespace ConsoleApp4.Application.Services
 		{
 			List<Service> services = new List<Service>();
 			List<string> noms = NomsServices(doc, nsmgr);
-			List<string> descriptions = DescriptionsService(doc, nsmgr);
-			List<string> interfacesImplementees = InterfacesImplementeesServices(doc, nsmgr);
-			List<List<MethodeService>> methodes = MethodeService.MethodesServices(doc, nsmgr);
+		
 
 			for (int i = 1; i < NomsServices(doc, nsmgr).Count + 1; i++)
 			{
+				List<MethodeService> methodes = MethodeService.MethodesServices(doc, nsmgr, i);
+				string descriptions = DescriptionsService(doc, nsmgr,i);
+				string interfacesImplementees = InterfacesImplementeesServices(doc, nsmgr,i);
 
 
-				if (MethodeService.NombreMethodesServices(doc, nsmgr)[i - 1] != 0)
+				if (MethodeService.NombreMethodesServices(doc, nsmgr,i - 1) != 0)
 				{
 
-					services.Add(new Service(noms[i - 1], descriptions[i - 1], interfacesImplementees[i - 1], methodes[i - 1]));
+					services.Add(new Service(noms[i - 1], descriptions, interfacesImplementees, methodes));
 				}
 
-				if (MethodeService.NombreMethodesServices(doc, nsmgr)[i - 1] == 0)
+				if (MethodeService.NombreMethodesServices(doc, nsmgr,i - 1) == 0)
 				{
 
-					services.Add(new Service(noms[i - 1], descriptions[i - 1], interfacesImplementees[i - 1]));
+					services.Add(new Service(noms[i - 1], descriptions, interfacesImplementees));
 				}
 
 

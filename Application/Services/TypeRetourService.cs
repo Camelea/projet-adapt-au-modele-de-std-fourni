@@ -39,63 +39,33 @@ namespace ConsoleApp4.Application.Services
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<TypeRetourService>> TypeRetourMethodesServices(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<TypeRetourService> TypeRetourMethodesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeTypeRetourServices = new List<List<string>>();
-			List<List<TypeRetourService>> TypeRetourInterfacesServices = new List<List<TypeRetourService>>();
+			List<string> ListeTypeRetourServices = new List<string>();
 
-			for (int i = 1; i < Service.NomsServices(doc, nsmgr).Count + 1; i++)
+			if (MethodeService.NombreMethodesServices(doc, nsmgr, i - 1) != 0)
 			{
 
-				if (MethodeService.NombreMethodesServices(doc, nsmgr)[i - 1] != 0)
+
+				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/preceding-sibling:: w:tbl / w:tr /w:tc)]";
+
+
+				nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+				foreach (XmlNode isbn2 in nodeList2)
 				{
 
-					for (int cmp = 0; cmp < MethodeService.NombreMethodesServices(doc, nsmgr)[i - 1] + 1; cmp++)
-					{
-						if ((i < Service.NomsServices(doc, nsmgr).Count + 1 && cmp < MethodeService.NombreMethodesServices(doc, nsmgr)[i - 1]) || (i == Service.NomsServices(doc, nsmgr).Count + 1 && cmp < MethodeService.NombreMethodesServices(doc, nsmgr)[i - 1]))
-						{
-							ListeTypeRetourServices.Add(new List<string>());
-							string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:tbl / w:tr /w:tc)]";
+					ListeTypeRetourServices.Add(isbn2.InnerText);
 
-
-							nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-							foreach (XmlNode isbn2 in nodeList2)
-							{
-
-								ListeTypeRetourServices[cmp].Add(isbn2.InnerText);
-
-							}
-							TypeRetourInterfacesServices.Add(ListeATypeRetourService(ListeTypeRetourServices[cmp]));
-
-						}
-						if (i == Service.NomsServices(doc, nsmgr).Count && cmp == MethodeService.NombreMethodesServices(doc, nsmgr)[i - 1])
-						{
-							ListeTypeRetourServices.Add(new List<string>());
-							string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /preceding-sibling:: w:tbl / w:tr /w:tc)]";
-
-
-							nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-							foreach (XmlNode isbn2 in nodeList2)
-							{
-
-								ListeTypeRetourServices[cmp].Add(isbn2.InnerText);
-
-							}
-							TypeRetourInterfacesServices.Add(ListeATypeRetourService(ListeTypeRetourServices[cmp]));
-
-
-
-
-						}
-					}
 				}
+			
 			}
-			return TypeRetourInterfacesServices;
+					
+			
+			return (ListeATypeRetourService(ListeTypeRetourServices));
 
 		}
 
