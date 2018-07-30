@@ -76,26 +76,23 @@ namespace ConsoleApp4.Application.Mappers
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionsMapper(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionsMapper(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsMappers = new List<string>();
+			
 
-			for (int i = 1; i < NomsMappers(doc, nsmgr).Count + 1; i++)
-
-			{
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
 
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
-
+			var res = "";
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeDescriptionsMappers.Add(isbn2.InnerText);
+					res = res + " " + (isbn2.InnerText);
 				}
 
-			}
-			return ListeDescriptionsMappers;
+			
+			return res;
 
 
 		}
@@ -113,23 +110,25 @@ namespace ConsoleApp4.Application.Mappers
 		{
 			List<Mapper> services = new List<Mapper>();
 			List<string> noms = NomsMappers(doc, nsmgr);
-			List<string> descriptions = DescriptionsMapper(doc, nsmgr);
-			List<List<MethodeMapper>> methodes = MethodeMapper.MethodesMappers(doc, nsmgr);
-
+		
+			
 			for (int i = 1; i < NomsMappers(doc, nsmgr).Count + 1; i++)
 			{
+				List<MethodeMapper> methodes = MethodeMapper.MethodesMappers(doc, nsmgr, i);
+
+				string descriptions = DescriptionsMapper(doc, nsmgr,i);
 
 
-				if (MethodeMapper.NombreMethodesMappers(doc, nsmgr)[i - 1] != 0)
+				if (MethodeMapper.NombreMethodesMappers(doc, nsmgr,i - 1) != 0)
 				{
 
-					services.Add(new Mapper(noms[i - 1], descriptions[i - 1], methodes[i - 1]));
+					services.Add(new Mapper(noms[i - 1], descriptions, methodes));
 				}
 
-				if (MethodeMapper.NombreMethodesMappers(doc, nsmgr)[i - 1] == 0)
+				if (MethodeMapper.NombreMethodesMappers(doc, nsmgr,i - 1) == 0)
 				{
 
-					services.Add(new Mapper(noms[i - 1], descriptions[i - 1]));
+					services.Add(new Mapper(noms[i - 1], descriptions));
 				}
 
 

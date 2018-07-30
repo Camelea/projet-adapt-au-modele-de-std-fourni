@@ -33,83 +33,42 @@ namespace ConsoleApp4.Application.Mappers
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<AlgorithmeMapper>> AlgorithmesMethodesMappers(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<AlgorithmeMapper> AlgorithmesMethodesMappers(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeAlgorithmesMethodesMappers = new List<List<string>>();
-			List<List<AlgorithmeMapper>> AlgorithmesMethodesMappers = new List<List<AlgorithmeMapper>>();
-			for (int i = 1; i < Mapper.NomsMappers(doc, nsmgr).Count + 1; i++)
+			List<string> ListeAlgorithmesMethodesMappers = new List<string>();
 
+
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling:: w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]  / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]  / preceding-sibling::w:tbl / w:tr /w:tc)]";
+
+
+			if (i == Mapper.NomsMappers(doc, nsmgr).Count && cmp == MethodeMapper.NombreMethodesMappers(doc, nsmgr, i - 1) - 1)
 			{
-				for (int cmp = 0; cmp < MethodeMapper.NombreMethodesMappers(doc, nsmgr)[i - 1] + 1; cmp++)
-				{
-					if (i < Mapper.NomsMappers(doc, nsmgr).Count || (i == Mapper.NomsMappers(doc, nsmgr).Count && cmp < MethodeMapper.NombreMethodesMappers(doc, nsmgr)[i - 1] - 1))
-					{
-						ListeAlgorithmesMethodesMappers.Add(new List<string>());
-						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling:: w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]  / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]  / preceding-sibling::w:tbl / w:tr /w:tc)]";
 
+				 xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling:: w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]  / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]  / preceding-sibling::w:tbl / w:tr /w:tc)]";
 
-						nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-						foreach (XmlNode isbn2 in nodeList2)
-						{
-							if (isbn2.InnerText != "")
-							{
-								ListeAlgorithmesMethodesMappers[cmp].Add(isbn2.InnerText.Trim());
-							}
-						}
-						AlgorithmesMethodesMappers.Add(ListeAAlgorithmesMappers(ListeAlgorithmesMethodesMappers[cmp]));
-
-
-					}
-
-
-
-					if (i == Mapper.NomsMappers(doc, nsmgr).Count && cmp == MethodeMapper.NombreMethodesMappers(doc, nsmgr)[i - 1] - 1)
-					{
-						ListeAlgorithmesMethodesMappers.Add(new List<string>());
-						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling:: w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i+1) + "]  / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i +1)+ "]  / preceding-sibling::w:tbl / w:tr /w:tc)]";
-
-
-						nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-						foreach (XmlNode isbn2 in nodeList2)
-						{
-							if (isbn2.InnerText != "")
-							{
-								ListeAlgorithmesMethodesMappers[cmp].Add(isbn2.InnerText.Trim());
-							}
-						}
-						AlgorithmesMethodesMappers.Add(ListeAAlgorithmesMappers(ListeAlgorithmesMethodesMappers[cmp]));
-
-
-					}
-					if (i <Mapper.NomsMappers(doc, nsmgr).Count && cmp == MethodeMapper.NombreMethodesMappers(doc, nsmgr)[i - 1] - 1)
-					{
-						ListeAlgorithmesMethodesMappers.Add(new List<string>());
-						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling:: w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][7]  / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][7] / preceding-sibling::w:tbl / w:tr /w:tc)]";
-
-
-						nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-						foreach (XmlNode isbn2 in nodeList2)
-						{
-							if (isbn2.InnerText != "")
-							{
-								ListeAlgorithmesMethodesMappers[cmp].Add(isbn2.InnerText.Trim());
-							}
-						}
-						AlgorithmesMethodesMappers.Add(ListeAAlgorithmesMappers(ListeAlgorithmesMethodesMappers[cmp]));
-
-
-					}
-				}
 			}
 
+			if (i < Mapper.NomsMappers(doc, nsmgr).Count && cmp == MethodeMapper.NombreMethodesMappers(doc, nsmgr,i - 1) - 1)
+			{
+				
+				 xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling:: w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][7]  / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][7] / preceding-sibling::w:tbl / w:tr /w:tc)]";
+			}
 
-			return AlgorithmesMethodesMappers;
+						nodeList2 = root.SelectNodes(xpath, nsmgr);
+
+						foreach (XmlNode isbn2 in nodeList2)
+						{
+							
+								ListeAlgorithmesMethodesMappers.Add(isbn2.InnerText.Trim());
+							
+						}
+						
+
+
+			return (ListeAAlgorithmesMappers(ListeAlgorithmesMethodesMappers));
 		}
 
 		/// <summary>
