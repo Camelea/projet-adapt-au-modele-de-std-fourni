@@ -108,7 +108,7 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 					for (int cmp = 0; cmp < NombreMethodesServiceExterne(doc, nsmgr, i - 1); cmp++)
 
 					{
-						string algorithmes = AlgorithmesMethodesServiceExterne(doc, nsmgr, i - 1, cmp);
+					string algorithmes = AlgorithmesMethodesServiceExterne(doc, nsmgr, i - 1, cmp);
 					List<DescriptionServiceExterne> descriptions = DescriptionServiceExterne.DescriptionsMethodesServiceExterne(doc, nsmgr,i,cmp);
 					List<ParametreServiceExterne> parametresMethodes = ParametreServiceExterne.ParametresMethodesServiceExterne(doc, nsmgr,i ,cmp);
 					List<TypeRetourServiceExterne> typesRetour = TypeRetourServiceExterne.TypeRetourMethodesServiceExternes(doc, nsmgr,i ,cmp);

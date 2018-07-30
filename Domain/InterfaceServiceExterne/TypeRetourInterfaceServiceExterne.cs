@@ -12,13 +12,13 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 		
 	
 			#region Attributs
-			public string Type;
-			public string Description;
+			public string Type { get; private set; }
+		public string Description { get; private set; }
 
-			#endregion
+		#endregion
 
-			#region Constructeur 
-			public TypeRetourInterfaceServiceExterne(string type, string description)
+		#region Constructeur 
+		public TypeRetourInterfaceServiceExterne(string type, string description)
 			{
 				this.Type = type;
 				this.Description = description;

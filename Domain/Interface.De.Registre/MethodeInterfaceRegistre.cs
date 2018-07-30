@@ -8,11 +8,11 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 	{
 		#region Attributs 
 
-		public string Nom;
-		public string Description;
-		public List<ParametreInterfaceRegistre> ParametresInterfaceRegistre;
-		public List<TypeRetourInterfaceRegistre> TypeRetourInterfacesRegistres;
-		
+		public string Nom { get; private set; }
+		public string Description { get; private set; }
+		public List<ParametreInterfaceRegistre> ParametresInterfaceRegistre { get; private set; }
+		public List<TypeRetourInterfaceRegistre> TypeRetourInterfacesRegistres { get; private set; }
+
 		#endregion
 
 		#region Constructeur 

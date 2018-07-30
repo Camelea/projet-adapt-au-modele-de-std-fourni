@@ -22,8 +22,7 @@ namespace ConsoleApp4
 			//doc.Load("C:\\Users\\CameleaOUARKOUB\\Desktop\\document.xml");
 
 
-
-			//Create an XmlNamespaceManager for resolving namespaces.
+			
 			XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
 			nsmgr.AddNamespace("wpc", "http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas");
 			nsmgr.AddNamespace("cx", "http://schemas.microsoft.com/office/drawing/2014/chartex");

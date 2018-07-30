@@ -8,8 +8,8 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 	{
 		#region Attributs
 
-		public string Type;
-		public string Description;
+		public string Type { get; private set; }
+		public string Description { get; private set; }
 
 		#endregion
 

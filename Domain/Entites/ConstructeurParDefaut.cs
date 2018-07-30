@@ -11,8 +11,8 @@ namespace ConsoleApp4.Domain.Entites
 	{
 		#region Attributs
 
-		public string Description;
-		public string Algorithme;
+		public string Description { get; private set; }
+		public string Algorithme { get; private set; }
 
 		#endregion
 
