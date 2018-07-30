@@ -71,28 +71,25 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<string> DescriptionsMethodesinterfacesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
+		public static string DescriptionsMethodesinterfacesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i,int cmp )
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> MethodesInterfacesRegistres = new List<string>();
 
-				for (int cmp = 0; cmp < NombreMethodesInterfacesRegistres(doc, nsmgr,i - 1) + 1; cmp++)
-				{
 					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][1]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/preceding-sibling:: w:p)]";
-
+					var res = "";
 					nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 					foreach (XmlNode isbn2 in nodeList2)
 					{
-						MethodesInterfacesRegistres.Add(isbn2.InnerText);
+						res = res + " " + (isbn2.InnerText);
 					}
 					
 
-				}
+				
 			
-			return MethodesInterfacesRegistres;
+			return res;
 
 
 		}
@@ -123,7 +120,6 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		{
 
 				List<string> nomsMethodes = NomsMethodesInterfacesRegistres(doc, nsmgr,i-1);
-				List<string> descriptionsMethodes = DescriptionsMethodesinterfacesRegistres(doc, nsmgr,i-1);
 				List<MethodeInterfaceRegistre> methodesInterfacesRegistres = new List<MethodeInterfaceRegistre>();
 
 
@@ -135,8 +131,9 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 					{
 						List<ParametreInterfaceRegistre> parametres = ParametreInterfaceRegistre.ParametresMethodesInterfacesRegistres(doc, nsmgr, i,cmp);
 						List<TypeRetourInterfaceRegistre> typesRetour = TypeRetourInterfaceRegistre.TypeRetourMethodesInterfacesRegistres(doc, nsmgr,i , cmp);
+						string descriptionsMethodes = DescriptionsMethodesinterfacesRegistres(doc, nsmgr, i ,cmp);
 
-						methodesInterfacesRegistres.Add(new MethodeInterfaceRegistre(nomsMethodes[cmp], descriptionsMethodes[cmp], parametres, typesRetour));
+					methodesInterfacesRegistres.Add(new MethodeInterfaceRegistre(nomsMethodes[cmp], descriptionsMethodes, parametres, typesRetour));
 
 
 					}
