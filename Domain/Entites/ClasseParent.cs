@@ -32,16 +32,13 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<ClasseParent>> ClassesParent(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<ClasseParent> ClassesParent(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeClassesParent = new List<List<string>>();
-			List<List<ClasseParent>> ClassesParent = new List<List<ClasseParent>>();
-			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
-			{
-
-				ListeClassesParent.Add(new List<string>());
+			List<string> ListeClassesParent = new List<string>();
+			
+				
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3] / following-sibling::w:tbl/w:tr/w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][4] / preceding-sibling::w:tbl/w:tr/w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][4] / preceding-sibling::w:tbl/w:tr/w:tc)]";
 
 
@@ -51,14 +48,11 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 				foreach (XmlNode isbn2 in nodeList2)
 				{
 
-					ListeClassesParent[i - 1].Add(isbn2.InnerText);
+					ListeClassesParent.Add(isbn2.InnerText);
 
 				}
-				ClassesParent.Add(ListeAClasseParent(ListeClassesParent[i - 1]));
-			}
-
-
-			return ClassesParent;
+		
+			return ListeAClasseParent(ListeClassesParent);
 
 		}
 

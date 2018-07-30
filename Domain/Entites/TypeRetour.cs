@@ -32,24 +32,17 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<TypeRetour>> TypeRetourMethodesEntites(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<TypeRetour> TypeRetourMethodesEntites(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeMethodesEntites = new List<List<string>>();
-			List<List<TypeRetour>> TypesRetourEntites = new List<List<TypeRetour>>();
-
-			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
-			{
-
-				if (Methode.NombreMethodesEntites(doc, nsmgr)[i - 1] != 0)
+			List<string> ListeMethodesEntites = new List<string>();
+			
+			
+				if (Methode.NombreMethodesEntites(doc, nsmgr,i - 1)!= 0)
 				{
 
-					for (int cmp = 0; cmp < Methode.NombreMethodesEntites(doc, nsmgr)[i - 1]; cmp++)
-					{
-
-						ListeMethodesEntites.Add(new List<string>());
 						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][7] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling:: w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][7] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4] / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][7] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4] / preceding-sibling::w:tbl / w:tr /w:tc)]";
 
 
@@ -59,16 +52,14 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 						{
 							if (isbn2.InnerText != "")
 							{
-								ListeMethodesEntites[cmp].Add(isbn2.InnerText.Trim());
+								ListeMethodesEntites.Add(isbn2.InnerText.Trim());
 							}
 						}
-						TypesRetourEntites.Add(ListeATypeRetour(ListeMethodesEntites[cmp]));
-
+		
 					}
 
-				}
-			}
-			return TypesRetourEntites;
+			
+			return (ListeATypeRetour(ListeMethodesEntites));
 
 		}
 

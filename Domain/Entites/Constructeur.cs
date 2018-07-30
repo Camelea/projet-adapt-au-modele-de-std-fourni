@@ -30,19 +30,14 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<Constructeur> Constructeurs(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static Constructeur Constructeurs(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
-			List<Constructeur> constructeurs = new List<Constructeur>();
-			List<ConstructeurParDefaut> constructeursParDefaut = ConstructeurParDefaut.ConstructeursParDefaut(doc, nsmgr);
-			List<ConstructeurInstanciation> constructeursInstanciation = ConstructeurInstanciation.ConstructeursInstanciation(doc, nsmgr);
+			
+			ConstructeurParDefaut constructeursParDefaut = ConstructeurParDefaut.ConstructeursParDefaut(doc, nsmgr,i);
+			ConstructeurInstanciation constructeursInstanciation = ConstructeurInstanciation.ConstructeursInstanciation(doc, nsmgr,i);
 
-			for (int i = 0; i < Entite.NomsEntites(doc, nsmgr).Count; i++)
-			{
-				constructeurs.Add(new Constructeur(constructeursParDefaut[i], constructeursInstanciation[i]));
-
-
-			}
-			return constructeurs;
+	
+			return new Constructeur(constructeursParDefaut, constructeursInstanciation);
 
 		}
 

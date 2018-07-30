@@ -38,15 +38,11 @@ namespace ConsoleApp4.Domain.Entites
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionsConstructeursInstanciation(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionsConstructeursInstanciation(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsConstructeursInstanciation = new List<string>();
-
-			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
-
-			{
+			
 				var res = "";
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][1]/ following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2] / preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2] /preceding-sibling::w:p)]";
 
@@ -56,10 +52,8 @@ namespace ConsoleApp4.Domain.Entites
 				{
 					res = res + (isbn2.InnerText);
 				}
-				ListeDescriptionsConstructeursInstanciation.Add(res);
-
-			}
-			return ListeDescriptionsConstructeursInstanciation;
+				
+			return res;
 
 
 		}
@@ -70,15 +64,11 @@ namespace ConsoleApp4.Domain.Entites
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> AlgorithmesConstructeursInstanciation(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string AlgorithmesConstructeursInstanciation(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeAlgorithmesConstructeursInstanciation = new List<string>();
-
-			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
-
-			{
+		
 				var res = "";
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][7] / preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][7]/preceding-sibling::w:p)]";
 
@@ -88,10 +78,8 @@ namespace ConsoleApp4.Domain.Entites
 				{
 					res = res + (isbn2.InnerText);
 				}
-				ListeAlgorithmesConstructeursInstanciation.Add(res);
-
-			}
-			return ListeAlgorithmesConstructeursInstanciation;
+				
+			return res;
 
 
 		}
@@ -103,21 +91,15 @@ namespace ConsoleApp4.Domain.Entites
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<ConstructeurInstanciation> ConstructeursInstanciation(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static ConstructeurInstanciation ConstructeursInstanciation(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
-			List<ConstructeurInstanciation> constructeursInstanciation = new List<ConstructeurInstanciation>();
-			List<string> algorithmes = AlgorithmesConstructeursInstanciation(doc, nsmgr);
-			List<string> descriptions = DescriptionsConstructeursInstanciation(doc, nsmgr);
-			List<List<Parametre>> parametres = Parametre.ParametresEntites(doc, nsmgr);
+			
+			string algorithmes = AlgorithmesConstructeursInstanciation(doc, nsmgr,i);
+			string descriptions = DescriptionsConstructeursInstanciation(doc, nsmgr,i);
+			List<Parametre> parametres = Parametre.ParametresEntites(doc, nsmgr,i);
 
 
-			for (int i = 0; i < Entite.NomsEntites(doc, nsmgr).Count; i++)
-			{
-				constructeursInstanciation.Add(new ConstructeurInstanciation(descriptions[i], parametres[i],algorithmes[i]));
-
-
-			}
-			return constructeursInstanciation;
+			return ( new ConstructeurInstanciation(descriptions, parametres, algorithmes));
 		}
 
 		#endregion

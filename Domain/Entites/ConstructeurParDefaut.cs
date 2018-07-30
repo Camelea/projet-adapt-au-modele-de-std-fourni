@@ -36,15 +36,12 @@ namespace ConsoleApp4.Domain.Entites
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionsConstructeursParDefaut(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionsConstructeursParDefaut(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsConstructeursParDefaut = new List<string>();
+			
 
-			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
-
-			{
 				var res = "";
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][1]/ following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2] / preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2] /preceding-sibling::w:p)]";
 
@@ -54,10 +51,10 @@ namespace ConsoleApp4.Domain.Entites
 				{
 					res = res + (isbn2.InnerText);
 				}
-				ListeDescriptionsConstructeursParDefaut.Add(res);
+				
 
-			}
-			return ListeDescriptionsConstructeursParDefaut;
+			
+			return res;
 
 
 		}
@@ -68,15 +65,11 @@ namespace ConsoleApp4.Domain.Entites
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> AlgorithmesConstructeursParDefaut(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string AlgorithmesConstructeursParDefaut(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeAlgorithmesConstructeursParDefaut = new List<string>();
 
-			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
-
-			{
 				var res = "";
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/ following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][2] / preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][2] /preceding-sibling::w:p)]";
 
@@ -86,28 +79,21 @@ namespace ConsoleApp4.Domain.Entites
 				{
 					res = res + (isbn2.InnerText);
 				}
-				ListeAlgorithmesConstructeursParDefaut.Add(res);
 
-			}
-			return ListeAlgorithmesConstructeursParDefaut;
+			
+			return res;
 
 
 		}
 
-		public static List<ConstructeurParDefaut> ConstructeursParDefaut(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static ConstructeurParDefaut ConstructeursParDefaut(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
-			List<ConstructeurParDefaut> constructeursParDefaut = new List<ConstructeurParDefaut>();
-			List<string> algorithmes = AlgorithmesConstructeursParDefaut(doc, nsmgr);
-			List<string> descriptions = DescriptionsConstructeursParDefaut(doc, nsmgr);
 
+				string algorithmes = AlgorithmesConstructeursParDefaut(doc, nsmgr, i);
+				string descriptions = DescriptionsConstructeursParDefaut(doc, nsmgr, i);
 
-			for (int i = 0; i <Entite.NomsEntites(doc, nsmgr).Count; i++)
-			{
-				constructeursParDefaut.Add(new ConstructeurParDefaut(descriptions[i], algorithmes[i]));
-
-
-			}
-			return constructeursParDefaut;
+			
+			return (new ConstructeurParDefaut(descriptions, algorithmes));
 		}
 
 		#endregion

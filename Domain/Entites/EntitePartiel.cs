@@ -32,16 +32,14 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<EntitePartiel>> EntitesPartiels(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<EntitePartiel> EntitesPartiels(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeEntitesPartiels = new List<List<string>>();
-			List<List<EntitePartiel>> EntitesPartiels = new List<List<EntitePartiel>>();
-			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
-			{
+			List<string> ListeEntitesPartiels = new List<string>();
+			
 
-				ListeEntitesPartiels.Add(new List<string>());
+				
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2] / following-sibling::w:tbl/w:tr/w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3] / preceding-sibling::w:tbl/w:tr/w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3] / preceding-sibling::w:tbl/w:tr/w:tc)]";
 
 
@@ -51,14 +49,13 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 				foreach (XmlNode isbn2 in nodeList2)
 				{
 
-					ListeEntitesPartiels[i-1].Add(isbn2.InnerText);
+					ListeEntitesPartiels.Add(isbn2.InnerText);
 
 				}
-				EntitesPartiels.Add(ListeAEntitePartiel(ListeEntitesPartiels[i-1]));
-			}
+		
 
 
-		return EntitesPartiels;
+		return (ListeAEntitePartiel(ListeEntitesPartiels));
 
 		}
 

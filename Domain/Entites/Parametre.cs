@@ -33,18 +33,13 @@ namespace ConsoleApp4.Domain.Entites
 		}
 
 		
-		public static List<List<Parametre>> ParametresEntites(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<Parametre> ParametresEntites(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeParametresEntites = new List<List<string>>();
-			List<List<Parametre>> ParametresEntites = new List<List<Parametre>>();
-
-			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
-			{
-				
-						ListeParametresEntites.Add(new List<string>());
+			List<string> ListeParametresEntites = new List<string>();
+			
 						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][1]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/ following-sibling::w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/preceding-sibling:: w:tbl / w:tr /w:tc )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3]/preceding-sibling:: w:tbl / w:tr /w:tc)]";
 
 
@@ -53,15 +48,13 @@ namespace ConsoleApp4.Domain.Entites
 						foreach (XmlNode isbn2 in nodeList2)
 						{
 
-							ListeParametresEntites[i-1].Add(isbn2.InnerText);
+							ListeParametresEntites.Add(isbn2.InnerText);
 
 						}
-						ParametresEntites.Add(ListeAParametres(ListeParametresEntites[i-1]));
-
-					}
+				
 
 			
-			return ParametresEntites;
+			return (ListeAParametres(ListeParametresEntites));
 
 		}
 

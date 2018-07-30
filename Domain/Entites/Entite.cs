@@ -90,26 +90,23 @@ namespace ConsoleApp4.Domain.Entites
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<String> DescriptionsEntites(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionsEntites(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeDescriptionsEntites = new List<string>();
+			
 
-			for (int i = 1; i < NomsEntites(doc, nsmgr).Count + 1; i++)
-
-			{
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-
+				var res = "";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					ListeDescriptionsEntites.Add(isbn2.InnerText);
+					res = res + " " +(isbn2.InnerText);
 				}
 
-			}
-			return ListeDescriptionsEntites;
+			
+			return res;
 
 
 		}
@@ -125,28 +122,27 @@ namespace ConsoleApp4.Domain.Entites
 		{
 			List<Entite> entites = new List<Entite>();
 			List<string> noms = NomsEntites(doc, nsmgr);
-			List<string> descriptions = DescriptionsEntites(doc, nsmgr);
-			List<List<Methode>> methodes = Methode.Methodes(doc, nsmgr);
-			List<List<ClasseParent>> classesParent = ClasseParent.ClassesParent(doc, nsmgr);
-			List<List<EntitePartiel>> entitesPartiels = EntitePartiel.EntitesPartiels(doc, nsmgr);
-			List<List<Propriete>> proprietes = Propriete.Proprietes(doc, nsmgr);
-			List<List<ProprieteDynamique>> proprietesDynamiques = ProprieteDynamique.ProprietesDynamiques(doc, nsmgr);
-			List<Constructeur> constructeurs = Constructeur.Constructeurs(doc, nsmgr);
 
 			for (int i = 1; i < NomsEntites(doc, nsmgr).Count + 1; i++)
 			{
+				string descriptions = DescriptionsEntites(doc, nsmgr,i);
+				List<ClasseParent> classesParent = ClasseParent.ClassesParent(doc, nsmgr,i);
+				List<EntitePartiel> entitesPartiels = EntitePartiel.EntitesPartiels(doc, nsmgr,i);
+				List<Propriete> proprietes = Propriete.Proprietes(doc, nsmgr,i);
+				List<ProprieteDynamique> proprietesDynamiques = ProprieteDynamique.ProprietesDynamiques(doc, nsmgr,i);
+				Constructeur constructeurs = Constructeur.Constructeurs(doc, nsmgr, i);
+				List<Methode> methodes = Methode.Methodes(doc, nsmgr,i);
 
-
-				if (Methode.NombreMethodesEntites(doc, nsmgr)[i - 1] != 0)
+				if (Methode.NombreMethodesEntites(doc, nsmgr,i - 1) != 0)
 				{
 
-					entites.Add(new Entite(noms[i-1], descriptions[i-1], entitesPartiels[i-1], classesParent[i-1],proprietes[i-1],proprietesDynamiques[i-1], constructeurs[i-1],methodes[i-1]));
+					entites.Add(new Entite(noms[i-1], descriptions, entitesPartiels, classesParent,proprietes,proprietesDynamiques, constructeurs,methodes));
 				}
 
-				if (Methode.NombreMethodesEntites(doc, nsmgr)[i - 1] == 0)
+				if (Methode.NombreMethodesEntites(doc, nsmgr,i - 1) == 0)
 				{
 
-					entites.Add(new Entite(noms[i - 1], descriptions[i - 1], entitesPartiels[i - 1], classesParent[i - 1], proprietes[i - 1], proprietesDynamiques[i - 1], constructeurs[i - 1]));
+					entites.Add(new Entite(noms[i - 1], descriptions, entitesPartiels, classesParent, proprietes, proprietesDynamiques, constructeurs));
 				}
 
 

@@ -46,16 +46,12 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<ProprieteDynamique>> ProprietesDynamiques(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<ProprieteDynamique> ProprietesDynamiques(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeProprietesDynamiques = new List<List<string>>();
-			List<List<ProprieteDynamique>> ProprietesDynamiques = new List<List<ProprieteDynamique>>();
-			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
-			{
-
-				ListeProprietesDynamiques.Add(new List<string>());
+			List<string> ListeProprietesDynamiques = new List<string>();
+			
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][5] / following-sibling::w:tbl/w:tr/w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6] / preceding-sibling::w:tbl/w:tr/w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][6] / preceding-sibling::w:tbl/w:tr/w:tc)]";
 
 
@@ -65,14 +61,13 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 				foreach (XmlNode isbn2 in nodeList2)
 				{
 
-					ListeProprietesDynamiques[i - 1].Add(isbn2.InnerText);
+					ListeProprietesDynamiques.Add(isbn2.InnerText);
 
 				}
-				ProprietesDynamiques.Add(ListeAProprietesDynamiques(ListeProprietesDynamiques[i - 1]));
-			}
 
 
-			return ProprietesDynamiques;
+
+			return ListeAProprietesDynamiques(ListeProprietesDynamiques);
 
 		}
 

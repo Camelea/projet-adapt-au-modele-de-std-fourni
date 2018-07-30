@@ -13,8 +13,8 @@ namespace ConsoleApp4.Application.Interface
 
 		public string Nom { get; private set; }
 		public string Description { get; private set; }
-		public List<ParametreInterfaceService> parametreEntrant { get; private set; }
-		public List<TypeRetourInterfaceService> parametreSortant { get; private set; }
+		public List<ParametreInterfaceService> ParametresEntrant { get; private set; }
+		public List<TypeRetourInterfaceService> ParametresSortant { get; private set; }
 
 		#endregion
 
@@ -24,8 +24,8 @@ namespace ConsoleApp4.Application.Interface
 		{
 			this.Nom = nom;
 			this.Description = description;
-			this.parametreEntrant = parametreEntrant;
-			this.parametreSortant = parametreSortant;
+			this.ParametresEntrant = parametreEntrant;
+			this.ParametresSortant = parametreSortant;
 
 		}
 
