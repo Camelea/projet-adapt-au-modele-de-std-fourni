@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Domain.Interface.De.Registre
-{
+{ 
+	/// <summary>
+	/// Classe qui permet de récupérer la liste des interfaces de registre
+	/// </summary>
 	public class InterfaceRegistre
 	{
 

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Domain.Registres
-{
+{/// <summary>
+ /// Classe qui permet de récupérer les parametres d'un registre donné  
+ /// </summary>
 	class ParametreRegistre
 	{
 		#region Attributs

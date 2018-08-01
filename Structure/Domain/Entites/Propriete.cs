@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Domain.Entites
-{
+{/// <summary>
+ /// Classe qui permet de récupérer la liste des proprietes d'un objet donnée  
+ /// </summary
 	class Propriete
 	{
 		#region Attributs 
@@ -20,7 +22,7 @@ namespace ConsoleApp4.Domain.Entites
 
 		#region Constructeur 
 
-		public Propriete(string nom, string description,string type)
+		public Propriete(string nom, string type,string description)
 		{
 			this.Nom = nom;
 			this.Type = type;
@@ -31,7 +33,26 @@ namespace ConsoleApp4.Domain.Entites
 
 		#region Méthodes
 
+		public override string  ToString()
+		{
+			this.Type.Replace("Enum", "");
+			this.Type.Replace("«", "");
+			this.Type.Replace("»", "");
+			var propriete = " /// <summary>" + "\n" + " ///" + this.Description + "\n" + " /// </summary>" + "\n" + "[Key]" + "\n" + "[CustomToColumnName(\"" + this.Nom.ToUpper() + "\")]" + "\n" + "public virtual  " + this.Type.ToLower() + " " + this.Nom + " { get; set;}";
 
+			if (this.Type.Contains("nullable"))
+			{
+				var type = this.Type;
+				type = type.Replace("nullable","");
+				type = type.Replace("Enum","");
+				type = type.Replace("«","");
+				type = type.Replace("»","");
+				propriete = " /// <summary>" + "\n" + " ///" + this.Description + "\n" + " /// </summary>" + "\n" + "[Key]" + "\n" + "[CustomToColumnName(\"" + this.Nom.ToUpper() + "\")]" + "\n" + "public virtual " + type.Trim() +"?" + " " + this.Nom + " { get; set;}";
+			}
+			return propriete;
+
+
+		}
 		/// <summary>
 		/// Renvoie la liste des informations des proprietes des entites  
 		/// </summary>

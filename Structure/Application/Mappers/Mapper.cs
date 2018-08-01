@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Application.Mappers
-{
+{/// <summary>
+ /// Classe qui permet de récupérer la liste des mappers 
+ /// </summary>
 	class Mapper
 	{
 		#region Attributs

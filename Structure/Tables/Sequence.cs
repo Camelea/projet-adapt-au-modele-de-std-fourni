@@ -2,7 +2,9 @@
 using System.Xml;
 
 namespace ConsoleApp4.Tables
-{
+{/// <summary>
+ /// Classe qui permet de récupérer la séquence d'une table 
+ /// </summary>
 	public class Sequence
 	{
 		public string Nom { get; set; }

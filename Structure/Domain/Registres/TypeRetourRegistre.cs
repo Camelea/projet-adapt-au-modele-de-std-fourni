@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Domain.Registres
-{
+{/// <summary>
+ /// Classe qui permet de récupérer la liste des types de retour d'un registre 
+ /// </summary>
 	class TypeRetourRegistre
 	{
 		#region Attributs

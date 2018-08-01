@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Tables
-{
+{/// <summary>
+ /// Classe qui permet de récupérer les données  d'une table 
+ /// </summary>
 	class Donnee
 	{
 		#region Attributs

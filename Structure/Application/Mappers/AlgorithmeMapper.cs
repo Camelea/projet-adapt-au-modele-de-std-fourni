@@ -7,6 +7,9 @@ using System.Xml;
 
 namespace ConsoleApp4.Application.Mappers
 {
+	/// <summary>
+	/// Classe qui permet de récupérer la liste des algorithmes d'un mapper 
+	/// </summary>
 	class AlgorithmeMapper
 	{
 

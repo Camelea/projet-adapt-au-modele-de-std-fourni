@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Domain.CommonType.Services_Externes
-{
+{/// <summary>
+ /// Classe qui permet de récupérer la liste des services externes  
+ /// </summary>
 	class ServiceExterne
 	{
 		#region Attributs

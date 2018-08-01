@@ -9,7 +9,9 @@ using System.Xml;
 namespace ConsoleApp4.Domain.CommonType
 {
 	class Enumeration
-	{
+	{/// <summary>
+	 /// Classe qui permet de récupérer les enumerations 
+	 /// </summary>
 		#region Attributs
 
 		public string Nom;

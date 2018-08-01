@@ -2,13 +2,17 @@
 using System.Xml;
 
 namespace ConsoleApp4.Tables
-{
+{  
+	/// <summary>
+	/// Classe qui permet de récupérer la liste des contraintes de vérification d'une table 
+	/// </summary>
+	
 	public class ContrainteDeVerification
 	{
 		#region Attributs
 		public string Nom { get; private set; }
-		public string Colonne;
-		public string Condition;
+		public string Colonne { get; private set; }
+		public string Condition { get; private set; }
 		#endregion
 
 		#region Constructeur

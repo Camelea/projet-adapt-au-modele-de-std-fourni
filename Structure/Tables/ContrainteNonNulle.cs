@@ -2,7 +2,11 @@
 using System.Xml;
 
 namespace ConsoleApp4.Tables
-{
+
+{       /// <summary>
+		/// Classe qui permet de récupérer la liste des contraintes non nulles d'une table 
+		/// </summary>
+		
 	public class ContrainteNonNulle
 	{
 		#region Attributs

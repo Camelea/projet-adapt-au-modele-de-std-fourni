@@ -2,7 +2,7 @@
 using ConsoleApp4.Application.Interface;
 using ConsoleApp4.Domain.CommonType;
 using ConsoleApp4.Domain.CommonType.Metiers;
-using ConsoleApp4.Domain.CommonType.Services_Externes;
+using ConsoleApp4.Domain.Entites;
 using ConsoleApp4.Tables;
 using System;
 using System.Collections.Generic;
@@ -95,7 +95,7 @@ namespace ConsoleApp4
 			//	Console.WriteLine(lp.ToString());
 
 			//}
-
+			//Console.ReadKey();
 			#region Test proprietes services externes 
 			//var i = 2;
 			//var proprietes = Propriete.ProprietesServicesExternes(doc, nsmgr,i);
@@ -157,17 +157,17 @@ namespace ConsoleApp4
 			//Console.ReadKey();
 
 			#region Test proprietes enumerations  
-			var i = 2;
-			var proprietes = Propriete.ValeursEnumeration(doc, nsmgr, i);
-			List<Propriete> resultat1 = proprietes;
-			foreach (Propriete lp in resultat1)
+			//var i = 2;
+			//var proprietes = Propriete.ValeursEnumeration(doc, nsmgr, i);
+			//List<Propriete> resultat1 = proprietes;
+			//foreach (Propriete lp in resultat1)
 
-			{
+			//{
 
-				Console.WriteLine(lp.ToString());
+			//	Console.WriteLine(lp.ToString());
 
-			}
-			Console.ReadKey();
+			//}
+			//Console.ReadKey();
 			#endregion
 
 			#endregion
@@ -301,6 +301,21 @@ namespace ConsoleApp4
 			//}
 			//Console.ReadKey();
 
+			#endregion
+
+
+			#region Test proprietes entite  
+			var i = 1;
+			var proprietes = Propriete.Proprietes(doc, nsmgr, i);
+			List<Propriete> resultat1 = proprietes;
+			foreach (Propriete lp in resultat1)
+
+			{
+
+				Console.WriteLine(lp.ToString());
+
+			}
+			Console.ReadKey();
 			#endregion
 		}
 	}

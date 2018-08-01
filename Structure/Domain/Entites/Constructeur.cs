@@ -4,6 +4,10 @@ using System.Xml;
 
 namespace ConsoleApp4.Domain.CommonType.Services_Externes
 {
+	/// <summary>
+	/// Classe qui permet de récupérer le constructeur d'une table 
+	/// </summary>
+	/// 
 	public class Constructeur
 	{
 		#region Attributs

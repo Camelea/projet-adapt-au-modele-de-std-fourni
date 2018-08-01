@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Application.Interface
-{
+{	
 	public class Methode
 	{
 		#region Attributs 

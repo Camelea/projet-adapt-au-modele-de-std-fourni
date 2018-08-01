@@ -7,6 +7,10 @@ using System.Xml;
 
 namespace ConsoleApp4.Tables
 {
+	/// <summary>
+	/// Classe qui permet de récupérer les contraintes ( par defaut et initialisation ) de la table concernée 
+	/// </summary>
+	
 	class Contrainte
 	{
 		#region Attributs

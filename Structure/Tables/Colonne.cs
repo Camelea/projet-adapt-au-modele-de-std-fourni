@@ -8,7 +8,9 @@ using System.Xml;
 namespace ConsoleApp4.Tables
 {
 	class Colonne
-	{
+	{/// <summary>
+	 /// Classe qui permet de récupérer les colonnes d'une table 
+	 /// </summary>
 		#region Attributs
 		public string Type;
 		public string Description;

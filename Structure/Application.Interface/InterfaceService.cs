@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Application.Interface
-{
+{/// <summary>
+ /// Classe qui permet de récupérer la liste des interfaces de services  
+ /// </summary>
 	class InterfaceService
 	{
 		#region Attributs

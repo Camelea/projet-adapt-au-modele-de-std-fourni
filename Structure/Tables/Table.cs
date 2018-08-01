@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Tables
-{
+
+{/// <summary>
+/// Classe qui permet de récupérer la liste des tables 
+/// </summary>
 	class Table
 	{
 		#region Attributs
