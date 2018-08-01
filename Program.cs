@@ -1,5 +1,7 @@
 ﻿
 using ConsoleApp4.Application.Interface;
+using ConsoleApp4.Domain.CommonType;
+using ConsoleApp4.Domain.CommonType.Metiers;
 using ConsoleApp4.Domain.CommonType.Services_Externes;
 using ConsoleApp4.Tables;
 using System;
@@ -65,36 +67,13 @@ namespace ConsoleApp4
 
 			//}
 
-			//#region TestTable 
-			var sequences = Table.Tables(doc, nsmgr);
-			List<Table> resultat = sequences;
-			foreach (Table y in resultat)
-			{
-				foreach (Donnee c in y.Donnees) {
-					Console.WriteLine(c.ToString());
-
-				}
-			}
-
-
-
-			Console.ReadKey();
-
-			#endregion
-
-			#region Test Service Externe 
-
-			//var proprietes = Propriete.ProprietesServicesExternes(doc, nsmgr);
-			//List<List<Propriete>> resultat1 = proprietes;
-
-			//foreach (List<Propriete> lp in resultat1)
-
+			////#region TestTable 
+			//var sequences = Table.Tables(doc, nsmgr);
+			//List<Table> resultat = sequences;
+			//foreach (Table y in resultat)
 			//{
-			//	Console.WriteLine("nouvelle liste");
-			//	foreach (Propriete p in lp )
-			//	{
-			//		Console.WriteLine("nouvelle prop");
-			//		Console.WriteLine(p.ToString());
+			//	foreach (Donnee c in y.Donnees) {
+			//		Console.WriteLine(c.ToString());
 
 			//	}
 			//}
@@ -102,6 +81,94 @@ namespace ConsoleApp4
 
 
 			//Console.ReadKey();
+
+			#endregion
+
+			#region Test Service Externe 
+
+			//var proprietes = ServiceExterne.ServicesExternes(doc, nsmgr);
+			//List<ServiceExterne> resultat1 = proprietes;
+			//foreach (ServiceExterne lp in resultat1)
+
+			//{
+
+			//	Console.WriteLine(lp.ToString());
+
+			//}
+
+			#region Test proprietes services externes 
+			//var i = 2;
+			//var proprietes = Propriete.ProprietesServicesExternes(doc, nsmgr,i);
+			//List<Propriete> resultat1 = proprietes;
+			//foreach (Propriete lp in resultat1)
+
+			//{
+
+			//	Console.WriteLine(lp.ToString());
+
+			//}
+			#endregion
+
+
+			//Console.ReadKey();
+
+			#endregion
+
+			#region Test Metier 
+
+			//var proprietes = Metier.Metiers(doc, nsmgr);
+			//List<Metier> resultat1 = proprietes;
+			//foreach (Metier lp in resultat1)
+
+			//{
+
+			//	Console.WriteLine(lp.ToString());
+
+			//}
+			//Console.ReadKey();
+
+			#region Test proprietes metier  
+			//var i = 2;
+			//var proprietes = Propriete.ProprietesMetier(doc, nsmgr, i);
+			//List<Propriete> resultat1 = proprietes;
+			//foreach (Propriete lp in resultat1)
+
+			//{
+
+			//	Console.WriteLine(lp.ToString());
+
+			//}
+			//Console.ReadKey();
+			#endregion
+
+			#endregion
+
+			#region Test Enumerations
+
+			//var proprietes = Enumeration.Enumerations(doc, nsmgr);
+			//List<Enumeration> resultat1 = proprietes;
+			//foreach (Enumeration lp in resultat1)
+
+			//{
+
+			//	Console.WriteLine(lp.ToString());
+
+			//}
+			//Console.ReadKey();
+
+			#region Test proprietes enumerations  
+			var i = 2;
+			var proprietes = Propriete.ValeursEnumeration(doc, nsmgr, i);
+			List<Propriete> resultat1 = proprietes;
+			foreach (Propriete lp in resultat1)
+
+			{
+
+				Console.WriteLine(lp.ToString());
+
+			}
+			Console.ReadKey();
+			#endregion
 
 			#endregion
 

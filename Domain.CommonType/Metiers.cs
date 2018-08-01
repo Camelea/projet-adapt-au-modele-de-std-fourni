@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Domain.CommonType.Metiers
-{
+{/// <summary>
+/// Classe qui permet de récupérer la liste des metiers 
+/// </summary>
 	class Metier
 	{
 		#region Attributs
@@ -31,6 +33,10 @@ namespace ConsoleApp4.Domain.CommonType.Metiers
 
 		#region Méthodes 
 
+		public override string ToString()
+		{
+			return (this.Nom + this.Description);
+		}
 
 		/// <summary>
 		/// Fonction qui retourne les noms des DTOs métiers  
@@ -70,7 +76,7 @@ namespace ConsoleApp4.Domain.CommonType.Metiers
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
 
-				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1]/ following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2]/ following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
 			var res = "";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 			
@@ -95,15 +101,15 @@ namespace ConsoleApp4.Domain.CommonType.Metiers
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<Metier> WebMethodes(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<Metier> Metiers(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			List<string> noms = NomsClassesMetier(doc, nsmgr);
 			List<Metier> metiers = new List<Metier>();
-			for (int i = 0; i < noms.Count; i++)
+			for (int i = 1; i < noms.Count+1; i++)
 			{
 				string descriptions = DescriptionMetiers(doc, nsmgr,i);
 				List <Propriete> proprietes = Propriete.ProprietesMetier(doc, nsmgr,i);
-				metiers.Add(new Metier(noms[i], descriptions, proprietes));
+				metiers.Add(new Metier(noms[i-1], descriptions, proprietes));
 
 			}
 			return metiers;

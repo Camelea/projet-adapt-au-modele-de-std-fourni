@@ -31,6 +31,10 @@ namespace ConsoleApp4.Domain.CommonType
 
 		#region Méthodes 
 
+		public override string ToString()
+		{
+			return (this.Nom + this.Description);
+		}
 
 		/// <summary>
 		/// Fonction qui retourne les noms des DTOs enumerations
@@ -70,8 +74,8 @@ namespace ConsoleApp4.Domain.CommonType
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
 
-				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-				var res = "";
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1]/ following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3]/ following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
+			var res = "";
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 				foreach (XmlNode isbn2 in nodeList2)
@@ -96,11 +100,11 @@ namespace ConsoleApp4.Domain.CommonType
 		{
 			List<string> noms = NomsClassesEnumeration(doc, nsmgr);
 			List<Enumeration> enumerations = new List<Enumeration>();
-			for (int i = 0; i < noms.Count; i++)
+			for (int i = 1; i < noms.Count+1; i++)
 			{
 				string descriptions = DescriptionEnumeration(doc, nsmgr,i);
 				List<Propriete> proprietes = Propriete.ValeursEnumeration(doc, nsmgr, i);
-				enumerations.Add(new Enumeration(noms[i], descriptions, proprietes));
+				enumerations.Add(new Enumeration(noms[i-1], descriptions, proprietes));
 
 			}
 			return enumerations;
