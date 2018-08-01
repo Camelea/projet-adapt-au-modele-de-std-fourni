@@ -48,6 +48,8 @@ namespace ConsoleApp4.Tables
 		}
 
 
+
+
 		/// <summary>
 		/// Retourne une liste de noms des tables présentes dans le fichier
 		/// </summary>
@@ -101,13 +103,13 @@ namespace ConsoleApp4.Tables
 			List<Table> tables = new List<Table>();
 			
 
-			for (int i = 0; i < NombreTables(doc, nsmgr); i++)
+			for (int i = 1; i < NombreTables(doc, nsmgr)+1; i++)
 			{
 				Contrainte contraintes = Contrainte.Contraintes(doc, nsmgr,i);
 				List<Colonne> colonnes = Colonne.ColonnesTables(doc, nsmgr, i);
 				List<Donnee> donnees = Donnee.DonneesTables(doc, nsmgr, i);
 
-				tables.Add(new Table(noms[i], colonnes, contraintes, donnees));
+				tables.Add(new Table(noms[i-1], colonnes, contraintes, donnees));
 
 
 			}

@@ -38,7 +38,7 @@ namespace ConsoleApp4.Tables
 				}
 
 
-			return (new Sequence(ListeSequences[i+1]));
+			return (new Sequence(ListeSequences[1]));
 		}
 	}
 }

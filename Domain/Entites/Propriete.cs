@@ -38,16 +38,12 @@ namespace ConsoleApp4.Domain.Entites
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<Propriete>> Proprietes(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<Propriete> Proprietes(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeProprietes = new List<List<string>>();
-			List<List<Propriete>> Proprietes = new List<List<Propriete>>();
-			for (int i = 1; i < Entite.NomsEntites(doc, nsmgr).Count + 1; i++)
-			{
-
-				ListeProprietes.Add(new List<string>());
+			List<string> ListeProprietes = new List<string>();
+		
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][4] / following-sibling::w:tbl/w:tr/w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][5] / preceding-sibling::w:tbl/w:tr/w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][5] / preceding-sibling::w:tbl/w:tr/w:tc)]";
 
 
@@ -57,14 +53,14 @@ namespace ConsoleApp4.Domain.Entites
 				foreach (XmlNode isbn2 in nodeList2)
 				{
 
-					ListeProprietes[i - 1].Add(isbn2.InnerText);
+					ListeProprietes.Add(isbn2.InnerText);
 
 				}
-				Proprietes.Add(ListeAProprietes(ListeProprietes[i - 1]));
-			}
+			
+			
 
 
-			return Proprietes;
+			return ListeAProprietes(ListeProprietes);
 
 		}
 

@@ -49,7 +49,8 @@ namespace ConsoleApp4.Tables
 		public static Contrainte Contraintes(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
 
-				Sequence sequences = Sequence.SequenceTables(doc, nsmgr,i);
+				
+			Sequence sequences = Sequence.SequenceTables(doc, nsmgr,i);
 				List<ClePrimaire> clesprimaires = ClePrimaire.ClesPrimairesTables(doc, nsmgr,i);
 				List<ContrainteDeVerification> contraintesdeverification = ContrainteDeVerification.ContraintesDeVerificationTables(doc, nsmgr,i);
 				List<ContrainteNonNulle> contraintesnonnulles = ContrainteNonNulle.ContraintesNonNullesTables(doc, nsmgr,i);

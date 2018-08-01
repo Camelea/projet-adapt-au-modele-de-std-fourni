@@ -136,10 +136,11 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 		{
 			List<ServiceExterne> servicesExternes = new List<ServiceExterne>();
 			List<string> noms = NomsServiceExterne(doc, nsmgr);
-			List<List<MethodeServiceExterne>> methodes = MethodeServiceExterne.MethodesServiceExterne(doc, nsmgr);
+
 
 			for (int i = 1; i < NomsServiceExterne(doc, nsmgr).Count + 1; i++)
 			{
+				List<MethodeServiceExterne> methodes = MethodeServiceExterne.MethodesServiceExterne(doc, nsmgr, i);
 				string descriptions = DescriptionsServiceExterne(doc, nsmgr,i-1);
 				string interfacesImplementees = InterfacesImplementeesServiceExterne(doc, nsmgr,i-1);
 
@@ -147,7 +148,7 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 				if (MethodeServiceExterne.NombreMethodesServiceExterne(doc, nsmgr,i - 1) != 0)
 				{
 
-					servicesExternes.Add(new ServiceExterne(noms[i - 1], descriptions, interfacesImplementees, methodes[i - 1]));
+					servicesExternes.Add(new ServiceExterne(noms[i - 1], descriptions, interfacesImplementees, methodes));
 				}
 
 				if (MethodeServiceExterne.NombreMethodesServiceExterne(doc, nsmgr,i - 1) == 0)

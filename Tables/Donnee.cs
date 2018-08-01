@@ -29,7 +29,7 @@ namespace ConsoleApp4.Tables
 
 		public override string ToString()
 		{
-			return (Nom + "" + Valeur); // à corriger 
+			return (Nom + " " + Valeur); // à corriger 
 		}
 
 

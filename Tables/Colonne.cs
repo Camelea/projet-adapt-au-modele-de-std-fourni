@@ -31,7 +31,7 @@ namespace ConsoleApp4.Tables
 
 		public override string ToString()
 		{
-			return ("///" + this.Description + "\n" + "ALTER TABLE" + "ADD" + this.Nom  + " " +  this.Type); // a regler l'ajout du nom de la table concernée 
+			return ("///" + this.Description + "\n" + " ALTER TABLE" + " " + "ADD" +" " + this.Nom  + " " +  this.Type); // a regler l'ajout du nom de la table concernée 
 
 		}
 
@@ -50,7 +50,7 @@ namespace ConsoleApp4.Tables
 			List<string> ListeColonnes = new List<string>();
 
 
-				string xpath = @"//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][1]/ following-sibling::w:tbl / w:tr /w:tc [count(. | //w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][1]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][1]/preceding-sibling::w:tbl / w:tr /w:tc)]";
+				string xpath = @"//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][1]/ following-sibling::w:tbl / w:tr /w:tc [count(. | //w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(//w:p [ w:pPr / w:pStyle [@w:val='Heading1']][1]  /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][2]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 
 
 				nodeList2 = root.SelectNodes(xpath, nsmgr);

@@ -56,7 +56,7 @@ namespace ConsoleApp4
 
 			#region Test Table 
 
-			// var sequences = ConstructeurInitialisation.GetDescriptionContrainteInitialisation(doc, nsmgr);
+			//var sequences = ConstructeurInitialisation.GetDescriptionContrainteInitialisation(doc, nsmgr);
 			//List<string> resultat = sequences;
 			//foreach (string y in resultat)
 			//{
@@ -66,19 +66,19 @@ namespace ConsoleApp4
 			//}
 
 			//#region TestTable 
-			//var sequences = Table.Tables(doc, nsmgr);
-			//List<Table> resultat = sequences;
-			//foreach (Table y in resultat)
-			//{
+			var sequences = Table.Tables(doc, nsmgr);
+			List<Table> resultat = sequences;
+			foreach (Table y in resultat)
+			{
+				foreach (Donnee c in y.Donnees) {
+					Console.WriteLine(c.ToString());
 
-			//	Console.WriteLine(y.ToString());
-
-
-			//}
+				}
+			}
 
 
 
-			//Console.ReadKey();
+			Console.ReadKey();
 
 			#endregion
 
