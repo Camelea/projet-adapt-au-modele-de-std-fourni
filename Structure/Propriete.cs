@@ -64,7 +64,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 					}
 	
 			
-			return (ListeAParametresEntrants(ListeProprietesServicesExternes));
+			return (ListeAProprietes(ListeProprietesServicesExternes));
 
 		}
 		#endregion
@@ -99,7 +99,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 					}
 
-		return ListeAParametresEntrants(ListeProprietesMetier);
+		return ListeAProprietes(ListeProprietesMetier);
 
 		}
 
@@ -136,7 +136,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 					}
 				
 			
-			return (ListeAParametresEntrants(ListeValeursEnumerations));
+			return (ListeAProprietes(ListeValeursEnumerations));
 
 		}
 
@@ -173,7 +173,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 					}
 					
 			
-			return ListeAParametresEntrants(ListeProprietesObjetsPresentation);
+			return ListeAProprietes(ListeProprietesObjetsPresentation);
 
 		}
 
@@ -187,14 +187,14 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// Renvoie la liste des proprietes associés à une liste donnée
 		/// </summary>
 		/// <returns></returns>
-		public static List<Propriete> ListeAParametresEntrants(List<string> liste)
+		public static List<Propriete> ListeAProprietes(List<string> liste)
 		{
-			List<Propriete> ListeParametresEntrantsClasses = new List<Propriete>();
+			List<Propriete> ListeProprietes = new List<Propriete>();
 			for (int i = 3; i < liste.Count; i = i + 3)
 			{
-				ListeParametresEntrantsClasses.Add(new Propriete(liste[i], liste[i + 1], liste[i + 2]));
+				ListeProprietes.Add(new Propriete(liste[i], liste[i + 1], liste[i + 2]));
 			}
-			return ListeParametresEntrantsClasses;
+			return ListeProprietes;
 		}
 
 

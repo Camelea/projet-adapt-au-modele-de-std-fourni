@@ -1,4 +1,5 @@
 ﻿using ConsoleApp4.Domain.CommonType.Services_Externes;
+using ConsoleApp4.Structure.Domain.CommonType.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +10,23 @@ using System.Xml;
 namespace ConsoleApp4.Domain.CommonType
 {
 	class Enumeration
-	{/// <summary>
-	 /// Classe qui permet de récupérer les enumerations 
-	 /// </summary>
+	{
+		/// <summary>
+		/// Classe qui permet de récupérer les enumerations 
+		/// </summary>
+	 
 		#region Attributs
 
 		public string Nom;
 		public string Description;
-		public List<Propriete> Valeurs;
+		public List<ProprieteEnumeration> Valeurs;
 
 
 
 		#endregion
 
 		#region Constructeur 
-		public Enumeration(string nom, string description, List<Propriete> valeurs)
+		public Enumeration(string nom, string description, List<ProprieteEnumeration> valeurs)
 		{
 			this.Nom = nom;
 			this.Description = description;
@@ -35,7 +38,26 @@ namespace ConsoleApp4.Domain.CommonType
 
 		public override string ToString()
 		{
-			return (this.Nom + this.Description);
+			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description.Trim() + "." + "\r\n" + "/// </summary>" + "\r\n";
+			var prop = "";
+			foreach (ProprieteEnumeration p in this.Valeurs)
+			{
+				prop = prop + "\r\n";
+
+				if (p == this.Valeurs.Last())
+				{
+					prop = prop + p.ToString() + "\r\n";
+				}
+				else
+				{
+					prop = prop + p.ToString() + "," + "\r\n";
+				}
+				
+			}
+			var res = doc + "\r\n" +  "public enum " + this.Nom + "\r\n" + "{ " + "\r\n" + prop + "\r\n" + "}";
+
+			return res;
+
 		}
 
 		/// <summary>
@@ -44,7 +66,7 @@ namespace ConsoleApp4.Domain.CommonType
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<string> NomsClassesEnumeration(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<string> NomsEnumeration(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
@@ -100,12 +122,12 @@ namespace ConsoleApp4.Domain.CommonType
 		/// <returns></returns>
 		public static List<Enumeration> Enumerations(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
-			List<string> noms = NomsClassesEnumeration(doc, nsmgr);
+			List<string> noms = NomsEnumeration(doc, nsmgr);
 			List<Enumeration> enumerations = new List<Enumeration>();
 			for (int i = 1; i < noms.Count+1; i++)
 			{
 				string descriptions = DescriptionEnumeration(doc, nsmgr,i);
-				List<Propriete> proprietes = Propriete.ValeursEnumeration(doc, nsmgr, i);
+				List<ProprieteEnumeration> proprietes = ProprieteEnumeration.ValeursEnumeration(doc, nsmgr, i);
 				enumerations.Add(new Enumeration(noms[i-1], descriptions, proprietes));
 
 			}

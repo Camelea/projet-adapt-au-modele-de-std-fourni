@@ -35,18 +35,17 @@ namespace ConsoleApp4.Domain.Entites
 
 		public override string  ToString()
 		{
-			this.Type.Replace("Enum", "");
-			this.Type.Replace("«", "");
-			this.Type.Replace("»", "");
-			var propriete = " /// <summary>" + "\n" + " ///" + this.Description + "\n" + " /// </summary>" + "\n" + "[Key]" + "\n" + "[CustomToColumnName(\"" + this.Nom.ToUpper() + "\")]" + "\n" + "public virtual  " + this.Type.ToLower() + " " + this.Nom + " { get; set;}";
+			var type = this.Type;
+			type = type.Replace("Enum", "");
+			type = type.Replace("«", "");
+			type = type.Replace("»", "");
+
+			var propriete = " /// <summary>" + "\n" + " ///" + this.Description + "\n" + " /// </summary>" + "\n" + "[Key]" + "\n" + "[CustomToColumnName(\"" + this.Nom.ToUpper() + "\")]" + "\n" + "public virtual " + this.Type.ToLower().Trim() + " " + this.Nom + " { get; set;}";
 
 			if (this.Type.Contains("nullable"))
-			{
-				var type = this.Type;
+			{ 
+				
 				type = type.Replace("nullable","");
-				type = type.Replace("Enum","");
-				type = type.Replace("«","");
-				type = type.Replace("»","");
 				propriete = " /// <summary>" + "\n" + " ///" + this.Description + "\n" + " /// </summary>" + "\n" + "[Key]" + "\n" + "[CustomToColumnName(\"" + this.Nom.ToUpper() + "\")]" + "\n" + "public virtual " + type.Trim() +"?" + " " + this.Nom + " { get; set;}";
 			}
 			return propriete;

@@ -58,7 +58,8 @@
     <Compile Include="Structure\Application\Services\ParametreService.cs" />
     <Compile Include="Structure\Application\Services\Service.cs" />
     <Compile Include="Structure\Application\Services\TypeRetourService.cs" />
-    <Compile Include="Structure\Domain.CommonType\Enumerations.cs" />
+    <Compile Include="Structure\Domain.CommonType\Enumerations\Enumerations.cs" />
+    <Compile Include="Structure\Domain.CommonType\Enumerations\ProprieteEnumeration.cs" />
     <Compile Include="Structure\Domain.CommonType\Metiers.cs" />
     <Compile Include="Structure\Domain\Entites\ClasseParent.cs" />
     <Compile Include="Structure\Domain\Entites\Constructeur.cs" />

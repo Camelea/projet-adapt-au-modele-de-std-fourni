@@ -145,16 +145,16 @@ namespace ConsoleApp4
 
 			#region Test Enumerations
 
-			//var proprietes = Enumeration.Enumerations(doc, nsmgr);
-			//List<Enumeration> resultat1 = proprietes;
-			//foreach (Enumeration lp in resultat1)
+			var proprietes = Enumeration.Enumerations(doc, nsmgr);
+			List<Enumeration> resultat1 = proprietes;
+			foreach (Enumeration lp in resultat1)
 
-			//{
+			{
 
-			//	Console.WriteLine(lp.ToString());
+				Console.WriteLine(lp.ToString());
 
-			//}
-			//Console.ReadKey();
+			}
+			Console.ReadKey();
 
 			#region Test proprietes enumerations  
 			//var i = 2;
@@ -305,17 +305,17 @@ namespace ConsoleApp4
 
 
 			#region Test proprietes entite  
-			var i = 1;
-			var proprietes = Propriete.Proprietes(doc, nsmgr, i);
-			List<Propriete> resultat1 = proprietes;
-			foreach (Propriete lp in resultat1)
+			//var i = 1;
+			//var proprietes = Propriete.Proprietes(doc, nsmgr, i);
+			//List<Propriete> resultat1 = proprietes;
+			//foreach (Propriete lp in resultat1)
 
-			{
+			//{
 
-				Console.WriteLine(lp.ToString());
+			//	Console.WriteLine(lp.ToString());
 
-			}
-			Console.ReadKey();
+			//}
+			//Console.ReadKey();
 			#endregion
 		}
 	}
