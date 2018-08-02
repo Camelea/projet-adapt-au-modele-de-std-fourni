@@ -30,6 +30,11 @@ namespace ConsoleApp4.Application.Services
 
 		#region Méthodes 
 
+		public override string ToString()
+		{
+			var doc = "/// <param name=\"" + this.Nom + "\">" + this.Description + "." + "</param>";
+			return doc;
+		}
 		/// <summary>
 		/// retourne la liste des parametres des methodes des services 
 		/// </summary>

@@ -12,15 +12,15 @@ namespace ConsoleApp4.Application.Services
 		#region Attributs 
 
 		public string Nom;
-		public List<DescriptionService> Descriptions;
+		public DescriptionService Descriptions;
 		public List<ParametreService> ParametresMethode;
-		public List<TypeRetourService> TypesRetour;
+		public TypeRetourService TypesRetour;
 		public string Algorithme;
 		#endregion
 
 		#region Constructeur 
 
-		public MethodeService(string nom, List<DescriptionService> descriptions, List<ParametreService> parametresMethode, List<TypeRetourService> typeRetour, string algorithme)
+		public MethodeService(string nom, DescriptionService descriptions, List<ParametreService> parametresMethode, TypeRetourService typeRetour, string algorithme)
 		{
 			this.Nom = nom;
 			this.Descriptions = descriptions;
@@ -36,7 +36,29 @@ namespace ConsoleApp4.Application.Services
 
 		public override string ToString()
 		{
-			return (this.Nom);
+			
+			var param = "";
+			var paramMethode = "(" ;
+			
+
+			foreach (ParametreService p in this.ParametresMethode)
+			{
+				param = param + p.ToString() + "\r\n";
+				if (p == this.ParametresMethode.Last() ) {
+					paramMethode = paramMethode + p.Type + p.Nom +  " )";
+				}
+				else {
+					paramMethode = paramMethode + p.Type + p.Nom + ",";
+				}
+			}
+	
+			var retour = this.TypesRetour.ToString() + "\r\n";
+		
+			var doc = "/// <summary>" + "\r\n" + "/// " + this.Descriptions.Description + "." + "\r\n" + "/// </summary>" + "\r\n";
+			var res = doc + param + retour + "\r\n" + this.Descriptions.Visibilite + " " + TypesRetour.Type + this.Nom + paramMethode + "\r\n" + "{" + this.Algorithme + "\r\n" + "}";
+
+			return res;
+
 		}
 
 		/// <summary>
@@ -108,9 +130,9 @@ namespace ConsoleApp4.Application.Services
 					{
 
 					string algorithmes = AlgorithmesMethodesServices(doc, nsmgr,i,cmp);
-					List<DescriptionService> descriptions = DescriptionService.DescriptionsMethodesServices(doc, nsmgr,i,cmp);
+					DescriptionService descriptions = DescriptionService.DescriptionsMethodesServices(doc, nsmgr,i,cmp);
 					List<ParametreService> parametresMethodes = ParametreService.ParametresMethodesServices(doc, nsmgr,i,cmp);
-					List<TypeRetourService> typesRetour = TypeRetourService.TypeRetourMethodesServices(doc, nsmgr,i,cmp);
+					TypeRetourService typesRetour = TypeRetourService.TypeRetourMethodesServices(doc, nsmgr,i,cmp);
 
 
 					methodes.Add(new MethodeService(nomsMethodes[cmp], descriptions, parametresMethodes, typesRetour, algorithmes));

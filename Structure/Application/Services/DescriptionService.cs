@@ -36,7 +36,7 @@ namespace ConsoleApp4.Application.Services
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<DescriptionService> DescriptionsMethodesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp )
+		public static DescriptionService DescriptionsMethodesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i ,int cmp )
 		{
 
 			XmlNodeList nodeList2;
@@ -60,25 +60,9 @@ namespace ConsoleApp4.Application.Services
 					
 				}
 			
-			return (ListeADescriptionsServices(ListeDescriptionsMethodesServices));
+			return (new DescriptionService(ListeDescriptionsMethodesServices[3], ListeDescriptionsMethodesServices[4], ListeDescriptionsMethodesServices[5]));
 
 		}
-
-
-		/// <summary>
-		/// Renvoie la liste des colonnes de types de retour associés à une liste donnée
-		/// </summary>
-		/// <returns></returns>
-		public static List<DescriptionService> ListeADescriptionsServices(List<string> liste)
-		{
-			List<DescriptionService> ListeDescriptionsServices = new List<DescriptionService>();
-			for (int i = 3; i < liste.Count; i = i + 3)
-			{
-				ListeDescriptionsServices.Add(new DescriptionService(liste[i], liste[i + 1], liste[i + 2]));
-			}
-			return ListeDescriptionsServices;
-		}
-
 
 
 

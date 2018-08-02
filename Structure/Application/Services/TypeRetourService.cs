@@ -29,7 +29,8 @@ namespace ConsoleApp4.Application.Services
 
 		public override string ToString()
 		{
-			return (Type + " " + Description);
+			var doc = "/// <returns>"  + this.Description + "." + "</returns>";
+			return doc;
 
 		}
 
@@ -39,7 +40,7 @@ namespace ConsoleApp4.Application.Services
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<TypeRetourService> TypeRetourMethodesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
+		public static TypeRetourService TypeRetourMethodesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
@@ -65,28 +66,12 @@ namespace ConsoleApp4.Application.Services
 			}
 					
 			
-			return (ListeATypeRetourService(ListeTypeRetourServices));
+			return (new TypeRetourService(ListeTypeRetourServices[2], ListeTypeRetourServices[3]));
 
 		}
 
 
 
-
-
-
-		/// <summary>
-		/// Renvoie la liste des types de retour des services associés à une liste donnée
-		/// </summary>
-		/// <returns></returns>
-		public static List<TypeRetourService> ListeATypeRetourService(List<string> liste)
-		{
-			List<TypeRetourService> ListeTypeRetourService = new List<TypeRetourService>();
-			for (int i = 2; i < liste.Count; i = i + 2)
-			{
-				ListeTypeRetourService.Add(new TypeRetourService(liste[i], liste[i + 1]));
-			}
-			return ListeTypeRetourService;
-		}
 		#endregion
 	}
 }

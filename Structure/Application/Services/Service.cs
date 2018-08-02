@@ -43,7 +43,19 @@ namespace ConsoleApp4.Application.Services
 
 		public override string ToString()
 		{
-			return (this.Nom + this.Description);
+			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description.Trim() + "." + "\r\n" + "/// </summary>" + "\r\n";
+			var methodes = "";
+			foreach (MethodeService m in this.Methodes)
+			{
+				methodes = methodes + "\r\n";
+
+		
+					methodes = methodes + m.ToString() + "\r\n";
+
+			}
+			var res = doc + "\r\n" + "public class " + this.Nom +  ":" + this.InterfaceImplementee + "\r\n"  +"#region Méthodes " + "{ " + "\r\n" + methodes + "\r\n" + "#endregion" + "\r\n" +  "}";
+
+			return res;
 		}
 
 		/// <summary>
