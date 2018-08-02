@@ -31,11 +31,11 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 
 		public override string ToString()
 		{
-			return (Nom + " " + Type + " " + Description);
-
+			var doc = "/// <param name=\"" + this.Nom + "\">" + this.Description + "." + "</param>";
+			return doc;
 		}
 
-		
+
 		public static List<ParametreInterfaceServiceExterne> ParametresMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i,int cmp )
 		{
 

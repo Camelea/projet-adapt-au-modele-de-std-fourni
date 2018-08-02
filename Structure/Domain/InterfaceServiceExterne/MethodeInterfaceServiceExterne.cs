@@ -14,13 +14,13 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 		public string Nom;
 		public string Description;
 		public List<ParametreInterfaceServiceExterne> ParametresInterfaceServiceExterne;
-		public List<TypeRetourInterfaceServiceExterne> TypesRetourInterfaceServiceExterne;
+		public TypeRetourInterfaceServiceExterne TypesRetourInterfaceServiceExterne;
 
 		#endregion
 
 		#region Constructeur 
 
-		public MethodeInterfaceServiceExterne(string nom, string description, List<ParametreInterfaceServiceExterne> parametresInterfaceServiceExterne, List<TypeRetourInterfaceServiceExterne> typesRetourInterfaceServiceExterne)
+		public MethodeInterfaceServiceExterne(string nom, string description, List<ParametreInterfaceServiceExterne> parametresInterfaceServiceExterne, TypeRetourInterfaceServiceExterne typesRetourInterfaceServiceExterne)
 		{
 			this.Nom = nom;
 			this.Description = description;
@@ -32,7 +32,32 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 		#endregion
 
 		#region Méthodes
+		public override string ToString()
+		{
+			var param = "";
+			var paramMethode = "(";
 
+
+			foreach (ParametreInterfaceServiceExterne p in this.ParametresInterfaceServiceExterne)
+			{
+				param = param + p.ToString() + "\r\n";
+				if (p == this.ParametresInterfaceServiceExterne.Last())
+				{
+					paramMethode = paramMethode + p.Type + p.Nom + " )";
+				}
+				else
+				{
+					paramMethode = paramMethode + p.Type + p.Nom + ",";
+				}
+			}
+
+			var retour = this.TypesRetourInterfaceServiceExterne.Type + "\r\n";
+
+			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description + "." + "\r\n" + "/// </summary>" + "\r\n";
+			var res = doc + param + "\n" +  "[OperationContract]" + "\r\n" + "public" + " " + retour + this.Nom + paramMethode + "\r\n" + ";";
+
+			return res;
+		}
 		/// <summary>
 		/// Retourne la liste des noms des méthodes des interfaces de services externes présents dans le fichier
 		/// </summary>

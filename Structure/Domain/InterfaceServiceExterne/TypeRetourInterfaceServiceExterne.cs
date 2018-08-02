@@ -41,7 +41,7 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 			/// <param name="doc"></param>
 			/// <param name="nsmgr"></param>
 			/// <returns></returns>
-			public static List<TypeRetourInterfaceServiceExterne> TypeRetourMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
+			public static TypeRetourInterfaceServiceExterne TypeRetourMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 			{
 
 				XmlNodeList nodeList2;
@@ -78,28 +78,11 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 
 					
 				}
-				return ListeATypeRetourInterfaceServiceExterne(ListeTypeRetourInterfaceServiceExterne);
+				return new TypeRetourInterfaceServiceExterne(ListeTypeRetourInterfaceServiceExterne[2], ListeTypeRetourInterfaceServiceExterne[3]);
 
 		}
 
 
-
-
-
-
-			/// <summary>
-			/// Renvoie la liste des types de retour des services externes associés à une liste donnée
-			/// </summary>
-			/// <returns></returns>
-			public static List<TypeRetourInterfaceServiceExterne> ListeATypeRetourInterfaceServiceExterne(List<string> liste)
-			{
-				List<TypeRetourInterfaceServiceExterne> ListeTypeRetourInterfaceServiceExterne = new List<TypeRetourInterfaceServiceExterne>();
-				for (int i = 2; i < liste.Count; i = i + 2)
-				{
-					ListeTypeRetourInterfaceServiceExterne.Add(new TypeRetourInterfaceServiceExterne(liste[i], liste[i + 1]));
-				}
-				return ListeTypeRetourInterfaceServiceExterne;
-			}
 			#endregion
 		}
 	}

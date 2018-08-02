@@ -6,9 +6,11 @@ using ConsoleApp4.Domain.Entites;
 using ConsoleApp4.Tables;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace ConsoleApp4
@@ -145,16 +147,16 @@ namespace ConsoleApp4
 
 			#region Test Enumerations
 
-			var proprietes = Enumeration.Enumerations(doc, nsmgr);
-			List<Enumeration> resultat1 = proprietes;
-			foreach (Enumeration lp in resultat1)
+			//var proprietes = Enumeration.Enumerations(doc, nsmgr);
+			//List<Enumeration> resultat1 = proprietes;
+			//foreach (Enumeration lp in resultat1)
 
-			{
+			//{
 
-				Console.WriteLine(lp.ToString());
+			//	Console.WriteLine(lp.ToString());
 
-			}
-			Console.ReadKey();
+			//}
+			//Console.ReadKey();
 
 			#region Test proprietes enumerations  
 			//var i = 2;
@@ -316,7 +318,31 @@ namespace ConsoleApp4
 
 			//}
 			//Console.ReadKey();
+			
+
+		{
+				 Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "enumerations"));
+
+
+				foreach (Enumeration e in Enumeration.Enumerations(doc, nsmgr))
+				{
+					string chemin = @"C:\Users\CameleaOUARKOUB\Desktop\enumerations\" + e.Nom.Trim() + ".cs"; 
+					FileStream stream = new FileStream(chemin, FileMode.Append, FileAccess.Write);
+					StreamWriter writer = new StreamWriter(stream);
+					using (writer)
+					writer.WriteLine(e.ToString());
+					writer.Close();
+				}
+			}
+				
+			}
+			
+
+
+
+
 			#endregion
 		}
 	}
-}
+
+
