@@ -6,26 +6,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace ConsoleApp4.Application.Interface
+namespace ConsoleApp4.Structure.Application.Interface.ObjetPresentation
 {
-	class ObjetPresentation
+	class MethodeObjetPresentation
 	{
 		#region Attributs
 
 		public string Nom;
 		public string Description;
-		public List<Propriete> Proprietes;
+		public Propriete Propriete;
 
 
 
 		#endregion
 
+		public string ToString(string data)
+		{
+			var res = "///<summary>" + "\r\n" + "///" + " " + this.Description + "\r\n" + "/// </summary>" + "\r\n" + data + "public" + this.Propriete.GetType() + this.Propriete.Nom + "{ get; set;}" ;
+			return res;
+		}
+
+
 		#region Constructeur 
-		public ObjetPresentation(string nom, string description, List<Propriete> proprietes)
+		public MethodeObjetPresentation(string nom, string description, Propriete propriete)
 		{
 			this.Nom = nom;
 			this.Description = description;
-			this.Proprietes = proprietes;
+			this.Propriete = propriete;
 		}
 		#endregion
 
@@ -65,49 +72,47 @@ namespace ConsoleApp4.Application.Interface
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static string DescriptionObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
+		public static string DescriptionObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr, int i)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
 
-				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-				var res = "";
-				nodeList2 = root.SelectNodes(xpath, nsmgr);
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
+			var res = "";
+			nodeList2 = root.SelectNodes(xpath, nsmgr);
 
-				foreach (XmlNode isbn2 in nodeList2)
-				{
-					res = res + (isbn2.InnerText);
-				}
+			foreach (XmlNode isbn2 in nodeList2)
+			{
+				res = res + (isbn2.InnerText);
+			}
 
 			return res;
 
 
 		}
-
-
-
-
 		/// <summary>
 		/// Fonction qui retourne la listes des objets de presentation   
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<ObjetPresentation> ObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<MethodeObjetPresentation> MethodesObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			List<string> noms = NomsObjetsPresentation(doc, nsmgr);
-			List<ObjetPresentation> objetsPresentation = new List<ObjetPresentation>();
-			
+			List<MethodeObjetPresentation> methodesObjetsPresentation = new List<MethodeObjetPresentation>();
+
 			for (int i = 0; i < noms.Count; i++)
 			{
 				string descriptions = DescriptionObjetsPresentation(doc, nsmgr, i);
-				List<Propriete> proprietes = Propriete.ProprietesObjetsPresentation(doc, nsmgr,i);
-				objetsPresentation.Add(new ObjetPresentation(noms[i], descriptions, proprietes));
+				Propriete proprietes = Propriete.ProprietesObjetsPresentation(doc, nsmgr, i);
+				methodesObjetsPresentation.Add(new MethodeObjetPresentation(noms[i], descriptions, proprietes));
 
 			}
-			return objetsPresentation;
+			return methodesObjetsPresentation;
 
 		}
 		#endregion
+
+
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using ConsoleApp4.Application.Interface;
 using ConsoleApp4.Domain.CommonType.Metiers;
+using ConsoleApp4.Structure.Application.Interface.ObjetPresentation;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -150,7 +151,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<Propriete> ProprietesObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
+		public static Propriete ProprietesObjetsPresentation(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
@@ -159,7 +160,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
 
 
-			if (i == ObjetPresentation.NomsObjetsPresentation(doc, nsmgr).Count)
+			if (i == MethodeObjetPresentation.NomsObjetsPresentation(doc, nsmgr).Count)
 			{
 
 				xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /preceding-sibling::w:tbl / w:tr /w:tc)]";
@@ -173,7 +174,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 					}
 					
 			
-			return ListeAProprietes(ListeProprietesObjetsPresentation);
+			return new Propriete(ListeProprietesObjetsPresentation[3],ListeProprietesObjetsPresentation[4],ListeProprietesObjetsPresentation[5]);
 
 		}
 
