@@ -13,14 +13,14 @@ namespace ConsoleApp4.Application.Mappers
 
 		public string Nom { get; private set; }
 		public string Descriptions { get; private set; }
-		public List<ParametreEntrantMapper> ParametresMethode { get; private set; }
-		public List<TypeRetourMapper> TypesRetour { get; private set; }
-		public List<AlgorithmeMapper> Algorithme { get; private set; }
+		public ParametreEntrantMapper ParametresMethode { get; private set; }
+		public TypeRetourMapper TypesRetour { get; private set; }
+		public AlgorithmeMapper Algorithme { get; private set; }
 		#endregion
 
 		#region Constructeur 
 
-		public MethodeMapper(string nom, string descriptions, List<ParametreEntrantMapper> parametresMethode, List<TypeRetourMapper> typeRetour, List<AlgorithmeMapper> algorithme)
+		public MethodeMapper(string nom, string descriptions, ParametreEntrantMapper parametresMethode, TypeRetourMapper typeRetour, AlgorithmeMapper algorithme)
 		{
 			this.Nom = nom;
 			this.Descriptions = descriptions;
@@ -36,7 +36,19 @@ namespace ConsoleApp4.Application.Mappers
 
 		public override string ToString()
 		{
-			return (this.Nom);
+
+			var param = "";
+			var paramMethode = "(" + this.ParametresMethode.Type + " "  + this.ParametresMethode.Nom + " " + ")";
+			
+			param =  this.ParametresMethode.ToString() + "\r\n";
+
+			var retour = this.TypesRetour.ToString() + "\r\n";
+
+			var doc = "/// <summary>" + "\r\n" + "/// " + this.Descriptions + "." + "\r\n" + "/// </summary>" + "\r\n";
+			var res = doc + param + retour + "\r\n" + "public static" + " " + TypesRetour.Type + this.Nom + paramMethode + "\r\n" + "{" + this.Algorithme + "\r\n" + "}";
+
+			return res;
+
 		}
 
 		/// <summary>
@@ -104,9 +116,9 @@ namespace ConsoleApp4.Application.Mappers
 					for (int cmp = 0; cmp < NombreMethodesMappers(doc, nsmgr,i - 1); cmp++)
 					{
 						string descriptions = DescriptionsMethodesMappers(doc, nsmgr,i,cmp);
-						List<AlgorithmeMapper> algorithmes = AlgorithmeMapper.AlgorithmesMethodesMappers(doc, nsmgr,i,cmp);
-						List<ParametreEntrantMapper> parametresMethodes = ParametreEntrantMapper.ParametresMethodesMappers(doc, nsmgr,i,cmp);
-						List<TypeRetourMapper> typesRetour = TypeRetourMapper.TypeRetourMethodesMappers(doc, nsmgr,i,cmp);
+						AlgorithmeMapper algorithmes = AlgorithmeMapper.AlgorithmesMethodesMappers(doc, nsmgr,i,cmp);
+						ParametreEntrantMapper parametresMethodes = ParametreEntrantMapper.ParametresMethodesMappers(doc, nsmgr,i,cmp);
+						TypeRetourMapper typesRetour = TypeRetourMapper.TypeRetourMethodesMappers(doc, nsmgr,i,cmp);
 
 
 					methodes.Add(new MethodeMapper(nomsMethodes[cmp], descriptions, parametresMethodes, typesRetour, algorithmes));

@@ -29,7 +29,8 @@ namespace ConsoleApp4.Application.Mappers
 
 		public override string ToString()
 		{
-			return (Type + " " + Description);
+			var doc = "/// <returns>" + this.Description + "." + "</returns>";
+			return doc;
 
 		}
 
@@ -39,12 +40,12 @@ namespace ConsoleApp4.Application.Mappers
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<TypeRetourMapper> TypeRetourMethodesMappers(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
+		public static TypeRetourMapper TypeRetourMethodesMappers(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeTypeRetourServices = new List<string>();
+			List<string> ListeTypeRetourMapper = new List<string>();
 			
 				if (MethodeMapper.NombreMethodesMappers(doc, nsmgr,i - 1) != 0)
 				{
@@ -57,34 +58,17 @@ namespace ConsoleApp4.Application.Mappers
 							foreach (XmlNode isbn2 in nodeList2)
 							{
 
-								ListeTypeRetourServices.Add(isbn2.InnerText);
+								ListeTypeRetourMapper.Add(isbn2.InnerText);
 
 							}
 						
 					}
 			
-			return (ListeATypeRetourMapper(ListeTypeRetourServices));
+			return (new TypeRetourMapper(ListeTypeRetourMapper[2], ListeTypeRetourMapper[3]));
 
 		}
 
 
-
-
-
-
-		/// <summary>
-		/// Renvoie la liste des types de retour des services associés à une liste donnée
-		/// </summary>
-		/// <returns></returns>
-		public static List<TypeRetourMapper> ListeATypeRetourMapper(List<string> liste)
-		{
-			List<TypeRetourMapper> ListeTypeRetourMapper = new List<TypeRetourMapper>();
-			for (int i = 2; i < liste.Count; i = i + 2)
-			{
-				ListeTypeRetourMapper.Add(new TypeRetourMapper(liste[i], liste[i + 1]));
-			}
-			return ListeTypeRetourMapper;
-		}
 		#endregion
 	}
 }

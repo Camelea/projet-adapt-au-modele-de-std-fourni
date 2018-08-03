@@ -321,19 +321,6 @@ namespace ConsoleApp4
 			
 
 		{
-				 Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "enumerations"));
-
-
-				foreach (Enumeration e in Enumeration.Enumerations(doc, nsmgr))
-				{
-					string chemin = @"C:\Users\CameleaOUARKOUB\Desktop\enumerations\" + e.Nom.Trim() + ".cs"; 
-					FileStream stream = new FileStream(chemin, FileMode.Append, FileAccess.Write);
-					StreamWriter writer = new StreamWriter(stream);
-					using (writer)
-					writer.WriteLine(e.ToString());
-					writer.Close();
-				}
-			}
 				
 			}
 			

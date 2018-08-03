@@ -164,7 +164,7 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 				for (int cmp = 0; cmp < NombreMethodesInterfaceServiceExterne(doc, nsmgr,i - 1); cmp++)
 					{
 					List<ParametreInterfaceServiceExterne> parametres = ParametreInterfaceServiceExterne.ParametresMethodesInterfaceServiceExterne(doc, nsmgr, i,cmp);
-					List<TypeRetourInterfaceServiceExterne> typesRetour = TypeRetourInterfaceServiceExterne.TypeRetourMethodesInterfaceServiceExterne(doc, nsmgr,i , cmp);
+					TypeRetourInterfaceServiceExterne typesRetour = TypeRetourInterfaceServiceExterne.TypeRetourMethodesInterfaceServiceExterne(doc, nsmgr,i , cmp);
 
 					methodesInterfaceServiceExterne.Add(new MethodeInterfaceServiceExterne(nomsMethodes[cmp], descriptionsMethodes[cmp], parametres, typesRetour));
 

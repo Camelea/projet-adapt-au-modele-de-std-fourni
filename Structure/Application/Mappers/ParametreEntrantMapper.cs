@@ -30,13 +30,19 @@ namespace ConsoleApp4.Application.Mappers
 
 		#region Méthodes 
 
+		public override string ToString()
+		{
+			var doc = "/// <param name=\"" + this.Nom + "\">" + this.Description + "." + "</param>";
+			return doc;
+		}
+
 		/// <summary>
 		/// retourne la liste des parametres des methodes des mappers
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<ParametreEntrantMapper> ParametresMethodesMappers(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
+		public static ParametreEntrantMapper ParametresMethodesMappers(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
@@ -61,27 +67,9 @@ namespace ConsoleApp4.Application.Mappers
 				
 					}
 
-			return (ListeAParametresMappers(ListeParametresMethodesMappers));
+			return (new ParametreEntrantMapper(ListeParametresMethodesMappers[3], ListeParametresMethodesMappers[4], ListeParametresMethodesMappers[5]));
 
 		}
-
-
-		/// <summary>
-		/// Renvoie la liste des colonnes de parametres associés à une liste donnée
-		/// </summary>
-		/// <returns></returns>
-		public static List<ParametreEntrantMapper> ListeAParametresMappers(List<string> liste)
-		{
-			List<ParametreEntrantMapper> ListeParametresMappers = new List<ParametreEntrantMapper>();
-			for (int i = 3; i < liste.Count; i = i + 3)
-			{
-				ListeParametresMappers.Add(new ParametreEntrantMapper(liste[i], liste[i + 1], liste[i + 2]));
-			}
-			return ListeParametresMappers;
-		}
-
-
-
 
 
 		#endregion

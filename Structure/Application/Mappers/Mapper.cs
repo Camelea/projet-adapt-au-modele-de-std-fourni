@@ -42,9 +42,20 @@ namespace ConsoleApp4.Application.Mappers
 
 		public override string ToString()
 		{
-			return (this.Nom + this.Description);
-		}
+			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description.Trim() + "." + "\r\n" + "/// </summary>" + "\r\n";
+			var methodes = "";
+			foreach (MethodeMapper m in this.Methodes)
+			{
+				methodes = methodes + "\r\n";
 
+
+				methodes = methodes + m.ToString() + "\r\n";
+
+			}
+			var res = doc + "\r\n" + "public static class " + this.Nom  + "\r\n" + "#region Méthodes " + "{ " + "\r\n" + methodes + "\r\n" + "#endregion" + "\r\n" + "}";
+
+			return res;
+		}
 		/// <summary>
 		/// Retourne une liste de noms des mappers présents dans le fichier
 		/// </summary>

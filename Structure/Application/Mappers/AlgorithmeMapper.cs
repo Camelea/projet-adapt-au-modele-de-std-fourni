@@ -36,7 +36,7 @@ namespace ConsoleApp4.Application.Mappers
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<AlgorithmeMapper> AlgorithmesMethodesMappers(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
+		public static AlgorithmeMapper AlgorithmesMethodesMappers(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
@@ -71,24 +71,10 @@ namespace ConsoleApp4.Application.Mappers
 						
 
 
-			return (ListeAAlgorithmesMappers(ListeAlgorithmesMethodesMappers));
+			return (new AlgorithmeMapper (ListeAlgorithmesMethodesMappers[3], ListeAlgorithmesMethodesMappers[4], ListeAlgorithmesMethodesMappers[5]));
 		}
 
-		/// <summary>
-		/// Renvoie la liste des colonnes d'algorithmes associés à une liste donnée
-		/// </summary>
-		/// <returns></returns>
-		public static List<AlgorithmeMapper> ListeAAlgorithmesMappers(List<string> liste)
-		{
-			List<AlgorithmeMapper> ListeParametresMappers = new List<AlgorithmeMapper>();
-			for (int i = 3; i < liste.Count; i = i + 3)
-			{
-				ListeParametresMappers.Add(new AlgorithmeMapper(liste[i], liste[i + 1], liste[i + 2]));
-			}
-			return ListeParametresMappers;
-		}
-
-
+		
 		#endregion
 	}
 }

@@ -45,7 +45,7 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 					methodes = methodes + m.ToString() + "\r\n";
 
 			}
-			var res = doc + "\r\n" + "public interface " + this.Nom  + "\r\n"  +"#region Méthodes " + "{ " + "\r\n" + methodes + "\r\n" + "#endregion" + "\r\n" +  "}";
+			var res = doc +  "\r\n" + "[ServiceContract]" + "\r\n" + "public interface " + this.Nom  + "\r\n"  +"#region Méthodes " + "{ " + "\r\n" + methodes + "\r\n" + "#endregion" + "\r\n" +  "}";
 
 			return res;
 		}
