@@ -34,7 +34,7 @@ namespace ConsoleApp4.Application.Interface
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<TypeRetourInterfaceService> TypesRetourInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
+		public static TypeRetourInterfaceService TypesRetourInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 
 			XmlNodeList nodeList2;
@@ -77,28 +77,10 @@ namespace ConsoleApp4.Application.Interface
 					}
 				}
 			
-			return ListeATypeRetourInterfaceService(ListeTypeRetourInterfacesServices);
+			return  new TypeRetourInterfaceService(ListeTypeRetourInterfacesServices[2], ListeTypeRetourInterfacesServices[3]);
 
 		}
 
-
-		
-
-		/// <summary>
-		/// Fonction qui prend une liste de string et la transforme en liste de types de retour
-		/// 
-		/// </summary>
-		/// <param name="liste"></param>
-		/// <returns></returns>
-		public static List<TypeRetourInterfaceService> ListeATypeRetourInterfaceService(List<string> liste)
-		{
-			List<TypeRetourInterfaceService> ListeTypeRetourInterfacesServices= new List<TypeRetourInterfaceService>();
-			for (int i = 2; i < liste.Count; i = i + 2)
-			{
-				ListeTypeRetourInterfacesServices.Add(new TypeRetourInterfaceService(liste[i], liste[i + 1]));
-			}
-			return ListeTypeRetourInterfacesServices;
-		}
 
 
 

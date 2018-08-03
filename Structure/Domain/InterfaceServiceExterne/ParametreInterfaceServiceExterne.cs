@@ -29,12 +29,6 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 
 		#region Méthodes
 
-		public override string ToString()
-		{
-			var doc = "/// <param name=\"" + this.Nom + "\">" + this.Description + "." + "</param>";
-			return doc;
-		}
-
 
 		public static List<ParametreInterfaceServiceExterne> ParametresMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i,int cmp )
 		{

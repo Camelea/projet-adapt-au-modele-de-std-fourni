@@ -13,19 +13,19 @@ namespace ConsoleApp4.Application.Interface
 
 		public string Nom { get; private set; }
 		public string Description { get; private set; }
-		public List<ParametreInterfaceService> ParametresEntrant { get; private set; }
-		public List<TypeRetourInterfaceService> ParametresSortant { get; private set; }
+		public List<ParametreInterfaceService> Parametres { get; private set; }
+		public TypeRetourInterfaceService TypeRetour { get; private set; }
 
 		#endregion
 
 		#region Constructeur 
 
-		public Methode(string nom, string description, List<ParametreInterfaceService> parametreEntrant, List<TypeRetourInterfaceService> parametreSortant)
+		public Methode(string nom, string description, List<ParametreInterfaceService> parametreEntrant, TypeRetourInterfaceService parametreSortant)
 		{
 			this.Nom = nom;
 			this.Description = description;
-			this.ParametresEntrant = parametreEntrant;
-			this.ParametresSortant = parametreSortant;
+			this.Parametres = parametreEntrant;
+			this.TypeRetour = parametreSortant;
 
 		}
 
@@ -35,9 +35,30 @@ namespace ConsoleApp4.Application.Interface
 
 		public override string ToString()
 		{
-			return (this.Nom + this.Description);
-		}
+			var param = "";
+			var paramMethode = "(";
 
+
+			foreach (ParametreInterfaceService p in this.Parametres)
+			{
+				param = param + p.ToString() + "\r\n";
+				if (p == this.Parametres.Last())
+				{
+					paramMethode = paramMethode + p.Type + p.Nom + " )";
+				}
+				else
+				{
+					paramMethode = paramMethode + p.Type + p.Nom + ",";
+				}
+			}
+
+			var retour = this.TypeRetour.Type + "\r\n";
+
+			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description + "." + "\r\n" + "/// </summary>" + "\r\n";
+			var res = doc + param + "\n" + "[OperationContract]" + "\r\n" + "public" + " " + retour + this.Nom + paramMethode + "\r\n" + ";";
+
+			return res;
+		}
 		/// <summary>
 		/// Retourne la liste des noms des méthodes des interfaces de service présentes dans le fichier
 		/// </summary>
@@ -123,9 +144,9 @@ namespace ConsoleApp4.Application.Interface
 			List<Methode> methodesInterfacesServices = new List<Methode>();
 			
 
-				List<TypeRetourInterfaceService> parametresSortants = TypeRetourInterfaceService.TypesRetourInterfacesServices(doc, nsmgr,i);
+				TypeRetourInterfaceService typeRetour = TypeRetourInterfaceService.TypesRetourInterfacesServices(doc, nsmgr,i);
 				List<string> nomsMethodes = NomsMethodesInterfacesServices(doc, nsmgr, i-1);
-				List<ParametreInterfaceService> parametresEntrants = ParametreInterfaceService.ParametresInterfacesServices(doc, nsmgr,i);
+				List<ParametreInterfaceService> parametres = ParametreInterfaceService.ParametresInterfacesServices(doc, nsmgr,i);
 			if (NombreMethodesInterfacesServices(doc, nsmgr,i - 1) != 0)
 				{
 				
@@ -134,7 +155,7 @@ namespace ConsoleApp4.Application.Interface
 					{
 					string descriptionsMethodes = DescriptionsMethodesinterfacesService(doc, nsmgr, i, cmp);
 
-					methodesInterfacesServices.Add(new Methode(nomsMethodes[cmp], descriptionsMethodes, parametresEntrants, parametresSortants));
+					methodesInterfacesServices.Add(new Methode(nomsMethodes[cmp], descriptionsMethodes, parametres, typeRetour));
 
 
 					}

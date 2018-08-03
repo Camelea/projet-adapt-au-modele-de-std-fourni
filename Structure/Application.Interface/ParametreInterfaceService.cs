@@ -28,9 +28,10 @@ namespace ConsoleApp4.Application.Interface
 
 		public override string ToString()
 		{
-			return (Nom + " " + Type + " " + Description);
-
+			var doc = "/// <param name=\"" + this.Nom + "\">" + this.Description + "." + "</param>";
+			return doc;
 		}
+
 
 		#region ServicesExternes
 		public static List<ParametreInterfaceService> ParametresInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i )

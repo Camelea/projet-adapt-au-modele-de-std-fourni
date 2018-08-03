@@ -42,9 +42,20 @@ namespace ConsoleApp4.Application.Interface
 
 		public override string ToString()
 		{
-			return (this.Nom + this.Description);
-		}
+			var doc = "/// <summary>" + "\r\n" + "/// " /*this.Description.Trim()*/  + "." + "\r\n" + "/// </summary>" + "\r\n";
+			var methodes = "";
+			foreach (Methode m in this.Methodes)
+			{
+				methodes = methodes + "\r\n";
 
+
+				methodes = methodes + m.ToString() + "\r\n";
+
+			}
+			var res = doc + "\r\n" + "[ServiceContract]" + "\r\n" + "public interface " + this.Nom + "\r\n" + "#region Méthodes " + "{ " + "\r\n" + methodes + "\r\n" + "#endregion" + "\r\n" + "}";
+
+			return res;
+		}
 		/// <summary>
 		/// Retourne une liste de noms des interfaces de services présentes dans le fichier
 		/// </summary>

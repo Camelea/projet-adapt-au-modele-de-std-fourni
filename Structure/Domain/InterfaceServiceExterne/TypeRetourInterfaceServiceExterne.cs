@@ -17,7 +17,7 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 
 		#endregion
 
-		#region Constructeur 
+			#region Constructeur 
 		public TypeRetourInterfaceServiceExterne(string type, string description)
 			{
 				this.Type = type;

@@ -33,22 +33,7 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 
 		#region Méthodes 
 
-		public override string ToString()
-		{
-			var doc = "/// <summary>" + "\r\n" + "/// " /*this.Description.Trim()*/  + "." + "\r\n" + "/// </summary>" + "\r\n";
-			var methodes = "";
-			foreach (MethodeInterfaceServiceExterne m in this.Methodes)
-			{
-				methodes = methodes + "\r\n";
 
-		
-					methodes = methodes + m.ToString() + "\r\n";
-
-			}
-			var res = doc +  "\r\n" + "[ServiceContract]" + "\r\n" + "public interface " + this.Nom  + "\r\n"  +"#region Méthodes " + "{ " + "\r\n" + methodes + "\r\n" + "#endregion" + "\r\n" +  "}";
-
-			return res;
-		}
 		/// <summary>
 		/// Retourne une liste de noms des interfaces de services externes présents dans le fichier
 		/// </summary>
