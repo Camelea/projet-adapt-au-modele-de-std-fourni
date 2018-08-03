@@ -44,7 +44,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 				param.Append(p.ToString() + "\r\n");
 				if (p == this.ParametresInterfaceRegistre.Last())
 				{
-					paramMethode = paramMethode.Append(p.Type + p.Nom + " )");
+					paramMethode = paramMethode.Append(p.Type + p.Nom + " );");
 				}
 				else
 				{

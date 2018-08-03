@@ -25,23 +25,30 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 
 			}
 
-			#endregion
+		#endregion
 
-			#region Méthodes
+		#region Méthodes
 
-			public override string ToString()
+		public override string ToString()
+
+		{
+			var doc = "";
+			if (this.Type != "void")
 			{
-				return (Type + " " + Description);
-
+				doc = "/// <returns>" + this.Description + "." + "</returns>";
 			}
 
-			/// <summary>
-			/// Methode qui renvoie la liste des colonnes des types de retour des methodes des services externes
-			/// </summary>
-			/// <param name="doc"></param>
-			/// <param name="nsmgr"></param>
-			/// <returns></returns>
-			public static TypeRetourInterfaceServiceExterne TypeRetourMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
+			return doc;
+
+		}
+
+		/// <summary>
+		/// Methode qui renvoie la liste des colonnes des types de retour des methodes des services externes
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="nsmgr"></param>
+		/// <returns></returns>
+		public static TypeRetourInterfaceServiceExterne TypeRetourMethodesInterfaceServiceExterne(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 			{
 
 				XmlNodeList nodeList2;

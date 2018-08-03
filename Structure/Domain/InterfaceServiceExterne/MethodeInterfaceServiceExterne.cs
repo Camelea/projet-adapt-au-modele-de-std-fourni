@@ -33,6 +33,34 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 
 		#region Méthodes
 
+		public override string ToString()
+		{
+			StringBuilder param = new StringBuilder();
+			StringBuilder paramMethode = new StringBuilder();
+			paramMethode.Append("(");
+
+
+			foreach (ParametreInterfaceServiceExterne p in this.ParametresInterfaceServiceExterne)
+			{
+				param.Append(p.ToString() + "\r\n");
+				if (p == this.ParametresInterfaceServiceExterne.Last())
+				{
+					paramMethode = paramMethode.Append(p.Type + p.Nom + " );");
+				}
+				else
+				{
+					paramMethode = paramMethode.Append(p.Type + p.Nom + ",");
+				}
+			}
+
+			var retour = this.TypesRetourInterfaceServiceExterne.Type + "\r\n";
+
+			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description + "." + "\r\n" + "/// </summary>" + "\r\n";
+			var res = doc + param.ToString()  +"\r\n" + this.TypesRetourInterfaceServiceExterne.ToString() + "\r\n" + this.TypesRetourInterfaceServiceExterne.ToString()  + "\r\n" + "public" + " " + retour + this.Nom + paramMethode.ToString() + "\r\n" + ";";
+
+			return res;
+		}
+
 		/// <summary>
 		/// Retourne la liste des noms des méthodes des interfaces de services externes présents dans le fichier
 		/// </summary>

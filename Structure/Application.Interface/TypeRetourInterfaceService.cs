@@ -23,8 +23,14 @@ namespace ConsoleApp4.Application.Interface
 		#region Méthodes
 
 		public override string ToString()
+
 		{
-			var doc = "/// <returns>" + this.Description + "." + "</returns>";
+			var doc = "";
+			if (this.Type != "void")
+			{
+				doc = "/// <returns>" + this.Description + "." + "</returns>";
+			}
+
 			return doc;
 
 		}
