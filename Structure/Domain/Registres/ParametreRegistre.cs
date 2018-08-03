@@ -34,30 +34,29 @@ namespace ConsoleApp4.Domain.Registres
 
 		#region Méthodes 
 
+		public override string ToString()
+		{
+			var doc = "/// <param name=\"" + this.Nom + "\">" + this.Description + "." + "</param>";
+			return doc;
+		}
+
 		/// <summary>
 		/// retourne la liste des parametres des methodes des registres 
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<ParametreRegistre>> ParametresMethodesEntites(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<ParametreRegistre> ParametresMethodesEntites(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp )
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> ListeParametresMethodesRegistres = new List<List<string>>();
-			List<List<ParametreRegistre>> ParametresMethodesRegistres = new List<List<ParametreRegistre>>();
+			List<string> ListeParametresMethodesRegistres = new List<string>();
 
-			for (int i = 1; i < Registre.NomsRegistres(doc, nsmgr).Count + 1; i++)
-			{
-
-				if (MethodeRegistre.NombreMethodesRegistres(doc, nsmgr)[i - 1] != 0)
+				if (MethodeRegistre.NombreMethodesRegistres(doc, nsmgr,i - 1) != 0)
 				{
 
-					for (int cmp = 0; cmp < MethodeRegistre.NombreMethodesRegistres(doc, nsmgr)[i - 1]; cmp++)
-					{
-
-						ListeParametresMethodesRegistres.Add(new List<string>());
+						
 						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/ following-sibling:: w:tbl / w:tr /w:tc  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3] / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][3] / preceding-sibling::w:tbl / w:tr /w:tc)]";
 
 
@@ -67,16 +66,13 @@ namespace ConsoleApp4.Domain.Registres
 						{
 							if (isbn2.InnerText != "")
 							{
-								ListeParametresMethodesRegistres[cmp].Add(isbn2.InnerText.Trim());
+								ListeParametresMethodesRegistres.Add(isbn2.InnerText.Trim());
 							}
 						}
-						ParametresMethodesRegistres.Add(ListeAParametresRegistre(ListeParametresMethodesRegistres[cmp]));
-
+		
 					}
 
-				}
-			}
-			return ParametresMethodesRegistres;
+			return ListeAParametresRegistre(ListeParametresMethodesRegistres);
 
 		}
 

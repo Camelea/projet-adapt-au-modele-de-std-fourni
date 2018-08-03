@@ -12,19 +12,19 @@ namespace ConsoleApp4.Domain.Registres
 		#region Attributs 
 
 		public string Nom;
-		public string Descriptions;
-		public List<ParametreRegistre> ParametresMethode;
-		public List<TypeRetourRegistre> TypesRetour;
+		public string Description;
+		public List<ParametreRegistre> ParametresRegistres;
+		public TypeRetourRegistre TypesRetour;
 		public string Algorithme;
 		#endregion
 
 		#region Constructeur 
 
-		public MethodeRegistre(string nom, string descriptions, List<ParametreRegistre> parametresMethode, List<TypeRetourRegistre> typeRetour, string algorithme)
+		public MethodeRegistre(string nom, string description, List<ParametreRegistre> parametresMethode, TypeRetourRegistre typeRetour, string algorithme)
 		{
 			this.Nom = nom;
-			this.Descriptions = descriptions;
-			this.ParametresMethode = parametresMethode;
+			this.Description = description;
+			this.ParametresRegistres = parametresMethode;
 			this.TypesRetour = typeRetour;
 			this.Algorithme = algorithme;
 
@@ -35,8 +35,23 @@ namespace ConsoleApp4.Domain.Registres
 		#region Méthodes 
 
 		public override string ToString()
-		{
-			return (this.Nom);
+		{ var docParam = "";
+			var param = "(";
+			foreach (ParametreRegistre p in this.ParametresRegistres)
+			{
+				docParam = docParam + p.ToString() + "\r\n";
+				if (p == this.ParametresRegistres.Last())
+				{
+					param = param + p.Type + " " + p.Nom + ")";
+				}
+				else
+				{
+					param = param + p.Type + " " + p.Nom + ", ";
+				}
+			}
+
+			var res = "///<summary>" + "\r\n" + "/// " + this.Description + "." + "\r\n" + "/// </summary>" + "\r\n" + docParam + "\r\n" + "public" + this.TypesRetour.Type + this.Nom + param + "\r\n" +"{"  + this.Algorithme + "\r\n" + "}" ;
+			return res;
 		}
 
 		/// <summary>
@@ -45,44 +60,28 @@ namespace ConsoleApp4.Domain.Registres
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<string>> NomsMethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<string> NomsMethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> MethodesRegistres = new List<List<string>>();
+			List<string> MethodesRegistres = new List<string>();
 
-			for (int i = 1; i < Registre.NomsRegistres(doc, nsmgr).Count + 1; i++)
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
 
+					
+			if (i == Registre.NomsRegistres(doc, nsmgr).Count)
 			{
-				if (i < Registre.NomsRegistres(doc, nsmgr).Count)
-				{
-					List<string> ListeMethodes = new List<string>();
-					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
 
+				xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
+			}
 					nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 					foreach (XmlNode isbn2 in nodeList2)
 					{
-						ListeMethodes.Add(isbn2.InnerText);
-					}
-					MethodesRegistres.Add(ListeMethodes);
-
-				}
-				if (i == Registre.NomsRegistres(doc, nsmgr).Count)
-				{
-					List<string> ListeMethodes = new List<string>();
-					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
-
-					nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-					foreach (XmlNode isbn2 in nodeList2)
-					{
-						ListeMethodes.Add(isbn2.InnerText);
+					MethodesRegistres.Add(isbn2.InnerText);
 					}
 					
-				}
-			}
 
 			return MethodesRegistres;
 
@@ -96,15 +95,10 @@ namespace ConsoleApp4.Domain.Registres
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<int> NombreMethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static int NombreMethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
-			List<int> NombreMethodesRegistre = new List<int>();
-			foreach (List<string> liste in NomsMethodesRegistres(doc, nsmgr))
-			{
-				NombreMethodesRegistre.Add(liste.Count);
 
-			}
-			return NombreMethodesRegistre;
+			return NomsMethodesRegistres(doc, nsmgr,i).Count ;
 		}
 
 
@@ -115,30 +109,26 @@ namespace ConsoleApp4.Domain.Registres
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<MethodeRegistre>> MethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<MethodeRegistre> MethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
-			List<List<MethodeRegistre>> methodes = new List<List<MethodeRegistre>>();
-			List<List<string>> nomsMethodes = NomsMethodesRegistres(doc, nsmgr);
-			List<List<string>> algorithmes = AlgorithmesMethodesRegsitres(doc, nsmgr);
-			List<List<string>> descriptions = DescriptionsMethodesRegistres(doc, nsmgr);
-			List<List<ParametreRegistre>> parametresMethodes = ParametreRegistre.ParametresMethodesEntites(doc, nsmgr);
-			List<List<TypeRetourRegistre>> typesRetour = TypeRetourRegistre.TypeRetourMethodesRegistres(doc, nsmgr);
-			for (int i = 1; i < Registre.NomsRegistres(doc, nsmgr).Count + 1; i++)
-			{
-				if (NombreMethodesRegistres(doc, nsmgr)[i - 1] != 0)
+			List<MethodeRegistre> methodes = new List<MethodeRegistre>();
+
+				if (NombreMethodesRegistres(doc, nsmgr,i - 1) != 0)
 				{
-					List<MethodeRegistre> methodesInterfacesServices = new List<MethodeRegistre>();
+				List<string> nomsMethodes = NomsMethodesRegistres(doc, nsmgr, i);
+				List<MethodeRegistre> methodesInterfacesServices = new List<MethodeRegistre>();
 
-					for (int cmp = 0; cmp < NombreMethodesRegistres(doc, nsmgr)[i - 1]; cmp++)
+					for (int cmp = 0; cmp < NombreMethodesRegistres(doc, nsmgr,i - 1); cmp++)
 					{
+					string algorithmes = AlgorithmesMethodesRegsitres(doc, nsmgr,i,cmp);
+					string descriptions = DescriptionsMethodesRegistres(doc, nsmgr,i,cmp);
+					List<ParametreRegistre> parametresMethodes = ParametreRegistre.ParametresMethodesEntites(doc, nsmgr, i,cmp);
+					TypeRetourRegistre typesRetour = TypeRetourRegistre.TypeRetourMethodesRegistres(doc, nsmgr, i, cmp);
 
-						methodesInterfacesServices.Add(new MethodeRegistre(nomsMethodes[i - 1][cmp], descriptions[i-1][cmp], parametresMethodes[cmp], typesRetour[cmp], algorithmes[i - 1][cmp]));
+					methodes.Add(new MethodeRegistre(nomsMethodes[i-1], descriptions, parametresMethodes, typesRetour, algorithmes));
 
 
 					}
-					methodes.Add(methodesInterfacesServices);
-				}
-
 
 			}
 			return methodes;
@@ -150,56 +140,36 @@ namespace ConsoleApp4.Domain.Registres
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<string>> AlgorithmesMethodesRegsitres(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string AlgorithmesMethodesRegsitres(XmlDocument doc, XmlNamespaceManager nsmgr,int i ,int cmp)
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> MethodesRegistres = new List<List<string>>();
+			
 
-			for (int i = 1; i < Registre.NomsRegistres(doc, nsmgr).Count + 1; i++)
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:p)]";
 
+
+			if (i == Registre.NomsRegistres(doc, nsmgr).Count && cmp == NombreMethodesRegistres(doc, nsmgr, i - 1) - 1)
 			{
-				for (int cmp = 0; cmp < NombreMethodesRegistres(doc, nsmgr)[i - 1] + 1; cmp++)
-				{
-					if (i < Registre.NomsRegistres(doc, nsmgr).Count || (i == Registre.NomsRegistres(doc, nsmgr).Count && cmp < NombreMethodesRegistres(doc, nsmgr)[i - 1] - 1))
-					{
-						List<string> ListeMethodesEntites = new List<string>();
-						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:p)]";
-
-						nodeList2 = root.SelectNodes(xpath, nsmgr);
-						var res = "";
-						foreach (XmlNode isbn2 in nodeList2)
-						{
-							res = res + (isbn2.InnerText);
-						}
-						ListeMethodesEntites.Add(res);
-						MethodesRegistres.Add(ListeMethodesEntites);
-
-					}
-
-
-
-					if (i == Registre.NomsRegistres(doc, nsmgr).Count && cmp == NombreMethodesRegistres(doc, nsmgr)[i - 1] - 1)
-					{
-						List<string> ListeMethodeRegistres = new List<string>();
-						string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /preceding-sibling:: w:p)]";
-
-						nodeList2 = root.SelectNodes(xpath, nsmgr);
-						var res = "";
-						foreach (XmlNode isbn2 in nodeList2)
-						{
-							res = res + (isbn2.InnerText);
-						}
-						ListeMethodeRegistres.Add(res);
-						MethodesRegistres.Add(ListeMethodeRegistres);
-
-					}
-				}
+				
+				xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][4] /preceding-sibling:: w:p)]";
 			}
+					
 
+					if (i < Registre.NomsRegistres(doc, nsmgr).Count && cmp == NombreMethodesRegistres(doc, nsmgr,i - 1) - 1) {
+			xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i +1)+ "]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i+1)+ "]/preceding-sibling:: w:p)]";
 
-			return MethodesRegistres;
+			}
+			nodeList2 = root.SelectNodes(xpath, nsmgr);
+			var res = "";
+			foreach (XmlNode isbn2 in nodeList2)
+			{
+				res = res + (isbn2.InnerText);
+			}
+			
+
+			return res;
 		}
 
 		/// <summary>
@@ -208,33 +178,23 @@ namespace ConsoleApp4.Domain.Registres
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<List<string>> DescriptionsMethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static string DescriptionsMethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<List<string>> MethodesRegistres = new List<List<string>>();
-
-			for (int i = 1; i < Registre.NomsRegistres(doc, nsmgr).Count + 1; i++)
-
-			{
-				for (int cmp = 0; cmp < NombreMethodesRegistres(doc, nsmgr)[i - 1] + 1; cmp++)
-				{
-					List<string> ListeMethodesRegistres = new List<string>();
+		
 					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][1]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/preceding-sibling:: w:p)]";
 
 					nodeList2 = root.SelectNodes(xpath, nsmgr);
-
+					var res = "";
 					foreach (XmlNode isbn2 in nodeList2)
 					{
-						ListeMethodesRegistres.Add(isbn2.InnerText);
+						res = res + (isbn2.InnerText);
 					}
-					MethodesRegistres.Add(ListeMethodesRegistres);
 
-				}
-			}
 
-			return MethodesRegistres;
+			return res;
 
 
 		}
