@@ -9,9 +9,9 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 	public class Propriete
 	{
 		#region Attributs
-		public string Nom;
-		public string Type;
-		public string Description;
+		public string Nom { get; private set; }
+		public string Type { get; private set; }
+		public string Description { get; private set; }
 
 		#endregion
 

@@ -35,27 +35,28 @@ namespace ConsoleApp4.Application.Interface
 
 		public override string ToString()
 		{
-			var param = "";
-			var paramMethode = "(";
+			StringBuilder param = new StringBuilder();
+			StringBuilder paramMethode = new StringBuilder();
+			paramMethode.Append ("(");
 
 
 			foreach (ParametreInterfaceService p in this.Parametres)
 			{
-				param = param + p.ToString() + "\r\n";
+				param.Append( p.ToString() + "\r\n");
 				if (p == this.Parametres.Last())
 				{
-					paramMethode = paramMethode + p.Type + p.Nom + " )";
+					paramMethode = paramMethode.Append(p.Type + p.Nom + " )" + "\r\n");
 				}
 				else
 				{
-					paramMethode = paramMethode + p.Type + p.Nom + ",";
+					paramMethode = paramMethode.Append(p.Type + p.Nom + ",");
 				}
 			}
 
 			var retour = this.TypeRetour.Type + "\r\n";
 
 			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description + "." + "\r\n" + "/// </summary>" + "\r\n";
-			var res = doc + param + "\n" + "[OperationContract]" + "\r\n" + "public" + " " + retour + this.Nom + paramMethode + "\r\n" + ";";
+			var res = doc + param.ToString() + this.TypeRetour.ToString() +  "\n" + "[OperationContract]" + "\r\n" + "public" + " " + retour + this.Nom + paramMethode.ToString() + "\r\n" + ";";
 
 			return res;
 		}

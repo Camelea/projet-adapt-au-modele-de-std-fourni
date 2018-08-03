@@ -30,12 +30,14 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 
 		public override string ToString()
 		{
-			return ( Type + " " + Description);
+			var doc = "/// <returns>" + this.Description + "." + "</returns>";
+			return doc;
 
 		}
 
-		
-		public static List<TypeRetourInterfaceRegistre> TypeRetourMethodesInterfacesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i,int cmp )
+
+
+		public static TypeRetourInterfaceRegistre TypeRetourMethodesInterfacesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i,int cmp )
 		{
 
 			XmlNodeList nodeList2;
@@ -59,28 +61,12 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 						}
 				
 				
-			return ListeATypeRetourInterfaceRegistre(ListeTypeRetourInterfacesRegistres);
+			return new TypeRetourInterfaceRegistre(ListeTypeRetourInterfacesRegistres[2], ListeTypeRetourInterfacesRegistres[3]);
 
 		}
 
 
 
-		
-
-
-		/// <summary>
-		/// Renvoie la liste des types de retour des interfaces de registre associés à une liste donnée
-		/// </summary>
-		/// <returns></returns>
-		public static List<TypeRetourInterfaceRegistre> ListeATypeRetourInterfaceRegistre(List<string> liste)
-		{
-			List<TypeRetourInterfaceRegistre> ListeTypeRetourInterfaceRegistre = new List<TypeRetourInterfaceRegistre>();
-			for (int i = 2; i < liste.Count; i = i + 2)
-			{
-				ListeTypeRetourInterfaceRegistre.Add(new TypeRetourInterfaceRegistre(liste[i], liste[i + 1]));
-			}
-			return ListeTypeRetourInterfaceRegistre;
-		}
 		#endregion
 	}
 }

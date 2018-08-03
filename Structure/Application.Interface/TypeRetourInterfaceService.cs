@@ -24,9 +24,11 @@ namespace ConsoleApp4.Application.Interface
 
 		public override string ToString()
 		{
-			return ( Type + " " + Description);
+			var doc = "/// <returns>" + this.Description + "." + "</returns>";
+			return doc;
 
 		}
+
 
 		/// <summary>
 		/// Fonction qui permet de renvoyer la liste des colonnes de types de retour des interfaces de service 

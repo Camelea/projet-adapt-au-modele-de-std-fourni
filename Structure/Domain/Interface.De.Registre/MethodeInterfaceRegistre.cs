@@ -1,5 +1,7 @@
 ﻿using ConsoleApp4.Domain.Interface.De.Registre;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Xml;
 
 namespace ConsoleApp4.Domain.CommonType.Services_Externes
@@ -11,13 +13,13 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		public string Nom { get; private set; }
 		public string Description { get; private set; }
 		public List<ParametreInterfaceRegistre> ParametresInterfaceRegistre { get; private set; }
-		public List<TypeRetourInterfaceRegistre> TypeRetourInterfacesRegistres { get; private set; }
+		public TypeRetourInterfaceRegistre TypeRetourInterfacesRegistres { get; private set; }
 
 		#endregion
 
 		#region Constructeur 
 
-		public MethodeInterfaceRegistre(string nom, string description, List<ParametreInterfaceRegistre> parametresInterfaceRegistre, List<TypeRetourInterfaceRegistre> typeRetourInterfacesRegistres)
+		public MethodeInterfaceRegistre(string nom, string description, List<ParametreInterfaceRegistre> parametresInterfaceRegistre, TypeRetourInterfaceRegistre typeRetourInterfacesRegistres)
 		{
 			this.Nom = nom;
 			this.Description = description;
@@ -32,7 +34,30 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 		public override string ToString()
 		{
-			return (this.Nom + this.Description);
+			StringBuilder param = new StringBuilder();
+			StringBuilder paramMethode = new StringBuilder();
+			paramMethode.Append("(");
+
+
+			foreach (ParametreInterfaceRegistre p in this.ParametresInterfaceRegistre)
+			{
+				param.Append(p.ToString() + "\r\n");
+				if (p == this.ParametresInterfaceRegistre.Last())
+				{
+					paramMethode = paramMethode.Append(p.Type + p.Nom + " )");
+				}
+				else
+				{
+					paramMethode = paramMethode.Append(p.Type + p.Nom + ",");
+				}
+			}
+
+			var retour = this.TypeRetourInterfacesRegistres.Type + "\r\n";
+
+			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description + "." + "\r\n" + "/// </summary>" + "\r\n";
+			var res = doc + param.ToString() + "\r\n" + this.TypeRetourInterfacesRegistres.ToString() +"\r\n" + "[OperationContract]" + "\r\n" + "public" + " " + retour + this.Nom + paramMethode.ToString() + "\r\n" + ";";
+
+			return res;
 		}
 
 		/// <summary>
@@ -130,7 +155,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 					for (int cmp = 0; cmp < NombreMethodesInterfacesRegistres(doc, nsmgr,i - 1); cmp++)
 					{
 						List<ParametreInterfaceRegistre> parametres = ParametreInterfaceRegistre.ParametresMethodesInterfacesRegistres(doc, nsmgr, i,cmp);
-						List<TypeRetourInterfaceRegistre> typesRetour = TypeRetourInterfaceRegistre.TypeRetourMethodesInterfacesRegistres(doc, nsmgr,i , cmp);
+						TypeRetourInterfaceRegistre typesRetour = TypeRetourInterfaceRegistre.TypeRetourMethodesInterfacesRegistres(doc, nsmgr,i , cmp);
 						string descriptionsMethodes = DescriptionsMethodesinterfacesRegistres(doc, nsmgr, i ,cmp);
 
 					methodesInterfacesRegistres.Add(new MethodeInterfaceRegistre(nomsMethodes[cmp], descriptionsMethodes, parametres, typesRetour));

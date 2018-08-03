@@ -16,10 +16,10 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 
 		#region Attributs
 
-		public string Nom;
-		public string Description;
-		public List<MethodeInterfaceRegistre> Methodes;
-		
+		public string Nom { get; private set; }
+		public string Description { get; private set; }
+		public List<MethodeInterfaceRegistre> Methodes { get; private set; }
+
 
 		#endregion
 
@@ -45,7 +45,19 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 
 		public override string ToString()
 		{
-			return (this.Nom + this.Description);
+			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description.Trim()  + "." + "\r\n" + "/// </summary>" + "\r\n";
+			StringBuilder methodes = new StringBuilder();
+			foreach (MethodeInterfaceRegistre m in this.Methodes)
+			{
+				methodes.Append( "\r\n");
+
+
+				methodes.Append(m.ToString() + "\r\n");
+
+			}
+			var res = doc + "\r\n"  + "public interface " + this.Nom + "\r\n" + "#region Méthodes " + "{ " + "\r\n" + methodes + "\r\n" + "#endregion" + "\r\n" + "}";
+
+			return res;
 		}
 
 		/// <summary>
@@ -116,20 +128,20 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 
 			for (int i = 0; i < NomsInterfacesRegistres(doc, nsmgr).Count; i++)
 			{
-				List<MethodeInterfaceRegistre> methodes = MethodeInterfaceRegistre.MethodesRegistres(doc, nsmgr, i - 1);
+				List<MethodeInterfaceRegistre> methodes = MethodeInterfaceRegistre.MethodesRegistres(doc, nsmgr, i);
 				string descriptions = DescriptionsInterfacesRegistres(doc, nsmgr,i);
 
 
 				if (MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr,i - 1)!= 0)
 				{
 
-					interfacesRegistre.Add(new InterfaceRegistre(noms[i], descriptions, methodes));
+					interfacesRegistre.Add(new InterfaceRegistre(noms[i-1], descriptions, methodes));
 				}
 
 				if (MethodeInterfaceRegistre.NombreMethodesInterfacesRegistres(doc, nsmgr,i - 1) == 0)
 				{
 
-					interfacesRegistre.Add(new InterfaceRegistre(noms[i], descriptions));
+					interfacesRegistre.Add(new InterfaceRegistre(noms[i-1], descriptions));
 				}
 
 

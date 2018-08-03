@@ -33,8 +33,8 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 
 		public override string ToString()
 		{
-			return (Nom + " " + Type + " " + Description);
-
+			var doc = "/// <param name=\"" + this.Nom + "\">" + this.Description + "." + "</param>";
+			return doc;
 		}
 
 
