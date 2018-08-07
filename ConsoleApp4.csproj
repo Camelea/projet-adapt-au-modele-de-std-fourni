@@ -47,7 +47,8 @@
     <Compile Include="Code\EntiteToCode.cs" />
     <Compile Include="Structure\Application.Interface\InterfaceService.cs" />
     <Compile Include="Structure\Application.Interface\Methode.cs" />
-    <Compile Include="Structure\Application.Interface\ObjetPresentation.cs" />
+    <Compile Include="Structure\Application.Interface\ObjetPresentation\MethodeObjetPresentation.cs" />
+    <Compile Include="Structure\Application.Interface\ObjetPresentation\ObjetPresentation.cs" />
     <Compile Include="Structure\Application.Interface\ParametreInterfaceService.cs" />
     <Compile Include="Structure\Application.Interface\TypeRetourInterfaceService.cs" />
     <Compile Include="Structure\Application\Mappers\AlgorithmeMapper.cs" />

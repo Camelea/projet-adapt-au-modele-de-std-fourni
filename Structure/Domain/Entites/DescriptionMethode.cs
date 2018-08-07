@@ -36,7 +36,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<DescriptionMethode> DescriptionsMethodesEntites(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
+		public static DescriptionMethode DescriptionsMethodesEntites(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
@@ -61,26 +61,9 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 						
 					}
 
-			return (ListeADescriptionsMethode(ListeDescriptionsMethodesEntites));
+			return (new DescriptionMethode(ListeDescriptionsMethodesEntites[3], ListeDescriptionsMethodesEntites[4], ListeDescriptionsMethodesEntites[5]));
 
 		}
-
-
-		/// <summary>
-		/// Renvoie la liste des colonnes de descriptions associés à une liste donnée
-		/// </summary>
-		/// <returns></returns>
-		public static List<DescriptionMethode> ListeADescriptionsMethode(List<string> liste)
-		{
-			List<DescriptionMethode> ListeDescriptionsEntites = new List<DescriptionMethode>();
-			for (int i = 3; i < liste.Count; i = i + 3)
-			{
-				ListeDescriptionsEntites.Add(new DescriptionMethode(liste[i], liste[i + 1], liste[i + 2]));
-			}
-			return ListeDescriptionsEntites;
-		}
-
-
 
 
 

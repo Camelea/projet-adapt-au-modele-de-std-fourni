@@ -27,16 +27,16 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 
 		/// <summary>
-		/// Renvoie la liste des informations de parametres sortants des services externes 
+		/// Renvoie l'entité partiel de l'entité entré en parametre 
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<EntitePartiel> EntitesPartiels(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
+		public static EntitePartiel EntitesPartiels(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
-			List<string> ListeEntitesPartiels = new List<string>();
+			List<string> ListeEntitePartiel = new List<string>();
 			
 
 				
@@ -49,34 +49,15 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 				foreach (XmlNode isbn2 in nodeList2)
 				{
 
-					ListeEntitesPartiels.Add(isbn2.InnerText);
+					ListeEntitePartiel.Add(isbn2.InnerText);
 
 				}
 		
 
 
-		return (ListeAEntitePartiel(ListeEntitesPartiels));
+		return new EntitePartiel(ListeEntitePartiel[2],ListeEntitePartiel[3]);
 
 		}
-
-
-
-		/// <summary>
-		/// Fonction qui prend une liste de string et la transforme en liste d'entites partiels 
-		/// 
-		/// </summary>
-		/// <param name="liste"></param>
-		/// <returns></returns>
-		public static List<EntitePartiel> ListeAEntitePartiel(List<string> liste)
-		{
-			List<EntitePartiel> ListeEntitesPartiels = new List<EntitePartiel>();
-			for (int i = 2; i < liste.Count; i = i + 2)
-			{
-				ListeEntitesPartiels.Add(new EntitePartiel(liste[i], liste[i + 1]));
-			}
-			return ListeEntitesPartiels;
-		}
-
 
 		#endregion
 	}

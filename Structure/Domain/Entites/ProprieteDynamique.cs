@@ -39,6 +39,11 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 		#region Méthodes
 
+		public override string ToString()
+		{
+			var res =  "/// <summary>" + "\r\n" + "///" + this.Description + "\r\n" + "/// </summary>" + "\r\n" + "public " + this.Type + this.Nom + "\r\n" + "{" + "\r\n" + "get { " + this.get + "}" + "\r\n" + " set { " + this.Set + " }" + "\r\n" + "}";
+			return res;
+		}
 
 		/// <summary>
 		/// Renvoie la liste des informations de proprietes dynamiques des entitess 

@@ -1,4 +1,5 @@
 ﻿using ConsoleApp4.Domain.CommonType;
+using ConsoleApp4.Domain.Entites;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,10 +35,23 @@ namespace ConsoleApp4.Code
 			}
 		}
 
+		public void CreerEntites()
+		{
+			CreateDirectoryOnDesktop("entités");
+			foreach (Entite e in Entite.Entites(doc, nsmgr))
+			{
+				string chemin = @"C:\Users\CameleaOUARKOUB\Desktop\entités\" + e.Nom.Trim() + ".cs";
+				FileStream stream = new FileStream(chemin, FileMode.Append, FileAccess.Write);
+				StreamWriter writer = new StreamWriter(stream);
+				using (writer)
+					writer.WriteLine(e.ToString());
+				writer.Close();
+			}
+		}
 
 
 
-		
+
 	}
 }
 

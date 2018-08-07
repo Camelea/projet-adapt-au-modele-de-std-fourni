@@ -1,5 +1,6 @@
 ﻿using ConsoleApp4.Domain.Entites;
 using System.Collections.Generic;
+using System.Text;
 using System.Xml;
 
 namespace ConsoleApp4.Domain.Entites
@@ -26,11 +27,6 @@ namespace ConsoleApp4.Domain.Entites
 
 		#region Méthodes
 
-		public override string ToString()
-		{
-			return (Nom + " " + Type + " " + Description);
-
-		}
 
 		
 		public static List<Parametre> ParametresEntites(XmlDocument doc, XmlNamespaceManager nsmgr,int i )

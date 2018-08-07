@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 
 namespace ConsoleApp4.Application.Interface
@@ -73,20 +74,29 @@ namespace ConsoleApp4.Application.Interface
 
 
 							nodeList2 = root.SelectNodes(xpath, nsmgr);
-
+					
+					
 							foreach (XmlNode isbn2 in nodeList2)
 							{
 
 								ListeTypeRetourInterfacesServices.Add(isbn2.InnerText);
 
 							}
+					
 
-						
-					}
+
 				}
-			
-			return  new TypeRetourInterfaceService(ListeTypeRetourInterfacesServices[2], ListeTypeRetourInterfacesServices[3]);
 
+				}
+			if (ListeTypeRetourInterfacesServices.Count == 0)
+			{
+				return new TypeRetourInterfaceService("NA", "NA");
+			}
+			else
+			{
+
+				return new TypeRetourInterfaceService(ListeTypeRetourInterfacesServices[2], ListeTypeRetourInterfacesServices[3]);
+			}
 		}
 
 

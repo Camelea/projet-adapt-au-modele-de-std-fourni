@@ -28,6 +28,12 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		#endregion
 
 		#region Méthodes
+
+		public string ToString(string constructeurDefaut , string constructeurInitialisation)
+		{
+			return (this.ConstructeurParDefautEntite.ToString() + constructeurDefaut + this.ConstructeurInstanciationEntite + constructeurInitialisation);
+			
+		}
 		/// <summary>
 		/// Renvoie la list des constructeurs des enites 
 		/// </summary>

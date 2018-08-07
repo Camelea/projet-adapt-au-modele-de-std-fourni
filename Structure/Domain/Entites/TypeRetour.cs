@@ -26,13 +26,26 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 		#region Méthodes 
 
+		public override string ToString()
+
+		{
+			var doc = "";
+			if (this.Type != "void")
+			{
+				doc = "/// <returns>" + this.Description + "." + "</returns>";
+			}
+
+			return doc;
+
+		}
+
 		/// <summary>
 		/// retourne la liste des type de retour des entités 
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<TypeRetour> TypeRetourMethodesEntites(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
+		public static TypeRetour TypeRetourMethodesEntites(XmlDocument doc, XmlNamespaceManager nsmgr,int i , int cmp)
 		{
 
 			XmlNodeList nodeList2;
@@ -59,7 +72,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 					}
 
 			
-			return (ListeATypeRetour(ListeMethodesEntites));
+			return (new TypeRetour (ListeMethodesEntites[2], ListeMethodesEntites[3]));
 
 		}
 

@@ -53,7 +53,7 @@ namespace ConsoleApp4.Application.Interface
 				}
 			}
 
-			var retour = this.TypeRetour.Type + "\r\n";
+			var retour = this.TypeRetour.Type ;
 
 			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description + "." + "\r\n" + "/// </summary>" + "\r\n";
 			var res = doc + param.ToString() + this.TypeRetour.ToString() +  "\n" + "[OperationContract]" + "\r\n" + "public" + " " + retour + this.Nom + paramMethode.ToString() + "\r\n" + ";";

@@ -18,8 +18,8 @@ namespace ConsoleApp4.Domain.Entites
 
 		public string Nom;
 		public string Description;
-		public List<EntitePartiel> EntitesPartiels;
-		public List<ClasseParent> ClassesParent;
+		public EntitePartiel EntitesPartiels;
+		public ClasseParent ClassesParent;
 		public List<Propriete> Proprietes;
 		public List<ProprieteDynamique> ProprietesDynamiques;
 		public Constructeur Constructeur;
@@ -29,7 +29,7 @@ namespace ConsoleApp4.Domain.Entites
 
 		#region Constructeur 
 
-		public Entite(string nom, string description, List<EntitePartiel> entitesPartiels, List<ClasseParent> classesParent, List<Propriete> proprietes, List<ProprieteDynamique> proprietesDynamiques, Constructeur constructeur, List<Methode> methodes)
+		public Entite(string nom, string description, EntitePartiel entitesPartiels, ClasseParent classesParent, List<Propriete> proprietes, List<ProprieteDynamique> proprietesDynamiques, Constructeur constructeur, List<Methode> methodes)
 		{
 			this.Nom = nom;
 			this.Description = description;
@@ -41,7 +41,7 @@ namespace ConsoleApp4.Domain.Entites
 			this.Methodes = methodes;
 		}
 
-		public Entite(string nom, string description, List<EntitePartiel> entitesPartiels, List<ClasseParent> classesParent, List<Propriete> proprietes, List<ProprieteDynamique> proprietesDynamiques, Constructeur constructeur)
+		public Entite(string nom, string description, EntitePartiel entitesPartiels, ClasseParent classesParent, List<Propriete> proprietes, List<ProprieteDynamique> proprietesDynamiques, Constructeur constructeur)
 		{
 			this.Nom = nom;
 			this.Description = description;
@@ -55,7 +55,41 @@ namespace ConsoleApp4.Domain.Entites
 		#endregion
 
 
-		#region Methodes 
+		#region Methodes
+
+		public override string ToString()
+		{
+			var doc = "";
+			var res = "";
+			var constructeurDefaut = "protected" + this.Nom + "()" + "\r\n" + "{" + this.Constructeur.ConstructeurParDefautEntite.Algorithme + "\r\n " + "}" + "\r\n";
+			var constructeurInstanciation = "public" + this.Nom + this.Constructeur.ConstructeurInstanciationEntite.ParametresToString() + "\r\n" + "{" + this.Constructeur.ConstructeurInstanciationEntite.Algorithme + "\r\n" + "}" + "\r\n" ;
+			if (this.EntitesPartiels.Nom != "NA" && this.ClassesParent.Nom != "NA")
+			{
+
+				doc = "/// <summary>" + "\r\n" + "///" + this.EntitesPartiels.Description + "\r\n" + "/// </summary>" + "\r\n"  + "public partial class " + this.EntitesPartiels.Nom + " : Entity " + "\r\n" + "{" + "\r\n" + "/// <summary>" + "\r\n" + "///" + this.Description + "\r\n" +   "private class" + this.Nom + " : " + this.ClassesParent.Nom ;
+
+			}
+
+			else
+			{
+				doc = "/// <summary>" + "\r\n" + "///" + this.Description + "\r\n" + "/// </summary>" + "\r\n" + "/// <remarks> " + "\r\n" + "/// </remarks>" + "\r\n" + "public class" + this.Nom + " : Entity";
+				
+			}
+
+			res = doc + "\r\n" + "{" + "\r\n" + "#region Propriétés" + "\r\n" +  this.Proprietes.ToString() + "\r\n" + "#endregion" + "\r\n" + "#region Propriétés Dynamiques " + "\r\n" + this.ProprietesDynamiques.ToString() + "\r\n" + "#endregion" + "\r\n" + "#region Constructeurs " + this.Constructeur.ToString(constructeurDefaut, constructeurInstanciation) + "\r\n" + "#endregion" + "\r\n" + "}";
+
+			if (this.Methodes.Count == 0)
+			{
+				res.Replace("#region Propriétés" + this.Proprietes.ToString() + "\r\n" + "#endregion", "");
+			}
+			if (this.ProprietesDynamiques.Count == 0)
+			{
+				res.Replace("#region Propriétés Dynamiques" + this.ProprietesDynamiques.ToString() + "\r\n" + "#endregion", "");
+			}
+		
+			
+			return res;
+		}
 
 
 		/// <summary>
@@ -118,7 +152,7 @@ namespace ConsoleApp4.Domain.Entites
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<Entite> entites(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<Entite> Entites(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			List<Entite> entites = new List<Entite>();
 			List<string> noms = NomsEntites(doc, nsmgr);
@@ -126,8 +160,8 @@ namespace ConsoleApp4.Domain.Entites
 			for (int i = 1; i < NomsEntites(doc, nsmgr).Count + 1; i++)
 			{
 				string descriptions = DescriptionsEntites(doc, nsmgr,i);
-				List<ClasseParent> classesParent = ClasseParent.ClassesParent(doc, nsmgr,i);
-				List<EntitePartiel> entitesPartiels = EntitePartiel.EntitesPartiels(doc, nsmgr,i);
+				ClasseParent classesParent = ClasseParent.ClassesParent(doc, nsmgr,i);
+				EntitePartiel entitesPartiels = EntitePartiel.EntitesPartiels(doc, nsmgr,i);
 				List<Propriete> proprietes = Propriete.Proprietes(doc, nsmgr,i);
 				List<ProprieteDynamique> proprietesDynamiques = ProprieteDynamique.ProprietesDynamiques(doc, nsmgr,i);
 				Constructeur constructeurs = Constructeur.Constructeurs(doc, nsmgr, i);

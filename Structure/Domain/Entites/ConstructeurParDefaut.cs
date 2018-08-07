@@ -29,7 +29,11 @@ namespace ConsoleApp4.Domain.Entites
 
 		#region Méthodes 
 
-
+		public override string ToString()
+		{
+			var doc = "/// <summary>" + "\r\n" + "///" + this.Description + "\r\n" + "/// </summary>" + "\r\n";
+			return doc;
+		}
 		/// <summary>
 		/// Fonction qui retourne la liste des descriptions des constructeurs par defaut  
 		/// </summary>

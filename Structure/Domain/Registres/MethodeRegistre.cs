@@ -116,7 +116,6 @@ namespace ConsoleApp4.Domain.Registres
 				if (NombreMethodesRegistres(doc, nsmgr,i - 1) != 0)
 				{
 				List<string> nomsMethodes = NomsMethodesRegistres(doc, nsmgr, i);
-				List<MethodeRegistre> methodesInterfacesServices = new List<MethodeRegistre>();
 
 					for (int cmp = 0; cmp < NombreMethodesRegistres(doc, nsmgr,i - 1); cmp++)
 					{

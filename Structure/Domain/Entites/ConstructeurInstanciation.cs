@@ -31,6 +31,38 @@ namespace ConsoleApp4.Domain.Entites
 
 		#region Méthodes 
 
+		public override string ToString()
+		{ StringBuilder paramDoc = new StringBuilder();
+			foreach (Parametre p in this.Parametres) {
+				paramDoc.Append("/// <param name=\"" + p.Nom.ToLower() + "\">" + p.Description + "." + "</param>" + "r\n") ;
+			}
+			var doc = "/// <summary>" + "\r\n" + "///" + this.Description + "\r\n" + "/// </summary>" + "\r\n" + paramDoc.ToString();
+			return doc; ;
+		}
+
+		public string ParametresToString()
+		{
+
+			StringBuilder paramMethode = new StringBuilder();
+			paramMethode.Append("(");
+
+
+			foreach (Parametre p in this.Parametres)
+			{
+
+				if (p == this.Parametres.Last())
+				{
+					paramMethode = paramMethode.Append(p.Type + p.Nom + " )" + "\r\n");
+				}
+				else
+				{
+					paramMethode = paramMethode.Append(p.Type + p.Nom + ",");
+				}
+			}
+			return paramMethode.ToString();
+
+		
+	}
 
 		/// <summary>
 		/// Fonction qui retourne la liste des descriptions des constructeurs d'instanciation

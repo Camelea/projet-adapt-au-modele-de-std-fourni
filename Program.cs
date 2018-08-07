@@ -26,7 +26,7 @@ namespace ConsoleApp4
 			//doc.Load("C:\\Users\\CameleaOUARKOUB\\Desktop\\document.xml");
 
 
-			
+
 			XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
 			nsmgr.AddNamespace("wpc", "http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas");
 			nsmgr.AddNamespace("cx", "http://schemas.microsoft.com/office/drawing/2014/chartex");
@@ -176,20 +176,16 @@ namespace ConsoleApp4
 
 			#region Interfaces Services 
 
-			//var proprietes =TypeRetourInterfaceService.TypesRetourInterfacesServices(doc, nsmgr);
-			//List<List<TypeRetourInterfaceService>> resultat1 = proprietes;
+			var proprietes = TypeRetourInterfaceService.TypesRetourInterfacesServices(doc, nsmgr,1);
+			TypeRetourInterfaceService resultat1 = proprietes;
 
-			//foreach (List<TypeRetourInterfaceService> lp in resultat1)
+			
+				Console.WriteLine("nouvelle liste");
+		
+				Console.WriteLine(resultat1.ToString());
 
-			//{
-			//	Console.WriteLine("nouvelle liste");
-			//	foreach (TypeRetourInterfaceService p in lp)
-			//	{
-
-			//		Console.WriteLine(p.ToString());
-
-			//	}
-			//}
+				
+			
 
 
 
@@ -209,7 +205,7 @@ namespace ConsoleApp4
 
 
 
-			//Console.ReadKey();
+			Console.ReadKey();
 
 			#endregion
 
@@ -318,18 +314,11 @@ namespace ConsoleApp4
 
 			//}
 			//Console.ReadKey();
-			
-
-		{
-				
-			}
-			
-
 
 
 
 			#endregion
 		}
 	}
-
+}
 
