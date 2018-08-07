@@ -32,8 +32,7 @@ namespace ConsoleApp4.Application.Interface
 			return doc;
 		}
 
-
-		#region ServicesExternes
+		
 		public static List<ParametreInterfaceService> ParametresInterfacesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 
@@ -67,8 +66,7 @@ namespace ConsoleApp4.Application.Interface
 
 		}
 
-
-		#endregion
+	
 
 
 		/// <summary>
@@ -84,6 +82,7 @@ namespace ConsoleApp4.Application.Interface
 			}
 			return ListeParametresInterfacesServices;
 		}
+
 		#endregion
 
 	}
