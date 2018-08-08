@@ -51,7 +51,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 
 
-			if (i == ServiceExterne.NomsClassesServicesExternes(doc, nsmgr).Count)
+			if (i == MethodeServiceExterne.NomsClassesServicesExternes(doc, nsmgr).Count)
 			{
 
 				xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2]/preceding-sibling::w:tbl / w:tr /w:tc)]";
@@ -108,40 +108,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		#endregion
 
 
-		#region Enumerations 
-		/// <summary>
-		/// Renvoie la liste des informations de parametres des enumerations 
-		/// </summary>
-		/// <param name="doc"></param>
-		/// <param name="nsmgr"></param>
-		/// <returns></returns>
-		public static List<Propriete> ValeursEnumeration(XmlDocument doc, XmlNamespaceManager nsmgr,int i)
-		{
-			XmlNodeList nodeList2;
-			XmlElement root = doc.DocumentElement;
-			List<string> ListeValeursEnumerations = new List<string>();
-
-			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/ preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling::w:tbl / w:tr /w:tc)]";
-
-			if (i == Metier.NomsClassesMetier(doc, nsmgr).Count)
-			{
-				 xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:tbl / w:tr /w:tc [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] / preceding-sibling::w:tbl / w:tr /w:tc)= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /preceding-sibling::w:tbl / w:tr /w:tc)]";
-			}
-
-					nodeList2 = root.SelectNodes(xpath, nsmgr);
-
-					foreach (XmlNode isbn2 in nodeList2)
-					{
-						ListeValeursEnumerations.Add(isbn2.InnerText);
-
-					}
-				
-			
-			return (ListeAProprietes(ListeValeursEnumerations));
-
-		}
-
-		#endregion
+		
 
 		#region Objets Presentation
 

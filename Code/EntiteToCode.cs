@@ -12,8 +12,6 @@ namespace ConsoleApp4.Code
 {
 	class EntiteToCode
 	{
-		public XmlDocument doc;
-		public XmlNamespaceManager nsmgr;
 
 		public static void CreateDirectoryOnDesktop(string directoryName)
 		{
@@ -21,7 +19,7 @@ namespace ConsoleApp4.Code
 
 		}
 
-		public void CreerEnumerations()
+		public void CreerEnumerations(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			CreateDirectoryOnDesktop("enumerations");
 			foreach (Enumeration e in Enumeration.Enumerations(doc, nsmgr))
@@ -35,7 +33,7 @@ namespace ConsoleApp4.Code
 			}
 		}
 
-		public void CreerEntites()
+		public void CreerEntites(XmlDocument doc , XmlNamespaceManager nsmgr)
 		{
 			CreateDirectoryOnDesktop("entités");
 			foreach (Entite e in Entite.Entites(doc, nsmgr))

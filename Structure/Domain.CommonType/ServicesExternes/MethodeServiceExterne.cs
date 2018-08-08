@@ -9,7 +9,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 {/// <summary>
  /// Classe qui permet de récupérer la liste des services externes  
  /// </summary>
-	class ServiceExterne
+	class MethodeServiceExterne
 	{
 		#region Attributs
 
@@ -22,7 +22,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		#endregion
 
 		#region Constructeur 
-		public ServiceExterne(string nom, string description, List<Propriete> proprietes)
+		public MethodeServiceExterne(string nom, string description, List<Propriete> proprietes)
 		{
 			this.Nom = nom;
 			this.Description = description;
@@ -32,9 +32,10 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 		#region Méthodes 
 
-		public override string ToString()
+		public string ToString(string data)
 		{
-			return (this.Nom + this.Description);
+			var res = "///<summary>" + "\r\n" + "///" + " " + this.Description + "\r\n" + "/// </summary>" + "\r\n" + data + "public" + this.Propriete.GetType() + this.Propriete.Nom + "{ get; set;}";
+			return res;
 		}
 
 		/// <summary>
@@ -98,16 +99,16 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<ServiceExterne> ServicesExternes(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static List<MethodeServiceExterne> MethodesServicesExternes(XmlDocument doc, XmlNamespaceManager nsmgr)
 		{
 			List<string> noms = NomsClassesServicesExternes(doc, nsmgr);
-			List<ServiceExterne> servicesExternes = new List<ServiceExterne>();
+			List<MethodeServiceExterne> servicesExternes = new List<MethodeServiceExterne>();
 			
 			for (int i = 1; i < noms.Count +1 ; i++)
 			{
 				string descriptions = DescriptionServicesExternes(doc, nsmgr,i);
 				List<Propriete> proprietes = Propriete.ProprietesServicesExternes(doc, nsmgr,i);
-				servicesExternes.Add(new ServiceExterne(noms[i-1], descriptions, proprietes));
+				servicesExternes.Add(new MethodeServiceExterne(noms[i-1], descriptions, proprietes));
 
 			}
 			return servicesExternes;

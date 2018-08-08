@@ -62,7 +62,6 @@ namespace ConsoleApp4.Domain.Entites
 			var doc = "";
 			var res = "";
 			var constructeurDefaut = "protected" + this.Nom + "()" + "\r\n" + "{" + this.Constructeur.ConstructeurParDefautEntite.Algorithme + "\r\n " + "}" + "\r\n";
-			var constructeurInstanciation = "public" + this.Nom + this.Constructeur.ConstructeurInstanciationEntite.ParametresToString() + "\r\n" + "{" + this.Constructeur.ConstructeurInstanciationEntite.Algorithme + "\r\n" + "}" + "\r\n" ;
 			if (this.EntitesPartiels.Nom != "NA" && this.ClassesParent.Nom != "NA")
 			{
 
@@ -75,19 +74,27 @@ namespace ConsoleApp4.Domain.Entites
 				doc = "/// <summary>" + "\r\n" + "///" + this.Description + "\r\n" + "/// </summary>" + "\r\n" + "/// <remarks> " + "\r\n" + "/// </remarks>" + "\r\n" + "public class" + this.Nom + " : Entity";
 				
 			}
-
-			res = doc + "\r\n" + "{" + "\r\n" + "#region Propriétés" + "\r\n" +  this.Proprietes.ToString() + "\r\n" + "#endregion" + "\r\n" + "#region Propriétés Dynamiques " + "\r\n" + this.ProprietesDynamiques.ToString() + "\r\n" + "#endregion" + "\r\n" + "#region Constructeurs " + this.Constructeur.ToString(constructeurDefaut, constructeurInstanciation) + "\r\n" + "#endregion" + "\r\n" + "}";
+			var proprietes = "#region Propriétés" + "\r\n" + this.Proprietes.ToString() + "\r\n" + "#endregion" + "\r\n";
+			var proprietesDynamiques = "#region Propriétés Dynamiques " + "\r\n" + this.ProprietesDynamiques.ToString() + "\r\n" + "#endregion" + "\r\n";
+			var constructeurs = "#region Constructeurs " + this.Constructeur.ToStringSansConstructeurInstanciation(constructeurDefaut) + "\r\n" + "#endregion" + "\r\n";
+			var methodes = "#region Méthodes " + this.Methodes.ToString() + "\r\n" + "#endregion" + "\r\n";
 
 			if (this.Methodes.Count == 0)
 			{
-				res.Replace("#region Propriétés" + this.Proprietes.ToString() + "\r\n" + "#endregion", "");
+				methodes = "";
 			}
 			if (this.ProprietesDynamiques.Count == 0)
 			{
-				res.Replace("#region Propriétés Dynamiques" + this.ProprietesDynamiques.ToString() + "\r\n" + "#endregion", "");
+				proprietesDynamiques = "";
 			}
-		
-			
+			if (this.Constructeur.ConstructeurInstanciationEntite != null)
+			{
+				var constructeurInstanciation = "public" + this.Nom + this.Constructeur.ConstructeurInstanciationEntite.ParametresToString() + "\r\n" + "{" + this.Constructeur.ConstructeurInstanciationEntite.Algorithme + "\r\n" + "}" + "\r\n";
+				constructeurs = "#region Constructeurs " + this.Constructeur.ToString(constructeurDefaut,constructeurInstanciation) + "\r\n" + "#endregion" + "\r\n";
+
+			}
+
+			res = doc + proprietes + proprietesDynamiques + constructeurs + methodes +   "\r\n" + "{" + "\r\n" + "}";
 			return res;
 		}
 

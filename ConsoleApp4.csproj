@@ -63,7 +63,8 @@
     <Compile Include="Structure\Application\Services\TypeRetourService.cs" />
     <Compile Include="Structure\Domain.CommonType\Enumerations\Enumerations.cs" />
     <Compile Include="Structure\Domain.CommonType\Enumerations\ProprieteEnumeration.cs" />
-    <Compile Include="Structure\Domain.CommonType\Metiers.cs" />
+    <Compile Include="Structure\Domain.CommonType\Metiers\Metiers.cs" />
+    <Compile Include="Structure\Domain.CommonType\ServicesExternes\ServiceExterne.cs" />
     <Compile Include="Structure\Domain\Entites\ClasseParent.cs" />
     <Compile Include="Structure\Domain\Entites\Constructeur.cs" />
     <Compile Include="Structure\Domain\Entites\ConstructeurInstanciation.cs" />
@@ -95,7 +96,7 @@
     <Compile Include="Structure\Infrastructure.ExternalServices\TypeRetourServiceExterne.cs" />
     <Compile Include="Structure\Propriete.cs" />
     <Compile Include="Structure\Domain\Entites\ProprieteDynamique.cs" />
-    <Compile Include="Structure\Domain.CommonType\ServiceExterne.cs" />
+    <Compile Include="Structure\Domain.CommonType\ServicesExternes\MethodeServiceExterne.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structure\Tables\CleEtrangere.cs" />
