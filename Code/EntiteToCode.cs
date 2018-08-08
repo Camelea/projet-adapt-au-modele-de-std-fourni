@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace ConsoleApp4.Code
 {
-	class EntiteToCode
+	public class EntiteToCode
 	{
 
 		public static void CreateDirectoryOnDesktop(string directoryName)
@@ -19,12 +19,13 @@ namespace ConsoleApp4.Code
 
 		}
 
-		public void CreerEnumerations(XmlDocument doc, XmlNamespaceManager nsmgr)
+		public static void CreerEnumerations(XmlDocument doc, XmlNamespaceManager nsmgr,string path )
 		{
-			CreateDirectoryOnDesktop("enumerations");
+			var subFolder = path + "\\" + "Enumerations";
+			Directory.CreateDirectory(subFolder);
 			foreach (Enumeration e in Enumeration.Enumerations(doc, nsmgr))
 			{
-				string chemin = @"C:\Users\CameleaOUARKOUB\Desktop\enumerations\" + e.Nom.Trim() + ".cs";
+				string chemin =subFolder + "\\" + e.Nom.Trim() + ".cs";
 				FileStream stream = new FileStream(chemin, FileMode.Append, FileAccess.Write);
 				StreamWriter writer = new StreamWriter(stream);
 				using (writer)

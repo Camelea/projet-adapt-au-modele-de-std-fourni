@@ -34,7 +34,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 		public string ToString(string data)
 		{
-			var res = "///<summary>" + "\r\n" + "///" + " " + this.Description + "\r\n" + "/// </summary>" + "\r\n" + data + "public" + this.Propriete.GetType() + this.Propriete.Nom + "{ get; set;}";
+			var res = "///<summary>" + "\r\n" + "///" + " " + this.Description + "\r\n" + "/// </summary>" + "\r\n" + data + "public" + "{ get; set;}";
 			return res;
 		}
 

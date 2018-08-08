@@ -1,5 +1,6 @@
 ﻿
 using ConsoleApp4.Application.Interface;
+using ConsoleApp4.Code;
 using ConsoleApp4.Domain.CommonType;
 using ConsoleApp4.Domain.CommonType.Metiers;
 using ConsoleApp4.Domain.Entites;
@@ -176,13 +177,16 @@ namespace ConsoleApp4
 
 			#region Interfaces Services 
 
-			var proprietes = TypeRetourInterfaceService.TypesRetourInterfacesServices(doc, nsmgr,1);
-			TypeRetourInterfaceService resultat1 = proprietes;
+			 
+			
+
+			//var proprietes = TypeRetourInterfaceService.TypesRetourInterfacesServices(doc, nsmgr,1);
+			//TypeRetourInterfaceService resultat1 = proprietes;
 
 			
-				Console.WriteLine("nouvelle liste");
+			//	Console.WriteLine("nouvelle liste");
 		
-				Console.WriteLine(resultat1.ToString());
+			//	Console.WriteLine(resultat1.ToString());
 
 				
 			
@@ -318,7 +322,11 @@ namespace ConsoleApp4
 
 
 			#endregion
+
+		
+
 		}
-	}
 }
 
+
+}
