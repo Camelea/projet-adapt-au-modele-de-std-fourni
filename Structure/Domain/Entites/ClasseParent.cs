@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Xml;
 
 namespace ConsoleApp4.Domain.CommonType.Services_Externes
-{
+{   /// <summary>
+	/// Classe qui permet de recuperer la classe parent 
+	/// </summary>
 	public class ClasseParent
 	{
 		#region Attributs 
 
-		public string Nom;
-		public string Description;
+		public string Nom { get; private set; }
+		public string Description { get; private set; }
 
 		#endregion
 

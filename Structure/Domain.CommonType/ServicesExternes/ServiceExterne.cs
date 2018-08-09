@@ -29,20 +29,20 @@ namespace ConsoleApp4.Structure.Domain.CommonType.ServicesExternes
 
 		public override string ToString()
 		{
-			var methodes = "";
+			StringBuilder methodes = new StringBuilder();
 			foreach (MethodeServiceExterne methode in this.Methodes)
 			{
 				if (methode == this.Methodes.First())
 				{
-					methodes = methodes + methode.ToString("[DataContract]") + "\r\n";
+					methodes.Append( methode.ToString("[DataContract]") + "\r\n");
 
 				}
 				else
 				{
-					methodes = methodes + methode.ToString("[DataMember]") + "\r\n";
+					methodes.Append(methode.ToString("[DataMember]") + "\r\n");
 				}
 			}
-			var res = "{" + methodes + "}";
+			var res = "{" + methodes.ToString() + "}";
 			return res;
 		}
 

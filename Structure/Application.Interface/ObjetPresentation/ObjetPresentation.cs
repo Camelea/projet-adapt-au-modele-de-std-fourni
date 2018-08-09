@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace ConsoleApp4.Application.Interface
-{
+{/// <summary>
+/// Permet de récupérer les objets de presentation 
+/// </summary>
 	class ObjetPresentation
 	{
-		#region Constructeur 
+		#region Attributs 
 		public List<MethodeObjetPresentation> Methodes;
 
 
@@ -29,15 +31,15 @@ namespace ConsoleApp4.Application.Interface
 		#region Methodes
 
 		public override string ToString(){
-			var methodes = "";
+			StringBuilder methodes = new StringBuilder();
 			foreach ( MethodeObjetPresentation methode in this.Methodes) {
 				if (methode == this.Methodes.First())
 				{
-					methodes = methodes + methode.ToString("[DataContract]") + "\r\n";
+					methodes.Append(methode.ToString("[DataContract]") + "\r\n");
 
 				}
 				else {
-					methodes = methodes + methode.ToString("[DataMember]") + "\r\n";
+					methodes.Append(methode.ToString("[DataMember]") + "\r\n");
 				}
 			}
 			var res = "{" + methodes + "}";

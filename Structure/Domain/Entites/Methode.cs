@@ -167,14 +167,14 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 					}
 
 					nodeList2 = root.SelectNodes(xpath, nsmgr);
-					var res = "";
-					foreach (XmlNode isbn2 in nodeList2)
+				StringBuilder res = new StringBuilder();
+				foreach (XmlNode isbn2 in nodeList2)
 					{
-						res = res + " " + (isbn2.InnerText);
+						res.Append(" " + (isbn2.InnerText));
 					}
 				
 
-			return res;
+			return res.ToString();
 		}
 
 		

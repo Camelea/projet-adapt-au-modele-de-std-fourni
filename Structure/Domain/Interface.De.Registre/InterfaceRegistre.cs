@@ -99,16 +99,16 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 			XmlElement root = doc.DocumentElement;
 
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-				var res = "";
+				StringBuilder res = new StringBuilder();
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 				
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					res = res + " " + (isbn2.InnerText);
+					res.Append(" " + (isbn2.InnerText));
 				}
 
-			
-			return res;
+
+			return res.ToString() ;
 
 
 		}

@@ -150,16 +150,16 @@ namespace ConsoleApp4.Infrastructure.ExternalServices
 				}
 
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
-				var res = "";
+			StringBuilder res = new StringBuilder();
 
-				foreach (XmlNode isbn2 in nodeList2)
+			foreach (XmlNode isbn2 in nodeList2)
 				{
-					res = res + (isbn2.InnerText);
+					res.Append(isbn2.InnerText);
 				}
 
 			
 
-			return res;
+			return res.ToString();
 		}
 
 		

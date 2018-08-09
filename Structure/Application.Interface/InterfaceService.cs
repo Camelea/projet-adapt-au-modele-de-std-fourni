@@ -43,13 +43,13 @@ namespace ConsoleApp4.Application.Interface
 		public override string ToString()
 		{
 			var doc = "/// <summary>" + "\r\n" + "/// " /*this.Description.Trim()*/  + "." + "\r\n" + "/// </summary>" + "\r\n";
-			var methodes = "";
+			StringBuilder methodes = new StringBuilder();
 			foreach (Methode m in this.Methodes)
 			{
-				methodes = methodes + "\r\n";
+				methodes.Append("\r\n");
 
 
-				methodes = methodes + m.ToString() + "\r\n";
+				methodes.Append(m.ToString() + "\r\n");
 
 			}
 			var res = doc + "\r\n" + "[ServiceContract]" + "\r\n" + "public interface " + this.Nom + "\r\n" + "#region Méthodes " + "{ " + "\r\n" + methodes + "\r\n" + "#endregion" + "\r\n" + "}";
@@ -95,16 +95,16 @@ namespace ConsoleApp4.Application.Interface
 			XmlElement root = doc.DocumentElement;
 
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][3] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
-				var res = "";
+				StringBuilder res = new StringBuilder();
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					res = res + (isbn2.InnerText);
+					res.Append(isbn2.InnerText);
 				}
 
 		
-			return res;
+			return res.ToString();
 
 
 		}

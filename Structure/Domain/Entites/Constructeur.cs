@@ -12,8 +12,8 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 	{
 		#region Attributs
 
-		public ConstructeurParDefaut ConstructeurParDefautEntite;
-		public ConstructeurInstanciation ConstructeurInstanciationEntite;
+		public ConstructeurParDefaut ConstructeurParDefautEntite { get; private set; }
+		public ConstructeurInstanciation ConstructeurInstanciationEntite { get; private set; }
 
 		#endregion
 
