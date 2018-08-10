@@ -43,16 +43,16 @@ namespace ConsoleApp4.Application.Mappers
 		public override string ToString()
 		{
 			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description.Trim() + "." + "\r\n" + "/// </summary>" + "\r\n";
-			var methodes = "";
+			StringBuilder methodes = new StringBuilder();
 			foreach (MethodeMapper m in this.Methodes)
 			{
-				methodes = methodes + "\r\n";
+				methodes.Append("\r\n");
 
 
-				methodes = methodes + m.ToString() + "\r\n";
+				methodes.Append(m.ToString() + "\r\n");
 
 			}
-			var res = doc + "\r\n" + "public static class " + this.Nom  + "\r\n" + "#region Méthodes " + "{ " + "\r\n" + methodes + "\r\n" + "#endregion" + "\r\n" + "}";
+			var res = doc + "\r\n" + "public static class " + this.Nom  + "\r\n" + "#region Méthodes " + "{ " + "\r\n" + methodes.ToString() + "\r\n" + "#endregion" + "\r\n" + "}";
 
 			return res;
 		}
@@ -98,14 +98,14 @@ namespace ConsoleApp4.Application.Mappers
 				string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][1] / following-sibling::w:p [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ preceding-sibling::w:p)= count(w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/preceding-sibling::w:p)]";
 
 				nodeList2 = root.SelectNodes(xpath, nsmgr);
-			var res = "";
+			StringBuilder res = new StringBuilder();
 				foreach (XmlNode isbn2 in nodeList2)
 				{
-					res = res + " " + (isbn2.InnerText);
+					res.Append(isbn2.InnerText);
 				}
 
 			
-			return res;
+			return res.ToString();
 
 
 		}
