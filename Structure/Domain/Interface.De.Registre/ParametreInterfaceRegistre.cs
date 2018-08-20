@@ -59,9 +59,14 @@ namespace ConsoleApp4.Domain.Interface.De.Registre
 							ListeParametresInterfacesRegistres.Add(isbn2.InnerText);
 
 						}
-					
+				if (ListeParametresInterfacesRegistres.Count < 6)
+				{
+					return null;
 
 				}
+
+
+			}
 			return ListeAParametresRegistres(ListeParametresInterfacesRegistres);
 
 	}

@@ -49,7 +49,7 @@ namespace ConsoleApp4.Application.Services
 			List<string> ListeParametresMethodesServices = new List<string>();
 	
 
-				if (MethodeService.NombreMethodesServices(doc, nsmgr,i - 1) != 0)
+				if (MethodeService.NombreMethodesServices(doc, nsmgr,i ) != 0)
 				{
 
 				

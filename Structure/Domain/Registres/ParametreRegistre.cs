@@ -53,7 +53,7 @@ namespace ConsoleApp4.Domain.Registres
 			XmlElement root = doc.DocumentElement;
 			List<string> ListeParametresMethodesRegistres = new List<string>();
 
-				if (MethodeRegistre.NombreMethodesRegistres(doc, nsmgr,i - 1) != 0)
+				if (MethodeRegistre.NombreMethodesRegistres(doc, nsmgr,i) != 0)
 				{
 
 						
@@ -64,13 +64,16 @@ namespace ConsoleApp4.Domain.Registres
 
 						foreach (XmlNode isbn2 in nodeList2)
 						{
-							if (isbn2.InnerText != "")
-							{
-								ListeParametresMethodesRegistres.Add(isbn2.InnerText.Trim());
-							}
+					
+								ListeParametresMethodesRegistres.Add(isbn2.InnerText);
+							
 						}
 		
 					}
+			if (ListeParametresMethodesRegistres.Count < 7)
+			{
+				return null;
+			}
 
 			return ListeAParametresRegistre(ListeParametresMethodesRegistres);
 

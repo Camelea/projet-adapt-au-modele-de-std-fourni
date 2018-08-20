@@ -158,13 +158,13 @@ namespace ConsoleApp4.Application.Services
 				string interfacesImplementees = InterfacesImplementeesServices(doc, nsmgr,i);
 
 
-				if (MethodeService.NombreMethodesServices(doc, nsmgr,i - 1) != 0)
+				if (MethodeService.NombreMethodesServices(doc, nsmgr,i ) != 0)
 				{
 
 					services.Add(new Service(noms[i - 1], descriptions, interfacesImplementees, methodes));
 				}
 
-				if (MethodeService.NombreMethodesServices(doc, nsmgr,i - 1) == 0)
+				if (MethodeService.NombreMethodesServices(doc, nsmgr,i) == 0)
 				{
 
 					services.Add(new Service(noms[i - 1], descriptions, interfacesImplementees));

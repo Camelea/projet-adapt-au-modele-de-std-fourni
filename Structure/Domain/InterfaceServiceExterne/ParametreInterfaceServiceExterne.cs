@@ -61,6 +61,10 @@ namespace ConsoleApp4.Domain.InterfaceServiceExterne
 						}
 					
 					}
+			if (ListeParametresInterfaceServiceExterne.Count < 6)
+			{
+				return null;
+			}
 
 				
 

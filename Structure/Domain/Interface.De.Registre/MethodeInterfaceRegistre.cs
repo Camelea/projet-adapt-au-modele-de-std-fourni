@@ -28,6 +28,28 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 
 		}
 
+		public MethodeInterfaceRegistre(string nom, string description, TypeRetourInterfaceRegistre typeRetourInterfacesRegistres)
+		{
+			this.Nom = nom;
+			this.Description = description;
+			this.TypeRetourInterfacesRegistres = typeRetourInterfacesRegistres;
+
+		}
+
+		public MethodeInterfaceRegistre(string nom, string description)
+		{
+			this.Nom = nom;
+			this.Description = description;
+			
+		}
+		public MethodeInterfaceRegistre(string nom, string description, List<ParametreInterfaceRegistre> parametresInterfaceRegistre)
+		{
+			this.Nom = nom;
+			this.Description = description;
+			this.ParametresInterfaceRegistre = parametresInterfaceRegistre;
+		
+
+		}
 		#endregion
 
 		#region Méthodes 
@@ -55,7 +77,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 			var retour = this.TypeRetourInterfacesRegistres.Type + "\r\n";
 
 			var doc = "/// <summary>" + "\r\n" + "/// " + this.Description + "." + "\r\n" + "/// </summary>" + "\r\n";
-			var res = doc + param.ToString() + "\r\n" + this.TypeRetourInterfacesRegistres.ToString() +"\r\n" + "[OperationContract]" + "\r\n" + "public" + " " + retour + this.Nom + paramMethode.ToString() + "\r\n" + ";";
+			var res = doc + param.ToString() + "\r\n" + this.TypeRetourInterfacesRegistres.ToString() +"\r\n" + "[OperationContract]" + "\r\n" + "public" + " " + retour + this.Nom + " "  + paramMethode.ToString() + "\r\n" + ";";
 
 			return res;
 		}
@@ -103,18 +125,18 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 			XmlElement root = doc.DocumentElement;
 
 					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][1]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][4] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][2]/preceding-sibling:: w:p)]";
-					var res = "";
+			StringBuilder res = new StringBuilder();
 					nodeList2 = root.SelectNodes(xpath, nsmgr);
 
 					foreach (XmlNode isbn2 in nodeList2)
 					{
-						res = res + " " + (isbn2.InnerText);
+						res.Append(isbn2.InnerText + "\r\n") ;
 					}
 					
 
 				
 			
-			return res;
+			return res.ToString();
 
 
 		}
@@ -131,7 +153,7 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 			return NomsMethodesInterfacesRegistres(doc,nsmgr,i).Count;
 		}
 
-	
+
 
 
 
@@ -141,31 +163,52 @@ namespace ConsoleApp4.Domain.CommonType.Services_Externes
 		/// <param name="doc"></param>
 		/// <param name="nsmgr"></param>
 		/// <returns></returns>
-		public static List<MethodeInterfaceRegistre> MethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
+		public static List<MethodeInterfaceRegistre> MethodesRegistres(XmlDocument doc, XmlNamespaceManager nsmgr, int i)
 		{
 
-				List<string> nomsMethodes = NomsMethodesInterfacesRegistres(doc, nsmgr,i-1);
-				List<MethodeInterfaceRegistre> methodesInterfacesRegistres = new List<MethodeInterfaceRegistre>();
+			List<string> nomsMethodes = NomsMethodesInterfacesRegistres(doc, nsmgr, i);
+			List<MethodeInterfaceRegistre> methodesInterfacesRegistres = new List<MethodeInterfaceRegistre>();
 
 
-			if (NombreMethodesInterfacesRegistres(doc, nsmgr,i - 1) != 0)
+			if (NombreMethodesInterfacesRegistres(doc, nsmgr, i) != 0)
+			{
+
+
+				for (int cmp = 0; cmp < NombreMethodesInterfacesRegistres(doc, nsmgr, i); cmp++)
 				{
-					
+					List<ParametreInterfaceRegistre> parametres = ParametreInterfaceRegistre.ParametresMethodesInterfacesRegistres(doc, nsmgr, i, cmp);
+					TypeRetourInterfaceRegistre typesRetour = TypeRetourInterfaceRegistre.TypeRetourMethodesInterfacesRegistres(doc, nsmgr, i, cmp);
+					string descriptionsMethodes = DescriptionsMethodesinterfacesRegistres(doc, nsmgr, i, cmp);
 
-					for (int cmp = 0; cmp < NombreMethodesInterfacesRegistres(doc, nsmgr,i - 1); cmp++)
+					if (typesRetour != null && parametres != null)
 					{
-						List<ParametreInterfaceRegistre> parametres = ParametreInterfaceRegistre.ParametresMethodesInterfacesRegistres(doc, nsmgr, i,cmp);
-						TypeRetourInterfaceRegistre typesRetour = TypeRetourInterfaceRegistre.TypeRetourMethodesInterfacesRegistres(doc, nsmgr,i , cmp);
-						string descriptionsMethodes = DescriptionsMethodesinterfacesRegistres(doc, nsmgr, i ,cmp);
+						methodesInterfacesRegistres.Add(new MethodeInterfaceRegistre(nomsMethodes[cmp], descriptionsMethodes, parametres, typesRetour));
+					}
+					else
+					{
+						if (typesRetour == null && parametres != null)
+						{
+							methodesInterfacesRegistres.Add(new MethodeInterfaceRegistre(nomsMethodes[cmp], descriptionsMethodes, parametres));
+						}
+						else
+						{
+							if (parametres == null && typesRetour != null )
+							{
+								methodesInterfacesRegistres.Add(new MethodeInterfaceRegistre(nomsMethodes[cmp], descriptionsMethodes, typesRetour));
 
-					methodesInterfacesRegistres.Add(new MethodeInterfaceRegistre(nomsMethodes[cmp], descriptionsMethodes, parametres, typesRetour));
+							}
+							else
+							{
+								methodesInterfacesRegistres.Add(new MethodeInterfaceRegistre(nomsMethodes[cmp], descriptionsMethodes));
 
+							}
+						}
 
 					}
 
+				}
 			}
-			return methodesInterfacesRegistres;
-			
+				return methodesInterfacesRegistres;
 		}
 		#endregion
 

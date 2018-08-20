@@ -74,18 +74,19 @@ namespace ConsoleApp4.Domain.Entites
 				doc = "/// <summary>" + "\r\n" + "///" + this.Description + "\r\n" + "/// </summary>" + "\r\n" + "/// <remarks> " + "\r\n" + "/// </remarks>" + "\r\n" + "public class" + this.Nom + " : Entity";
 				
 			}
-			var proprietes = "#region Propriétés" + "\r\n" + this.Proprietes.ToString() + "\r\n" + "#endregion" + "\r\n";
-			var proprietesDynamiques = "#region Propriétés Dynamiques " + "\r\n" + this.ProprietesDynamiques.ToString() + "\r\n" + "#endregion" + "\r\n";
+			
+			var proprietesDynamiques = "";
 			var constructeurs = "#region Constructeurs " + this.Constructeur.ToStringSansConstructeurInstanciation(constructeurDefaut) + "\r\n" + "#endregion" + "\r\n";
-			var methodes = "#region Méthodes " + this.Methodes.ToString() + "\r\n" + "#endregion" + "\r\n";
+			var methodes = "";
+		
+			if (this.Methodes.Count != 0)
+			{
+				methodes = "#region Méthodes " + this.Methodes.ToString() + "\r\n" + "#endregion" + "\r\n";
 
-			if (this.Methodes.Count == 0)
-			{
-				methodes = "";
 			}
-			if (this.ProprietesDynamiques.Count == 0)
+			if (this.ProprietesDynamiques.Count != 0)
 			{
-				proprietesDynamiques = "";
+				proprietesDynamiques = "#region Propriétés Dynamiques " + "\r\n" + this.ProprietesDynamiques.ToString() + "\r\n" + "#endregion" + "\r\n";
 			}
 			if (this.Constructeur.ConstructeurInstanciationEntite != null)
 			{
@@ -93,6 +94,8 @@ namespace ConsoleApp4.Domain.Entites
 				constructeurs = "#region Constructeurs " + this.Constructeur.ToString(constructeurDefaut,constructeurInstanciation) + "\r\n" + "#endregion" + "\r\n";
 
 			}
+			var proprietes = "#region Propriétés" + "\r\n" + this.Proprietes.ToString() + "\r\n" + "#endregion" + "\r\n";
+
 
 			res = doc + proprietes + proprietesDynamiques + constructeurs + methodes +   "\r\n" + "{" + "\r\n" + "}";
 			return res;
@@ -164,7 +167,7 @@ namespace ConsoleApp4.Domain.Entites
 			List<Entite> entites = new List<Entite>();
 			List<string> noms = NomsEntites(doc, nsmgr);
 
-			for (int i = 1; i < NomsEntites(doc, nsmgr).Count + 1; i++)
+			for ( int i = 1; i < 2; i++)
 			{
 				string descriptions = DescriptionsEntites(doc, nsmgr,i);
 				ClasseParent classesParent = ClasseParent.ClassesParent(doc, nsmgr,i);

@@ -132,13 +132,13 @@ namespace ConsoleApp4.Application.Mappers
 				string descriptions = DescriptionsMapper(doc, nsmgr,i);
 
 
-				if (MethodeMapper.NombreMethodesMappers(doc, nsmgr,i - 1) != 0)
+				if (MethodeMapper.NombreMethodesMappers(doc, nsmgr,i ) != 0)
 				{
 
 					services.Add(new Mapper(noms[i - 1], descriptions, methodes));
 				}
 
-				if (MethodeMapper.NombreMethodesMappers(doc, nsmgr,i - 1) == 0)
+				if (MethodeMapper.NombreMethodesMappers(doc, nsmgr,i) == 0)
 				{
 
 					services.Add(new Mapper(noms[i - 1], descriptions));

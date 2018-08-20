@@ -39,10 +39,8 @@ namespace ConsoleApp4.Code
 				FileStream stream = new FileStream(chemin, FileMode.Append, FileAccess.Write);
 				StreamWriter writer = new StreamWriter(stream);
 				using (writer)
-				writer.WriteLine(" namespace" + " " + nomProjet + ".Application.Services" + "\r\n" + "{");
-				writer.WriteLine(m.ToString());
-				writer.WriteLine("}");
-				writer.Close();
+				writer.WriteLine(" namespace" + " " + nomProjet + ".Application.Services" + "\r\n" + "{" + m.ToString() + "}");
+
 			}
 
 			var serviceFolder = subFolder + "\\" + "Services";
@@ -117,22 +115,9 @@ namespace ConsoleApp4.Code
 		public static void CreerDomain(XmlDocument doc, XmlNamespaceManager nsmgr, string path, string nomProjet)
 		{
 
+
 			var subFolder = path + "\\" + "Domain";
 			Directory.CreateDirectory(subFolder);
-			var EntiteFolder = subFolder + "\\" + "Entites";
-			Directory.CreateDirectory(EntiteFolder);
-			foreach (Entite e in Entite.Entites(doc, nsmgr))
-			{
-				string chemin = EntiteFolder + "\\" + e.Nom.Trim() + ".cs";
-				FileStream stream = new FileStream(chemin, FileMode.Append, FileAccess.Write);
-				StreamWriter writer = new StreamWriter(stream);
-				using (writer)
-					writer.WriteLine(" namespace" + " " + nomProjet + ".Domain.Entites" + "\r\n" + "{");
-				writer.WriteLine(e.ToString());
-				writer.WriteLine("}");
-				writer.Close();
-			}
-
 			var InterfaceRegistreFolder = subFolder + "\\" + "Interfaces de registre";
 			Directory.CreateDirectory(InterfaceRegistreFolder);
 			foreach (InterfaceRegistre i in InterfaceRegistre.InterfacesRegistre(doc, nsmgr))
@@ -144,7 +129,7 @@ namespace ConsoleApp4.Code
 					writer.WriteLine(" namespace" + " " + nomProjet + ".Domain.Interfaces.de.Registre" + "\r\n" + "{");
 				writer.WriteLine(i.ToString());
 				writer.WriteLine("}");
-				writer.Close();
+				
 			}
 
 			var interfaceServiceExterneFolder = subFolder + "\\" + "Interfaces de services externes" ;
@@ -158,7 +143,7 @@ namespace ConsoleApp4.Code
 					writer.WriteLine(" namespace" + " " + nomProjet + ".Domain.Interfaces.de.Services.Externes" + "\r\n" + "{");
 				writer.WriteLine(i.ToString());
 				writer.WriteLine("}");
-				writer.Close();
+				
 			}
 
 			var registreFolder = subFolder + "\\" + "Registre";
@@ -169,8 +154,22 @@ namespace ConsoleApp4.Code
 				FileStream stream = new FileStream(chemin, FileMode.Append, FileAccess.Write);
 				StreamWriter writer = new StreamWriter(stream);
 				using (writer)
-					writer.WriteLine(" namespace" + " " + nomProjet + ".Domain.Registre" + "\r\n" + "{");
-				writer.WriteLine(r.ToString());
+					writer.WriteLine(" namespace" + " " + nomProjet + ".Domain.Registre" + "\r\n" + "{" + r.ToString() + "}");
+				
+				
+			}
+
+			
+			var EntiteFolder = subFolder + "\\" + "Entites";
+			Directory.CreateDirectory(EntiteFolder);
+			foreach (Entite e in Entite.Entites(doc, nsmgr))
+			{
+				string chemin = EntiteFolder + "\\" + e.Nom.Trim() + ".cs";
+				FileStream stream = new FileStream(chemin, FileMode.Append, FileAccess.Write);
+				StreamWriter writer = new StreamWriter(stream);
+				using (writer)
+					writer.WriteLine(" namespace" + " " + nomProjet + ".Domain.Entites" + "\r\n" + "{");
+				writer.WriteLine(e.ToString());
 				writer.WriteLine("}");
 				writer.Close();
 			}

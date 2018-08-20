@@ -15,12 +15,12 @@ namespace ConsoleApp4.Application.Mappers
 		public string Descriptions { get; private set; }
 		public ParametreEntrantMapper ParametresMethode { get; private set; }
 		public TypeRetourMapper TypesRetour { get; private set; }
-		public AlgorithmeMapper Algorithme { get; private set; }
+		public List<AlgorithmeMapper> Algorithme { get; private set; }
 		#endregion
 
 		#region Constructeur 
 
-		public MethodeMapper(string nom, string descriptions, ParametreEntrantMapper parametresMethode, TypeRetourMapper typeRetour, AlgorithmeMapper algorithme)
+		public MethodeMapper(string nom, string descriptions, ParametreEntrantMapper parametresMethode, TypeRetourMapper typeRetour, List<AlgorithmeMapper> algorithme)
 		{
 			this.Nom = nom;
 			this.Descriptions = descriptions;
@@ -36,16 +36,35 @@ namespace ConsoleApp4.Application.Mappers
 
 		public override string ToString()
 		{
-
-			var param = "";
-			var paramMethode = "(" + this.ParametresMethode.Type + " "  + this.ParametresMethode.Nom + " " + ")";
-			
-			param =  this.ParametresMethode.ToString() + "\r\n";
-
-			var retour = this.TypesRetour.ToString() + "\r\n";
-
+			var res = "";
 			var doc = "/// <summary>" + "\r\n" + "/// " + this.Descriptions + "." + "\r\n" + "/// </summary>" + "\r\n";
-			var res = doc + param + retour + "\r\n" + "public static" + " " + TypesRetour.Type + this.Nom + paramMethode + "\r\n" + "{" + this.Algorithme + "\r\n" + "}";
+			var param = "";
+			var paramMethode = "";
+			if (this.ParametresMethode != null)
+			{
+				
+				paramMethode = "(" + this.ParametresMethode.Type + " " + this.ParametresMethode.Nom + " " + ")";
+
+				param = this.ParametresMethode.ToString() + "\r\n";
+
+			}
+			var retour = "";
+			if (this.TypesRetour != null)
+			{
+				retour = this.TypesRetour.ToString() + "\r\n";
+			}
+			StringBuilder algo = new StringBuilder();
+			if (this.Algorithme != null)
+			{
+				foreach (AlgorithmeMapper a in this.Algorithme)
+				{
+					algo.Append(a.ToString() + "\r\n");
+				}
+			}
+			res = doc + param + retour + "\r\n" + "public static" + " " + TypesRetour.Type + " " + this.Nom + " " + paramMethode + "\r\n" + "{" +"\r\n" +algo.ToString() + "\r\n" + "}";
+
+
+
 
 			return res;
 
@@ -64,12 +83,12 @@ namespace ConsoleApp4.Application.Mappers
 			XmlElement root = doc.DocumentElement;
 			List<string> MethodesMapper = new List<string>();
 
-			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i +1+ "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 2) + "]]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 2) + "]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i+  "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
 
 			if (i == Mapper.NomsMappers(doc, nsmgr).Count)
 			{
 				
-				xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i +1+ "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][7]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][7] /preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
+				xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][2]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][7]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][7] /preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
 			}
 					nodeList2 = root.SelectNodes(xpath, nsmgr);
 
@@ -109,14 +128,14 @@ namespace ConsoleApp4.Application.Mappers
 		{
 			List<MethodeMapper> methodes = new List<MethodeMapper>();
 			
-				if (NombreMethodesMappers(doc, nsmgr,i - 1) != 0)
+				if (NombreMethodesMappers(doc, nsmgr,i ) != 0)
 				{
-					List<string> nomsMethodes = NomsMethodesMappers(doc, nsmgr, i-1);
+					List<string> nomsMethodes = NomsMethodesMappers(doc, nsmgr, i);
 
-					for (int cmp = 0; cmp < NombreMethodesMappers(doc, nsmgr,i - 1); cmp++)
+					for (int cmp = 0; cmp < NombreMethodesMappers(doc, nsmgr,i); cmp++)
 					{
 						string descriptions = DescriptionsMethodesMappers(doc, nsmgr,i,cmp);
-						AlgorithmeMapper algorithmes = AlgorithmeMapper.AlgorithmesMethodesMappers(doc, nsmgr,i,cmp);
+						List<AlgorithmeMapper> algorithmes = AlgorithmeMapper.AlgorithmesMethodesMappers(doc, nsmgr,i,cmp);
 						ParametreEntrantMapper parametresMethodes = ParametreEntrantMapper.ParametresMethodesMappers(doc, nsmgr,i,cmp);
 						TypeRetourMapper typesRetour = TypeRetourMapper.TypeRetourMethodesMappers(doc, nsmgr,i,cmp);
 
@@ -151,7 +170,7 @@ namespace ConsoleApp4.Application.Mappers
 
 					foreach (XmlNode isbn2 in nodeList2)
 					{
-						res.Append(isbn2.InnerText);
+						res.Append(isbn2.InnerText + "\r\n");
 					}
 
 

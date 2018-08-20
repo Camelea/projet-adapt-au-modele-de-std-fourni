@@ -36,26 +36,26 @@ namespace ConsoleApp4.Application.Services
 
 		public override string ToString()
 		{
-			
-			var param = "";
-			var paramMethode = "(" ;
-			
+
+			StringBuilder param = new StringBuilder();
+			StringBuilder paramMethode = new StringBuilder();
+			paramMethode.Append("(");
 
 			foreach (ParametreService p in this.ParametresMethode)
 			{
-				param = param + p.ToString() + "\r\n";
+				param.Append(p.ToString() + "\r\n");
 				if (p == this.ParametresMethode.Last() ) {
-					paramMethode = paramMethode + p.Type + p.Nom +  " )";
+					paramMethode.Append(p.Type + p.Nom +  " )");
 				}
 				else {
-					paramMethode = paramMethode + p.Type + p.Nom + ",";
+					paramMethode.Append(p.Type + p.Nom + ",");
 				}
 			}
 	
 			var retour = this.TypesRetour.ToString() + "\r\n";
 		
 			var doc = "/// <summary>" + "\r\n" + "/// " + this.Descriptions.Description + "." + "\r\n" + "/// </summary>" + "\r\n";
-			var res = doc + param + retour + "\r\n" + this.Descriptions.Visibilite + " " + TypesRetour.Type + this.Nom + paramMethode + "\r\n" + "{" + this.Algorithme + "\r\n" + "}";
+			var res = doc + param.ToString() + retour + "\r\n" + this.Descriptions.Visibilite + " " + TypesRetour.Type + this.Nom + paramMethode.ToString() + "\r\n" + "{" + this.Algorithme + "\r\n" + "}";
 
 			return res;
 
@@ -73,14 +73,14 @@ namespace ConsoleApp4.Application.Services
 			XmlNodeList nodeList2;
 			XmlElement root = doc.DocumentElement;
 			List<string> MethodesServices = new List<string>();
-			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i +1+ "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 2) + "]]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 2) + "]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
+			string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + (i + 1) + "]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
 
 
 
 			if (i == Service.NomsServices(doc, nsmgr).Count)
 			{
 
-				 xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i +1+ "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
+				 xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/ following-sibling::w:p [ w:pPr / w:pStyle [@w:val='Heading5']]  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2]/preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']] )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /preceding-sibling:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']])]";
 			}
 					nodeList2 = root.SelectNodes(xpath, nsmgr);
 
@@ -121,12 +121,12 @@ namespace ConsoleApp4.Application.Services
 		public static List<MethodeService> MethodesServices(XmlDocument doc, XmlNamespaceManager nsmgr,int i )
 		{
 			List<MethodeService> methodes = new List<MethodeService>();
-			List<string> nomsMethodes = NomsMethodesServices(doc, nsmgr,i-1);
+			List<string> nomsMethodes = NomsMethodesServices(doc, nsmgr,i);
 			
-				if (NombreMethodesServices(doc, nsmgr,i - 1) != 0)
+				if (NombreMethodesServices(doc, nsmgr,i) != 0)
 				{
 	
-					for (int cmp = 0; cmp < NombreMethodesServices(doc, nsmgr,i - 1); cmp++)
+					for (int cmp = 0; cmp < NombreMethodesServices(doc, nsmgr,i ); cmp++)
 					{
 
 					string algorithmes = AlgorithmesMethodesServices(doc, nsmgr,i,cmp);
@@ -160,7 +160,7 @@ namespace ConsoleApp4.Application.Services
 					string xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 2) + "]/preceding-sibling:: w:p)]";
 
 
-					if (i == Service.NomsServices(doc, nsmgr).Count && cmp == NombreMethodesServices(doc, nsmgr, i - 1) - 1)
+					if (i == Service.NomsServices(doc, nsmgr).Count && cmp == NombreMethodesServices(doc, nsmgr, i ) - 1)
 					{
 						
 						xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][2] /preceding-sibling:: w:p)]";
@@ -169,7 +169,7 @@ namespace ConsoleApp4.Application.Services
 
 					
 
-					if (i < Service.NomsServices(doc, nsmgr).Count && cmp == NombreMethodesServices(doc, nsmgr,i - 1) - 1)
+					if (i < Service.NomsServices(doc, nsmgr).Count && cmp == NombreMethodesServices(doc, nsmgr,i) - 1)
 					{
 						 xpath = @"// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading4']][3]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading5']][" + (cmp + 1) + "]/following:: w:p [ w:pPr / w:pStyle [@w:val='Heading6']][4]/ following-sibling::w:p  [count(. | // w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i + 1+"]/preceding-sibling:: w:p )= count(// w:p [ w:pPr / w:pStyle [@w:val='Heading1']][6] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading2']][1] /following:: w:p [ w:pPr / w:pStyle [@w:val='Heading3']][" + i +1+"]/preceding-sibling:: w:p)]";
 

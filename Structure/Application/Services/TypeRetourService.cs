@@ -53,7 +53,7 @@ namespace ConsoleApp4.Application.Services
 			XmlElement root = doc.DocumentElement;
 			List<string> ListeTypeRetourServices = new List<string>();
 
-			if (MethodeService.NombreMethodesServices(doc, nsmgr, i - 1) != 0)
+			if (MethodeService.NombreMethodesServices(doc, nsmgr, i) != 0)
 			{
 
 
